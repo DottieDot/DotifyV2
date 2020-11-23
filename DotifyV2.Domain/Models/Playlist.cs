@@ -6,8 +6,8 @@ namespace DotifyV2.Domain.Models
 {
 	public class Playlist
 	{
-		int Id { get; set; }
-		string Name { get; set; }
-		bool Public { get; set; }
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public bool Private { get; set; }
 	}
 }

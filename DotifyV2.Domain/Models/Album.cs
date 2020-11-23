@@ -6,8 +6,8 @@ namespace DotifyV2.Domain.Models
 {
 	public class Album
 	{
-		int Id { get; set; }
-		string Name { get; set; }
-		string CoverArt { get; set; }
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string CoverArt { get; set; }
 	}
 }
