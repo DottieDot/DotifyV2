@@ -3,10 +3,10 @@ using DotifyV2.Domain.Models;
 
 namespace DotifyV2.Application.Repositories
 {
-	interface IUserRepository : ICrudRepository<User>
+	interface IUserRepository : ICrudRepository<UserDescription, User>
 	{
-		Task<User> GetUserByPlaylistIdAsync(int playlistId);
-		Task<User> GetUserByEmailAsync(string email);
-		Task<User> GetUserByApiTokenAsync(string apiToken);
+		Task<UserDescription> GetUserByPlaylistIdAsync(int playlistId);
+		Task<UserDescription> GetUserByUsernameAsync(string username);
+		Task<UserDescription> GetUserByApiTokenAsync(string apiToken);
 	}
 }

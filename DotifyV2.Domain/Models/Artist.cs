@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace DotifyV2.Domain.Models
 {
-	public class Artist
+	public class Artist : ArtistDescription
 	{
-		public int Id { get; set; }
-		public string Name { get; set; }
-		public string Picture { get; set; }
+		public IEnumerable<AlbumDescription> Albums { get; set; }
 	}
 }
