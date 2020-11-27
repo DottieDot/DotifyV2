@@ -4,8 +4,4 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\DotifyV2.Domain\DotifyV2.Domain.csproj" />
-  </ItemGroup>
-
 </Project>

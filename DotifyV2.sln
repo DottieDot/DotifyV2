@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotifyV2.Domain", "DotifyV2.Domain\DotifyV2.Domain.csproj", "{1FFEDDD4-6E38-4C08-8AD1-7EBA3D651B9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotifyV2.Application", "DotifyV2.Application\DotifyV2.Application.csproj", "{E78CF35A-818F-4111-BC14-D1FE3716CAFF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotifyV2.Application", "DotifyV2.Application\DotifyV2.Application.csproj", "{E78CF35A-818F-4111-BC14-D1FE3716CAFF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotifyV2.Persistence", "DotifyV2.Persistence\DotifyV2.Persistence.csproj", "{27030657-4428-445E-B49C-C21AECEB5215}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotifyV2.Persistence", "DotifyV2.Persistence\DotifyV2.Persistence.csproj", "{27030657-4428-445E-B49C-C21AECEB5215}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotifyV2.Presentation", "DotifyV2.Presentation\DotifyV2.Presentation.csproj", "{84284FC1-121F-4EF5-AD5E-A40A3E1EEB7F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotifyV2.Presentation", "DotifyV2.Presentation\DotifyV2.Presentation.csproj", "{84284FC1-121F-4EF5-AD5E-A40A3E1EEB7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotifyV2.Tests", "DotifyV2.Tests\DotifyV2.Tests.csproj", "{E98C5FE5-C776-4EA4-9EAD-21B36B25CA44}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotifyV2.Tests", "DotifyV2.Tests\DotifyV2.Tests.csproj", "{E98C5FE5-C776-4EA4-9EAD-21B36B25CA44}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotifyV2.Mapping", "DotifyV2.Mapping\DotifyV2.Mapping.csproj", "{D7EDA017-FCEC-458F-AD7A-7490F7C0C53E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1FFEDDD4-6E38-4C08-8AD1-7EBA3D651B9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1FFEDDD4-6E38-4C08-8AD1-7EBA3D651B9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1FFEDDD4-6E38-4C08-8AD1-7EBA3D651B9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1FFEDDD4-6E38-4C08-8AD1-7EBA3D651B9F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E78CF35A-818F-4111-BC14-D1FE3716CAFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E78CF35A-818F-4111-BC14-D1FE3716CAFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E78CF35A-818F-4111-BC14-D1FE3716CAFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +35,10 @@ Global
 		{E98C5FE5-C776-4EA4-9EAD-21B36B25CA44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E98C5FE5-C776-4EA4-9EAD-21B36B25CA44}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E98C5FE5-C776-4EA4-9EAD-21B36B25CA44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7EDA017-FCEC-458F-AD7A-7490F7C0C53E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7EDA017-FCEC-458F-AD7A-7490F7C0C53E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7EDA017-FCEC-458F-AD7A-7490F7C0C53E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7EDA017-FCEC-458F-AD7A-7490F7C0C53E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
