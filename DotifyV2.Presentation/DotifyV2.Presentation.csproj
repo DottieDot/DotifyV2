@@ -4,5 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DotifyV2.Application\DotifyV2.Application.csproj" />
+    <ProjectReference Include="..\DotifyV2.Mapping\DotifyV2.Mapping.csproj" />
+  </ItemGroup>
+
 
 </Project>
