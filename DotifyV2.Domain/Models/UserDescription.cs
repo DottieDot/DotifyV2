@@ -3,9 +3,9 @@ namespace DotifyV2.Domain.Models
 {
 	public class UserDescription
 	{
-		public int Id { get; set; }
-		public string Username { get; set; }
-		public string Password { get; set; }
-		public string ApiToken { get; set; }
+		public int Id { get; }
+		public string Username { get; }
+		public string Password { get; }
+		public string ApiToken { get; }
 	}
 }
