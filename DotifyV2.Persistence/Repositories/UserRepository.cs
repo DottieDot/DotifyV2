@@ -10,33 +10,8 @@ namespace DotifyV2.Persistence.Repositories
 	{
 		private readonly QueryFactory _db;
 		
-		public UserRepository(QueryFactory db)
+		private UserDataDto UserDataDtoFromQueryResult(dynamic row)
 		{
-			_db = db;
-		}
-
-		public Task<UserDataDto> CreateAsync(UserDataDto model)
-		{
-			throw new System.NotImplementedException();
-		}
-
-		public Task<bool> DeleteAsync(int id)
-		{
-			throw new System.NotImplementedException();
-		}
-
-		public Task<IEnumerable<UserDataDto>> GetAllAsync()
-		{
-			throw new System.NotImplementedException();
-		}
-
-		public async Task<UserDataDto> GetAsync(int id)
-		{
-			var row = await _db.Query("users")
-				.Select("id", "username", "api_token", "password")
-				.Where("id", id)
-				.FirstAsync();
-
 			return new UserDataDto
 			{
 				Id = row["id"],
@@ -46,9 +21,19 @@ namespace DotifyV2.Persistence.Repositories
 			};
 		}
 
-		public Task<UserDataDto> GetWithRelationsAsync(int id)
+		public UserRepository(QueryFactory db)
 		{
-			throw new System.NotImplementedException();
+			_db = db;
+		}
+
+		public async Task<UserDataDto> GetAsync(int id)
+		{
+			var row = await _db.Query("users")
+				.Select("id", "username", "api_token", "password")
+				.Where("id", id)
+				.FirstAsync();
+
+			return row != null ? UserDataDtoFromQueryResult(row) : null;
 		}
 
 		public Task<UserDataDto> GetUserByApiTokenAsync(string apiToken)
@@ -61,14 +46,14 @@ namespace DotifyV2.Persistence.Repositories
 			throw new System.NotImplementedException();
 		}
 
-		public Task<UserDataDto> GetUserByUsernameAsync(string username)
+		public async Task<UserDataDto> GetUserByUsernameAsync(string username)
 		{
-			throw new System.NotImplementedException();
-		}
+			var row = await _db.Query("users")
+				.Select("id", "username", "api_token", "password")
+				.Where("username", username)
+				.FirstAsync();
 
-		public Task<bool> UpdateAsync(UserDataDto model)
-		{
-			throw new System.NotImplementedException();
+			return row != null ? UserDataDtoFromQueryResult(row) : null;
 		}
 	}
 }

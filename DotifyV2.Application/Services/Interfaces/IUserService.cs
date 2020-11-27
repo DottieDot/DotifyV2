@@ -5,6 +5,6 @@ namespace DotifyV2.Application.Services.Interfaces
 {
 	public interface IUserService
 	{
-		Task<UserDescriptionDto> GetUser(int id);
+		Task<WrappedDto<UserDescriptionDto>> GetUserByIdAsync(int id);
 	}
 }

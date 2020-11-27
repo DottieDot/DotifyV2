@@ -15,10 +15,16 @@ namespace DotifyV2.Application.Services
 			_userRepository = userRepository;
 		}
 
-		public async Task<UserDescriptionDto> GetUser(int id)
+		public async Task<WrappedDto<UserDescriptionDto>> GetUserByIdAsync(int id)
 		{
-			var user = await _userRepository.GetAsync(id);
-			return new UserDescriptionDto(new User(user));
+			var userData = await _userRepository.GetAsync(id);
+			if (userData != null)
+			{
+				return new WrappedDto<UserDescriptionDto>(
+					new UserDescriptionDto(new User(userData)
+				));
+			}
+			return new WrappedDto<UserDescriptionDto>(null);
 		}
 	}
 }

@@ -33,7 +33,7 @@ namespace DotifyV2.Application.Models
 			return false;
 		}
 
-		public bool DoesPasswordMatch(string password)
+		public bool VerifyPassword(string password)
 		{
 			if (IsPasswordValid(password))
 			{
