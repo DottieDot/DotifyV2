@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DotifyV2.Application\DotifyV2.Application.csproj" />
+    <ProjectReference Include="..\DotifyV2.Common\DotifyV2.Common.csproj" />
   </ItemGroup>
 
 </Project>

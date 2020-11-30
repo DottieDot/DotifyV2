@@ -1,8 +1,10 @@
 ﻿using DotifyV2.Application.Repositories;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using SqlKata.Execution;
 using DotifyV2.Application.DTOs.Persistence;
+using DotifyV2.Persistence.Tables;
+using DotifyV2.Common;
+using System.Linq;
 
 namespace DotifyV2.Persistence.Repositories
 {
@@ -10,14 +12,14 @@ namespace DotifyV2.Persistence.Repositories
 	{
 		private readonly QueryFactory _db;
 		
-		private UserDataDto UserDataDtoFromQueryResult(dynamic row)
+		private UserDataDto UserDataDtoFromQueryResult(UserTableRow row)
 		{
 			return new UserDataDto
 			{
-				Id = row["id"],
-				Username = row["username"],
-				ApiToken = row["api_token"],
-				Password = row["password"],
+				Id = row.id,
+				Username = row.username,
+				ApiToken = row.api_token,
+				Password = row.password,
 			};
 		}
 
@@ -29,16 +31,21 @@ namespace DotifyV2.Persistence.Repositories
 		public async Task<UserDataDto> GetAsync(int id)
 		{
 			var row = await _db.Query("users")
-				.Select("id", "username", "api_token", "password")
+				.Select(typeof(UserTableRow).GetFieldNames().ToArray())
 				.Where("id", id)
-				.FirstAsync();
+				.FirstAsync<UserTableRow>();
 
 			return row != null ? UserDataDtoFromQueryResult(row) : null;
 		}
 
-		public Task<UserDataDto> GetUserByApiTokenAsync(string apiToken)
+		public async Task<UserDataDto> GetUserByApiTokenAsync(string apiToken)
 		{
-			throw new System.NotImplementedException();
+			var row = await _db.Query("users")
+				.Select(typeof(UserTableRow).GetFieldNames().ToArray())
+				.Where("api_token", apiToken)
+				.FirstAsync<UserTableRow>();
+
+			return row != null ? UserDataDtoFromQueryResult(row) : null;
 		}
 
 		public Task<UserDataDto> GetUserByPlaylistIdAsync(int playlistId)
@@ -49,9 +56,9 @@ namespace DotifyV2.Persistence.Repositories
 		public async Task<UserDataDto> GetUserByUsernameAsync(string username)
 		{
 			var row = await _db.Query("users")
-				.Select("id", "username", "api_token", "password")
+				.Select(typeof(UserTableRow).GetFieldNames().ToArray())
 				.Where("username", username)
-				.FirstAsync();
+				.FirstAsync<UserTableRow>();
 
 			return row != null ? UserDataDtoFromQueryResult(row) : null;
 		}

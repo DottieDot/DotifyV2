@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotifyV2.Presentation", "Do
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotifyV2.Tests", "DotifyV2.Tests\DotifyV2.Tests.csproj", "{E98C5FE5-C776-4EA4-9EAD-21B36B25CA44}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotifyV2.Mapping", "DotifyV2.Mapping\DotifyV2.Mapping.csproj", "{D7EDA017-FCEC-458F-AD7A-7490F7C0C53E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotifyV2.Mapping", "DotifyV2.Mapping\DotifyV2.Mapping.csproj", "{D7EDA017-FCEC-458F-AD7A-7490F7C0C53E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotifyV2.Common", "DotifyV2.Common\DotifyV2.Common.csproj", "{6308E72C-7209-4111-9CFC-79D2759D1184}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{D7EDA017-FCEC-458F-AD7A-7490F7C0C53E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7EDA017-FCEC-458F-AD7A-7490F7C0C53E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7EDA017-FCEC-458F-AD7A-7490F7C0C53E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6308E72C-7209-4111-9CFC-79D2759D1184}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6308E72C-7209-4111-9CFC-79D2759D1184}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6308E72C-7209-4111-9CFC-79D2759D1184}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6308E72C-7209-4111-9CFC-79D2759D1184}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
