@@ -23,12 +23,13 @@ namespace DotifyV2.Presentation.Middleware
 		public async Task InvokeAsync(HttpContext context, IAuthenticationService authenticationService)
 		{
 			var request = context.Request;
-			AuthenticationHeaderValue authorizationHeader = null;
 
-			if (authorizationHeader == null)
-			{
+			if (!request.Headers.ContainsKey("Authorization"))
+			{	
 				return;
 			}
+
+			AuthenticationHeaderValue authorizationHeader = AuthenticationHeaderValue.Parse(request.Headers["Authorization"]);
 
 			if (authorizationHeader.Scheme != "Bearer")
 			{
