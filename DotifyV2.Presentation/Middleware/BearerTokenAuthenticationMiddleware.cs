@@ -25,7 +25,8 @@ namespace DotifyV2.Presentation.Middleware
 			var request = context.Request;
 
 			if (!request.Headers.ContainsKey("Authorization"))
-			{	
+			{
+				await _next(context);
 				return;
 			}
 
