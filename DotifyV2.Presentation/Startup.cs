@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using DotifyV2.Mapping;
+using DotifyV2.Presentation.Middleware.Extensions;
 
 namespace DotifyV2.Presentation
 {
@@ -34,6 +35,8 @@ namespace DotifyV2.Presentation
 			app.UseHttpsRedirection();
 
 			app.UseRouting();
+
+			app.UseBearerTokenAuthentication();
 
 			app.UseEndpoints(endpoints =>
 			{

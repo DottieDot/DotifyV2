@@ -12,7 +12,7 @@ namespace DotifyV2.Persistence.Repositories
 	{
 		private readonly QueryFactory _db;
 		
-		private UserDataDto UserDataDtoFromQueryResult(UserTableRow row)
+		private UserDataDto UserDataDtoFromUserTableRow(UserTableRow row)
 		{
 			return new UserDataDto
 			{
@@ -35,7 +35,7 @@ namespace DotifyV2.Persistence.Repositories
 				.Where("id", id)
 				.FirstAsync<UserTableRow>();
 
-			return row != null ? UserDataDtoFromQueryResult(row) : null;
+			return row != null ? UserDataDtoFromUserTableRow(row) : null;
 		}
 
 		public async Task<UserDataDto> GetUserByApiTokenAsync(string apiToken)
@@ -45,7 +45,7 @@ namespace DotifyV2.Persistence.Repositories
 				.Where("api_token", apiToken)
 				.FirstAsync<UserTableRow>();
 
-			return row != null ? UserDataDtoFromQueryResult(row) : null;
+			return row != null ? UserDataDtoFromUserTableRow(row) : null;
 		}
 
 		public Task<UserDataDto> GetUserByPlaylistIdAsync(int playlistId)
@@ -60,7 +60,7 @@ namespace DotifyV2.Persistence.Repositories
 				.Where("username", username)
 				.FirstAsync<UserTableRow>();
 
-			return row != null ? UserDataDtoFromQueryResult(row) : null;
+			return row != null ? UserDataDtoFromUserTableRow(row) : null;
 		}
 	}
 }

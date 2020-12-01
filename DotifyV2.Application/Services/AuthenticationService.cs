@@ -34,10 +34,10 @@ namespace DotifyV2.Application.Services
 			return new AuthenticationResultDto { Success = false };
 		}
 
-		public async Task<WrappedDto<int?>> GetUserIdFromApiTokenAsync(string apiToken)
+		public async Task<WrappedDto<UserDescriptionDto>> AuthenticateAsync(string apiToken)
 		{
 			var userData = await _userRepository.GetUserByApiTokenAsync(apiToken);
-			return new WrappedDto<int?>(userData?.Id);
+			return userData != null ? new WrappedDto<UserDescriptionDto>(new UserDescriptionDto(new User(userData))) : null;
 		}
 	}
 }

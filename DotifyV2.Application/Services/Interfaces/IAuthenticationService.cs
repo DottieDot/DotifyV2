@@ -7,6 +7,6 @@ namespace DotifyV2.Application.Services.Interfaces
 	{
 		Task<AuthenticationResultDto> AuthenticateAsync(string username, string password);
 
-		Task<WrappedDto<int?>> GetUserIdFromApiTokenAsync(string apiToken);
+		Task<WrappedDto<UserDescriptionDto>> AuthenticateAsync(string apiToken);
 	}
 }
