@@ -1,8 +1,13 @@
 import { Button, TextField } from '@material-ui/core'
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import useStyles from './style'
 
-export default () => {
+interface Props {
+  authenticating: boolean
+  setAuthenticating: (authenticating: boolean) => void
+}
+
+export default ({ authenticating, setAuthenticating }: Props) => {
   const classes = useStyles()
   const [state, setState] = useState({
     username: '',
@@ -10,7 +15,7 @@ export default () => {
     confirmPassword: ''
   })
 
-  const onChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.attributes.getNamedItem('name')?.value
     if (name !== undefined) {
       setState({
@@ -24,7 +29,16 @@ export default () => {
     fullWidth: true,
     required: true,
     onChange: onChange,
+    disabled: authenticating,
   }
+
+  const signUp = useCallback(() => {
+    const fn = async () => {
+      setAuthenticating(true)
+      // Authenticate
+    }
+    fn()
+  }, [setAuthenticating, state])
 
   return (
     <form className={classes.form}>
@@ -51,6 +65,8 @@ export default () => {
       <Button 
         variant="contained" 
         color="primary"
+        disabled={authenticating}
+        onClick={signUp}
         fullWidth
       >
         Create Account

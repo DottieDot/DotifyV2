@@ -1,5 +1,5 @@
 import { setApiToken } from '../../api/apiRequest'
-import { AuthActions, CLEAR_API_TOKEN, SET_API_TOKEN } from '../model/actions/Auth'
+import { AuthActions, LOGOUT, SET_API_TOKEN } from '../model/actions/Auth'
 import { AuthState } from '../model/state'
 
 const defaultState: AuthState = {
@@ -14,7 +14,7 @@ export default (state: AuthState = defaultState, action: AuthActions): AuthState
         ...state,
         apiToken: action.apiToken
       }
-    case CLEAR_API_TOKEN:
+    case LOGOUT:
       setApiToken(undefined)
       return {
         ...state,

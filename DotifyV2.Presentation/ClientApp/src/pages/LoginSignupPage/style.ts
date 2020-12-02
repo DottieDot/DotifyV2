@@ -21,5 +21,8 @@ export default makeStyles(theme => ({
   gap: {
     flex: 1,
     minHeight: theme.spacing(2),
+  },
+  errorText: {
+    color: theme.palette.error.main
   }
 }))

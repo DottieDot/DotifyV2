@@ -1,11 +1,12 @@
-import { Card, CardContent, CardHeader, Container, Grid, makeStyles, Typography } from '@material-ui/core'
-import React from 'react'
+import { Card, CardContent, Container, Grid, LinearProgress, Typography } from '@material-ui/core'
+import React, { useState } from 'react'
 import LoginForm from './LoginForm'
 import RegistrationForm from './RegistrationForm'
 import useStyles from './style'
 
 export default () => {
   const classes = useStyles()
+  const [authenticating, setAuthenticating] = useState(false)
 
   return (
     <Container fixed className={classes.container}>
@@ -20,6 +21,7 @@ export default () => {
       <Grid container spacing={4}>
         <Grid item md={6} xs={12}>
           <Card className={classes.card}>
+            <LinearProgress hidden={!authenticating} />
             <CardContent className={classes.cardContent}>
               <Typography 
                 component="h2" 
@@ -28,12 +30,16 @@ export default () => {
               >
                 Sign Up
               </Typography>
-              <RegistrationForm />
+              <RegistrationForm 
+                authenticating={authenticating} 
+                setAuthenticating={setAuthenticating} 
+              />
             </CardContent>
           </Card>
         </Grid>
         <Grid item md={6} xs={12}>
           <Card className={classes.card}>
+            <LinearProgress hidden={!authenticating} />
             <CardContent className={classes.cardContent}>
               <Typography 
                 component="h2" 
@@ -42,7 +48,10 @@ export default () => {
               >
                 Login
               </Typography>
-              <LoginForm />
+              <LoginForm 
+                authenticating={authenticating} 
+                setAuthenticating={setAuthenticating} 
+              />
             </CardContent>
           </Card>
         </Grid>
