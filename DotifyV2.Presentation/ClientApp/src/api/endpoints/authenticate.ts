@@ -2,7 +2,7 @@ import apiRequest from '../apiRequest'
 import { AuthenticationResponse } from '../model'
 
 export default async (username: string, password: string) => {
-  const response = await apiRequest('/authenticate', 'POST', {
+  const response = await apiRequest('/api/authenticate', 'POST', {
     username, password
   })
   console.log(username, password)

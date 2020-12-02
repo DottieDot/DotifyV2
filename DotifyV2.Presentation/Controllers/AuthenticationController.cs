@@ -8,7 +8,6 @@ using System.Net;
 namespace DotifyV2.Presentation.Controllers
 {
 	[ApiController]
-	[Route("/api")]
 	public class AuthenticationController : ControllerBase
 	{
 		readonly IAuthenticationService _authenticationService;
@@ -18,7 +17,7 @@ namespace DotifyV2.Presentation.Controllers
 			_authenticationService = authenticationService;
 		}
 
-		[HttpPost("/authenticate")]
+		[HttpPost("/api/authenticate")]
 		public async Task<LoginResponseBody> LoginAsync([FromBody]LoginRequestBody loginRequest)
 		{
 			var authResult = await _authenticationService.AuthenticateAsync(loginRequest.Username, loginRequest.Password);
