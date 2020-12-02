@@ -19,19 +19,12 @@ namespace DotifyV2.Mapping
 			});
 
 			#region Repositories
-			services.AddTransient<IUserRepository, UserRepository>(implementationFactory =>
-			{
-				var db = implementationFactory.GetService<QueryFactory>();
-				return new UserRepository(db);
-			});
+			services.AddTransient<IUserRepository, UserRepository>();
 			#endregion
 
 			#region Services
-			services.AddTransient<IUserService, UserService>(implementationFactory =>
-			{
-				var userRepo = implementationFactory.GetService<IUserRepository>();
-				return new UserService(userRepo);
-			});
+			services.AddTransient<IUserService, UserService>();
+			services.AddTransient<IAuthenticationService, AuthenticationService>();
 			#endregion
 
 			return services;
