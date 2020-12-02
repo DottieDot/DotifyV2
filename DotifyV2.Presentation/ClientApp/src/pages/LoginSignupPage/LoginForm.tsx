@@ -5,7 +5,7 @@ import useStyles from './style'
 export default () => {
   const classes = useStyles()
   const [state, setState] = useState({
-    email: '',
+    username: '',
     password: '',
   })
 
@@ -28,10 +28,10 @@ export default () => {
   return (
     <form className={classes.form}>
       <TextField
-        type="email"
-        placeholder="john.doe@example.com"
-        label="Email address"
-        name="email"
+        type="text"
+        placeholder="JohnDoe"
+        label="Username"
+        name="username"
         {...sharedProps}
       />
       <TextField
