@@ -5,6 +5,7 @@ namespace DotifyV2.Application.Repositories
 {
 	public interface IUserRepository
 	{
+		Task<UserDataDto> Create(NewUserDataDto user);
 		Task<UserDataDto> GetAsync(int id);
 		Task<UserDataDto> GetUserByPlaylistIdAsync(int playlistId);
 		Task<UserDataDto> GetUserByUsernameAsync(string username);

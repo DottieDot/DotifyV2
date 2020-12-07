@@ -15,7 +15,7 @@ namespace DotifyV2.Application.Services
 			_userRepository = userRepository;
 		}
 
-		public async Task<AuthenticationResultDto> AuthenticateAsync(string username, string password)
+		public async Task<AuthenticationResultDto> LoginAsync(string username, string password)
 		{
 			var userData = await _userRepository.GetUserByUsernameAsync(username);
 			if (userData != null)

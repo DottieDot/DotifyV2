@@ -20,7 +20,7 @@ namespace DotifyV2.Presentation.Controllers
 		[HttpPost("/api/authenticate")]
 		public async Task<LoginResponseBody> LoginAsync([FromBody]LoginRequestBody loginRequest)
 		{
-			var authResult = await _authenticationService.AuthenticateAsync(loginRequest.Username, loginRequest.Password);
+			var authResult = await _authenticationService.LoginAsync(loginRequest.Username, loginRequest.Password);
 
 			if (!authResult.Success)
 			{

@@ -5,6 +5,7 @@ using DotifyV2.Application.DTOs.Persistence;
 using DotifyV2.Persistence.Tables;
 using DotifyV2.Common;
 using System.Linq;
+using System;
 
 namespace DotifyV2.Persistence.Repositories
 {
@@ -28,12 +29,33 @@ namespace DotifyV2.Persistence.Repositories
 			_db = db;
 		}
 
+		public async Task<UserDataDto> Create(NewUserDataDto user)
+		{
+			try
+			{
+				var id = await _db.Query("users")
+					.InsertGetIdAsync<int>(user);
+
+				return new UserDataDto
+				{
+					Id = id,
+					Username = user.Username,
+					Password = user.Password,
+					ApiToken = user.ApiToken,
+				};
+			}
+			catch (Exception)
+			{
+				return null;
+			}
+		}
+
 		public async Task<UserDataDto> GetAsync(int id)
 		{
 			var row = await _db.Query("users")
 				.Select(typeof(UserTableRow).GetFieldNames().ToArray())
 				.Where("id", id)
-				.FirstAsync<UserTableRow>();
+				.FirstOrDefaultAsync<UserTableRow>();
 
 			return row != null ? UserDataDtoFromUserTableRow(row) : null;
 		}
@@ -43,7 +65,7 @@ namespace DotifyV2.Persistence.Repositories
 			var row = await _db.Query("users")
 				.Select(typeof(UserTableRow).GetFieldNames().ToArray())
 				.Where("api_token", apiToken)
-				.FirstAsync<UserTableRow>();
+				.FirstOrDefaultAsync<UserTableRow>();
 
 			return row != null ? UserDataDtoFromUserTableRow(row) : null;
 		}
@@ -58,7 +80,7 @@ namespace DotifyV2.Persistence.Repositories
 			var row = await _db.Query("users")
 				.Select(typeof(UserTableRow).GetFieldNames().ToArray())
 				.Where("username", username)
-				.FirstAsync<UserTableRow>();
+				.FirstOrDefaultAsync<UserTableRow>();
 
 			return row != null ? UserDataDtoFromUserTableRow(row) : null;
 		}
