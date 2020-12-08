@@ -1,20 +1,22 @@
 ﻿using DotifyV2.Application.DTOs.Persistence;
+using DotifyV2.Application.Models.Interfaces;
 
 namespace DotifyV2.Application.Models
 {
-	public class User
+	public class User : IUser
 	{
+		string _password;
+		string _apiToken;
+
 		public int Id { get; private set; }
 		public string Username { get; private set; }
-		public string Password { get; private set; }
-		public string ApiToken { get; private set; }
 
 		public User(UserDataDto dto)
 		{
 			Id = dto.Id;
 			Username = dto.Username;
-			Password = dto.Password;
-			ApiToken = dto.ApiToken;
+			_password = dto.Password;
+			_apiToken = dto.ApiToken;
 		}
 
 		private bool IsPasswordValid(string password)
@@ -27,20 +29,25 @@ namespace DotifyV2.Application.Models
 			if (IsPasswordValid(password))
 			{
 				// TODO: Hash password
-				this.Password = password;
+				_password = password;
 				return true;
 			}
 			return false;
 		}
 
-		public bool VerifyPassword(string password)
+		public string VerifyPassword(string password)
 		{
 			if (IsPasswordValid(password))
 			{
 				// TODO: Check hashed password
-				return this.Password == password;
+				return _password == password ? _apiToken : null;
 			}
-			return false;
+			return null;
+		}
+
+		public void Save()
+		{
+			throw new System.NotImplementedException();
 		}
 	}
 }
