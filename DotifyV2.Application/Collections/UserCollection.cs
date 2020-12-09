@@ -50,7 +50,7 @@ namespace DotifyV2.Application.Collections
 			{
 				Username = username,
 				Password = password,
-				ApiToken = ""
+				ApiToken = Security.RandomCryptographicString(255)
 			};
 			var userData = await _userRepository.CreateUserAsync(newUserData);
 			return userData != null ? _dependencyMapper.Construct<User>(userData) : null;

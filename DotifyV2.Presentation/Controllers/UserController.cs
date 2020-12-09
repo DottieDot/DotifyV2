@@ -18,9 +18,9 @@ namespace DotifyV2.Presentation.Controllers
         }
 
         [HttpPost("api/users")]
-        public async Task<SignUpResponse> Create([FromBody] SignupRequest request)
+        public async Task<SignUpResponse> Create([FromBody] SignUpRequest request)
         {
-            if (_userCollection.GetUserByUsernameAsync(request.Username) != null)
+            if (await _userCollection.GetUserByUsernameAsync(request.Username) != null)
             {
                 throw new HttpException(HttpStatusCode.BadRequest, "A user already exists with this username");
             }

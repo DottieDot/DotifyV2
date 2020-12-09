@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using DotifyV2.Mapping;
 using DotifyV2.Presentation.Middleware.Extensions;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using DotifyV2.Presentation.Filters;
 
 namespace DotifyV2.Presentation
 {

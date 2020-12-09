@@ -1,4 +1,4 @@
-import { Button, TextField, Typography } from '@material-ui/core'
+import { Button, FormHelperText, TextField, Typography } from '@material-ui/core'
 import React, { useCallback, useMemo, useState } from 'react'
 import useStyles from './style'
 import * as api from '../../api/endpoints'
@@ -65,12 +65,14 @@ export default ({ authenticating, setAuthenticating }: Props) => {
         name="username"
         {...sharedProps}
       />
+      <FormHelperText error>{' '}</FormHelperText>
       <TextField
         type="password"
         label="Password"
         name="password"
         {...sharedProps}
       />
+      <FormHelperText error>{' '}</FormHelperText>
       <div className={classes.gap} />
       <Typography 
         variant="caption" 

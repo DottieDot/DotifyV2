@@ -34,7 +34,12 @@ namespace DotifyV2.Persistence.Repositories
 			try
 			{
 				var id = await _db.Query("users")
-					.InsertGetIdAsync<int>(user);
+					.InsertGetIdAsync<int>(new
+					{
+						username = user.Username,
+						password = user.Password,
+						api_token = user.ApiToken
+					});
 
 				return new UserDataDto
 				{
