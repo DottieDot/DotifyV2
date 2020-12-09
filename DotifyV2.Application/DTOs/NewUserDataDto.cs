@@ -1,9 +1,8 @@
 ﻿
-namespace DotifyV2.Application.DTOs.Persistence
+namespace DotifyV2.Application.DTOs
 {
-	public class UserDataDto
+	public class NewUserDataDto
 	{
-		public int Id { get; set; }
 		public string Username { get; set; }
 		public string Password { get; set; }
 		public string ApiToken { get; set; }

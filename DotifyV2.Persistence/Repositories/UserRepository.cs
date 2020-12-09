@@ -1,7 +1,7 @@
 ﻿using DotifyV2.Application.Repositories;
 using System.Threading.Tasks;
 using SqlKata.Execution;
-using DotifyV2.Application.DTOs.Persistence;
+using DotifyV2.Application.DTOs;
 using DotifyV2.Persistence.Tables;
 using DotifyV2.Common;
 using System.Linq;
@@ -29,7 +29,7 @@ namespace DotifyV2.Persistence.Repositories
 			_db = db;
 		}
 
-		public async Task<UserDataDto> Create(NewUserDataDto user)
+		public async Task<UserDataDto> CreateUserAsync(NewUserDataDto user)
 		{
 			try
 			{
@@ -50,7 +50,7 @@ namespace DotifyV2.Persistence.Repositories
 			}
 		}
 
-		public async Task<UserDataDto> GetAsync(int id)
+		public async Task<UserDataDto> GetUserByIdAsync(int id)
 		{
 			var row = await _db.Query("users")
 				.Select(typeof(UserTableRow).GetFieldNames().ToArray())

@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SqlKata.Execution;
 using DotifyV2.Persistence.Infrastructure;
 using DotifyV2.Application.Repositories;
 using DotifyV2.Persistence.Repositories;
-using DotifyV2.Application.Services.Interfaces;
-using DotifyV2.Application.Services;
+using DotifyV2.Application.Collections.Interfaces;
+using DotifyV2.Application.Collections;
+using DotifyV2.Common;
 
 namespace DotifyV2.Mapping
 {
@@ -18,13 +18,14 @@ namespace DotifyV2.Mapping
 				return QueryFactoryFactory.CreateQueryFactory(DatabaseType.MySql, "Host=localhost;Port=3306;User=root;Password=;Database=dotify_v2;SslMode=None");
 			});
 
+			services.AddScoped<DependencyMapper>();
+
 			#region Repositories
 			services.AddTransient<IUserRepository, UserRepository>();
 			#endregion
 
 			#region Services
-			services.AddTransient<IUserService, UserService>();
-			services.AddTransient<IAuthenticationService, AuthenticationService>();
+			services.AddTransient<IUserCollection, UserCollection>();
 			#endregion
 
 			return services;

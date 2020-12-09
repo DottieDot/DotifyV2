@@ -2,7 +2,7 @@
 
 namespace DotifyV2.Presentation.Models
 {
-	public class LoginRequestBody
+	public class LoginRequest
 	{
 		[JsonPropertyName("username")]
 		public string Username { get; set; }

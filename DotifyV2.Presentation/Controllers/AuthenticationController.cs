@@ -1,14 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using DotifyV2.Application.Services.Interfaces;
+﻿using System.Net;
 using System.Threading.Tasks;
-using DotifyV2.Presentation.Models;
-using DotifyV2.Presentation.Exceptions;
-using System.Net;
 using DotifyV2.Application.Collections.Interfaces;
+using DotifyV2.Presentation.Exceptions;
+using DotifyV2.Presentation.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DotifyV2.Presentation.Controllers
 {
-	[ApiController]
+    [ApiController]
 	public class AuthenticationController : ControllerBase
 	{
 		readonly IUserCollection _userCollection;
@@ -19,7 +18,7 @@ namespace DotifyV2.Presentation.Controllers
 		}
 
 		[HttpPost("/api/authenticate")]
-		public async Task<LoginResponseBody> LoginAsync([FromBody]LoginRequestBody loginRequest)
+		public async Task<LoginResponse> LoginAsync([FromBody]LoginRequest loginRequest)
 		{
 			var user = await _userCollection.GetUserByUsernameAsync(loginRequest.Username);
 
@@ -29,7 +28,7 @@ namespace DotifyV2.Presentation.Controllers
 				throw new HttpException(HttpStatusCode.Unauthorized);
 			}
 
-			return new LoginResponseBody
+			return new LoginResponse
 			{
 				ApiToken = apiToken
 			};

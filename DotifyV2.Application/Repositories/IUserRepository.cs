@@ -1,12 +1,12 @@
 ﻿using System.Threading.Tasks;
-using DotifyV2.Application.DTOs.Persistence;
+using DotifyV2.Application.DTOs;
 
 namespace DotifyV2.Application.Repositories
 {
 	public interface IUserRepository
 	{
-		Task<UserDataDto> Create(NewUserDataDto user);
-		Task<UserDataDto> GetAsync(int id);
+		Task<UserDataDto> CreateUserAsync(NewUserDataDto user);
+		Task<UserDataDto> GetUserByIdAsync(int id);
 		Task<UserDataDto> GetUserByPlaylistIdAsync(int playlistId);
 		Task<UserDataDto> GetUserByUsernameAsync(string username);
 		Task<UserDataDto> GetUserByApiTokenAsync(string apiToken);

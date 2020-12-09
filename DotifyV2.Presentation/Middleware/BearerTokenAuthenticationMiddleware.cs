@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Net.Http.Headers;
-using DotifyV2.Application.Services.Interfaces;
+using DotifyV2.Application.Collections.Interfaces;
 using DotifyV2.Presentation.Identities;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
@@ -20,7 +20,7 @@ namespace DotifyV2.Presentation.Middleware
 			_next = next;
 		}
 
-		public async Task InvokeAsync(HttpContext context, IAuthenticationService authenticationService)
+		public async Task InvokeAsync(HttpContext context, IUserCollection userCollection)
 		{
 			var request = context.Request;
 
@@ -43,13 +43,13 @@ namespace DotifyV2.Presentation.Middleware
 			}
 
 			string token = authorizationHeader.Parameter;
-			var authResult = await authenticationService.AuthenticateAsync(token);
-			if (!authResult.Success)
+			var user = await userCollection.GetUserByApiTokenAsync(token);
+			if (user == null)
 			{
 				throw new HttpException(HttpStatusCode.Unauthorized, "Invalid authorization token");
 			}
 
-			var identity = new BearerTokenUserIdentity(authResult.Data);
+			var identity = new BearerTokenUserIdentity(user);
 			context.User = new ClaimsPrincipal(identity);
 
 			await _next(context);

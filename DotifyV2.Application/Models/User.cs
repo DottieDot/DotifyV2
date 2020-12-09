@@ -1,4 +1,4 @@
-﻿using DotifyV2.Application.DTOs.Persistence;
+﻿using DotifyV2.Application.DTOs;
 using DotifyV2.Application.Models.Interfaces;
 
 namespace DotifyV2.Application.Models

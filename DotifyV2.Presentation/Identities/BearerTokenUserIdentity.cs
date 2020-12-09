@@ -1,16 +1,16 @@
 ﻿using System.Security.Principal;
-using DotifyV2.Application.DTOs.Presentation;
+using DotifyV2.Application.Models.Interfaces;
 
 namespace DotifyV2.Presentation.Identities
 {
 	public class BearerTokenUserIdentity : IIdentity
 	{
-		public BearerTokenUserIdentity(UserDescriptionDto user)
+		public BearerTokenUserIdentity(IUser user)
 		{
 			User = user;
 		}
 
-		public UserDescriptionDto User { get; private set; }
+		public IUser User { get; private set; }
 
 		public string AuthenticationType => "Bearer token";
 
