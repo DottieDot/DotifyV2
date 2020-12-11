@@ -54,5 +54,6 @@
   <ItemGroup>
     <Folder Include="Validation\" />
     <Folder Include="Filters\" />
+    <Folder Include="Models\Descriptions\" />
   </ItemGroup>
 </Project>

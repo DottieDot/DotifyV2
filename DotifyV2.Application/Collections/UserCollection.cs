@@ -34,7 +34,7 @@ namespace DotifyV2.Application.Collections
 
 		public async Task<IUser> GetUserByApiTokenAsync(string apiToken)
 		{
-			var data = await _userRepository.GetUserByUsernameAsync(apiToken);
+			var data = await _userRepository.GetUserByApiTokenAsync(apiToken);
 			return data != null ? _dependencyMapper.Construct<User>(data) : null;
 		}
 

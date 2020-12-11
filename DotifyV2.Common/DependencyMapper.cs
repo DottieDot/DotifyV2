@@ -17,7 +17,7 @@ namespace DotifyV2.Common
             var constructor = typeof(T).GetConstructors()[0];
             var services = constructor.GetParameters()
                 .Skip(parameters.Length)
-                .Select(param => _serviceProvider.GetService(param.GetType()));
+                .Select(param => _serviceProvider.GetService(param.ParameterType));
 
             return constructor.Invoke(parameters.Concat(services).ToArray()) as T;
         }
