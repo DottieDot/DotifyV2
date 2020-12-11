@@ -1,11 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DotifyV2.Domain\DotifyV2.Domain.csproj" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DotifyV2.Common\DotifyV2.Common.csproj" />
+  </ItemGroup>
 </Project>
