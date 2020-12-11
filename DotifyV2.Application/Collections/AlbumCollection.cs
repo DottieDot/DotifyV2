@@ -1,0 +1,29 @@
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Linq;
+using DotifyV2.Application.Collections.Interfaces;
+using DotifyV2.Application.Models;
+using DotifyV2.Application.Models.Interfaces;
+using DotifyV2.Application.Repositories;
+using DotifyV2.Common;
+
+namespace DotifyV2.Application.Collections
+{
+    public class AlbumCollection : IAlbumCollection
+    {
+        readonly IAlbumRepository _albumRepository;
+        readonly DependencyMapper _dependencyMapper;
+
+        public AlbumCollection(IAlbumRepository albumRepository, DependencyMapper dependencyMapper)
+        {
+            _albumRepository = albumRepository;
+            _dependencyMapper = dependencyMapper;
+        }
+
+        public async Task<IEnumerable<IAlbum>> GetAlbumsByArtistId(int artistId)
+        {
+           var albums = await _albumRepository.GetAlbumsByArtistId(artistId);
+           return albums.Select(data => _dependencyMapper.Construct<Album>(data));
+        }
+    }
+}

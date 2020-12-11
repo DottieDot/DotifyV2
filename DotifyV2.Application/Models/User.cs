@@ -3,7 +3,7 @@ using DotifyV2.Application.Models.Interfaces;
 
 namespace DotifyV2.Application.Models
 {
-	public class User : IUser
+    public class User : IUser
 	{
 		string _password;
 		string _apiToken;
