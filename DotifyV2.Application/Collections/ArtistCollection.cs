@@ -18,7 +18,7 @@ namespace DotifyV2.Application.Collections
             _dependencyMapper = dependencyMapper;
         }
 
-        public async Task<IArtist> GetArtistById(int artistId)
+        public async Task<IArtist> GetArtistByIdAsync(int artistId)
         {
             var data = await _artistRepository.GetArtistByIdAsync(artistId);
             return data != null ? _dependencyMapper.Construct<Artist>(data) : null;

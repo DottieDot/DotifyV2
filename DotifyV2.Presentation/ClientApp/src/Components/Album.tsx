@@ -1,5 +1,5 @@
 import { makeStyles, Paper, Typography } from '@material-ui/core'
-import React, { Fragment } from 'react'
+import React from 'react'
 
 interface Props {
   name: string
@@ -30,7 +30,7 @@ const CoverArt = ({ coverArt }: { coverArt: string }) => {
   const classes = useStyles()
 
   return (
-    <img src={coverArt} className={classes.coverArt} />
+    <img src={coverArt} className={classes.coverArt} alt="Cover art" />
   )
 }
 

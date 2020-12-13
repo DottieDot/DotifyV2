@@ -20,9 +20,15 @@ namespace DotifyV2.Application.Collections
             _dependencyMapper = dependencyMapper;
         }
 
-        public async Task<IEnumerable<IAlbum>> GetAlbumsByArtistId(int artistId)
+        public async Task<IAlbum> GetAlbumByIdAsync(int albumId)
         {
-           var albums = await _albumRepository.GetAlbumsByArtistId(artistId);
+            var data = await _albumRepository.GetAlbumByIdAsync(albumId);
+            return data != null ? _dependencyMapper.Construct<Album>(data) : null;
+        }
+
+        public async Task<IEnumerable<IAlbum>> GetAlbumsByArtistIdAsync(int artistId)
+        {
+           var albums = await _albumRepository.GetAlbumsByArtistIdAsync(artistId);
            return albums.Select(data => _dependencyMapper.Construct<Album>(data));
         }
     }

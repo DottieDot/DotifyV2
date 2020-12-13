@@ -5,6 +5,6 @@ namespace DotifyV2.Application.Collections.Interfaces
 {
     public interface IArtistCollection
     {
-        Task<IArtist> GetArtistById(int artistId);
+        Task<IArtist> GetArtistByIdAsync(int artistId);
     }
 }

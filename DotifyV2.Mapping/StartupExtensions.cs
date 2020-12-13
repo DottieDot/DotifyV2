@@ -24,12 +24,14 @@ namespace DotifyV2.Mapping
 			services.AddTransient<IUserRepository, UserRepository>();
 			services.AddTransient<IArtistRepository, ArtistRepository>();
 			services.AddTransient<IAlbumRepository, AlbumRepository>();
+			services.AddTransient<ISongRepository, SongRepository>();
 			#endregion
 
 			#region Services
 			services.AddTransient<IUserCollection, UserCollection>();
 			services.AddTransient<IArtistCollection, ArtistCollection>();
 			services.AddTransient<IAlbumCollection, AlbumCollection>();
+			services.AddTransient<ISongCollection, SongCollection>();
 			#endregion
 
 			return services;

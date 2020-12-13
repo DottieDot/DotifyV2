@@ -7,6 +7,8 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { CssBaseline } from '@material-ui/core'
 import { useApiToken } from './hooks'
 import { setApiToken } from './api/apiRequest'
+import Notifier from './Notifier'
+import { SnackbarProvider } from 'notistack'
 
 const theme = createMuiTheme({
   palette: {
@@ -29,9 +31,12 @@ export default () => {
     <StateProvider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <RegisterApiToken />
-          <RootRouter />
+          <SnackbarProvider anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+            <CssBaseline />
+            <RegisterApiToken />
+            <Notifier />
+            <RootRouter />
+          </SnackbarProvider>
         </ThemeProvider>
       </PersistGate>
     </StateProvider>

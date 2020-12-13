@@ -18,7 +18,17 @@ namespace DotifyV2.Persistence.Repositories
             _db = db;
         }
 
-        public async Task<IEnumerable<AlbumDataDto>> GetAlbumsByArtistId(int artistId)
+        public async Task<AlbumDataDto> GetAlbumByIdAsync(int albumId)
+        {
+            var row = await _db.Query("albums")
+                .Select(typeof(AlbumTableRow).GetFieldNames().ToArray())
+                .Where("id", albumId)
+                .FirstOrDefaultAsync<AlbumTableRow>();
+
+            return row?.ToAlbumDataDto();
+        }
+
+        public async Task<IEnumerable<AlbumDataDto>> GetAlbumsByArtistIdAsync(int artistId)
         {
             var rows = await _db.Query("albums")
                 .Select(typeof(AlbumTableRow).GetFieldNames().ToArray())

@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace DotifyV2.Application.Models.Interfaces
 {
@@ -9,5 +10,7 @@ namespace DotifyV2.Application.Models.Interfaces
         string CoverArt { get; }
 
         Task<IArtist> GetArtistAsync();
+
+        Task<IEnumerable<ISong>> GetSongsAsync();
     }
 }

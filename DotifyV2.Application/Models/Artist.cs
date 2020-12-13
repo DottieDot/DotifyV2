@@ -24,6 +24,6 @@ namespace DotifyV2.Application.Models
         public string Picture { get; }
 
         public Task<IEnumerable<IAlbum>> GetAlbumsAsync()
-            => _albumCollection.GetAlbumsByArtistId(Id);
+            => _albumCollection.GetAlbumsByArtistIdAsync(Id);
     }
 }

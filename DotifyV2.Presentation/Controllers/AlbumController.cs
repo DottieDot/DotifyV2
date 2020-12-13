@@ -8,28 +8,28 @@ using DotifyV2.Presentation.Filters;
 
 namespace DotifyV2.Presentation.Controllers
 {
-    [Route("api/artists")]
+    [Route("api/albums")]
     [ApiController]
     [Authorize]
-    public class ArtistController : Controller
+    public class AlbumController : Controller
     {
-        readonly IArtistCollection _artistCollection;
+        readonly IAlbumCollection _albumCollection;
 
-        public ArtistController(IArtistCollection artistCollection)
+        public AlbumController(IAlbumCollection albumCollection)
         {
-            _artistCollection = artistCollection;
+            _albumCollection = albumCollection;
         }
 
         [HttpGet("{id}")]
-        public async Task<ArtistResponse> Get(int id)
+        public async Task<AlbumResponse> Get(int id)
         {
-            var artist = await _artistCollection.GetArtistByIdAsync(id);
-            if (artist == null)
+            var album = await _albumCollection.GetAlbumByIdAsync(id);
+            if (album == null)
             {
                 throw new HttpException(HttpStatusCode.NotFound);
             }
 
-            return await ArtistResponse.CreateFromArtistAsync(artist);
+            return await AlbumResponse.CreateFromAlbumAsync(album);
         }
     }
 }
