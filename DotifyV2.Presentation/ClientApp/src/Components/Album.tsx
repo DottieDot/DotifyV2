@@ -1,7 +1,9 @@
-import { makeStyles, Paper, Typography } from '@material-ui/core'
-import React from 'react'
+import { ButtonBase, makeStyles, Paper, Typography } from '@material-ui/core'
+import React, { useCallback } from 'react'
+import { useHistory } from 'react-router'
 
 interface Props {
+  id: number
   name: string
   coverArt: string | null
 }
@@ -10,9 +12,16 @@ const useStyles = makeStyles({
   root: {
 
   },
+  buttonBase: {
+    width: '100%'
+  },
+  ripple: {
+
+  },
   paper: {
     paddingTop: '100%',
-    position: 'relative'
+    position: 'relative',
+    width: '100%',
   },
   coverArt: {
     position: 'absolute',
@@ -23,6 +32,7 @@ const useStyles = makeStyles({
     textAlign: 'center',
     display: 'flex',
     top: 0,
+    userSelect: 'none',
   }
 })
 
@@ -46,14 +56,21 @@ const AlbumInitials = () => {
   )
 }
 
-export default ({ name, coverArt }: Props) => {
+export default ({ id, name, coverArt }: Props) => {
   const classes = useStyles()
+  const history = useHistory()
+
+  const onClick = useCallback(() => {
+    history.push(`/albums/${id}`)
+  }, [history, id])
 
   return (
     <div>
-      <Paper variant="outlined" className={classes.paper}>
-        { coverArt ? <CoverArt coverArt={coverArt} /> : <AlbumInitials /> }
-      </Paper>
+      <ButtonBase TouchRippleProps={{ className: classes.ripple }} className={classes.buttonBase} onClick={onClick}>
+        <Paper variant="outlined" className={classes.paper}>
+          {coverArt ? <CoverArt coverArt={coverArt} /> : <AlbumInitials />}
+        </Paper>
+      </ButtonBase>
       <Typography variant="h6" component="h3" align="center">
         {name}
       </Typography>

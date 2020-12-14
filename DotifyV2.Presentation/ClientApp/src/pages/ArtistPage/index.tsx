@@ -1,9 +1,10 @@
 import { Container, Divider, Grid, makeStyles, Typography } from '@material-ui/core'
-import React, { Fragment, useEffect, useRef, useState } from 'react'
+import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router'
 import { getArtist } from '../../api/endpoints'
 import { Artist } from '../../api/model'
 import { Album, AppBar, MediaInfoCard } from '../../Components'
+import { useShare } from '../../hooks'
 
 interface Params {
   artist: string
@@ -33,6 +34,7 @@ export default () => {
   const [artist, setArtist] = useState<Artist | null>(null)
   const { artist: artistId } = useParams<Params>()
   const stickyMediaInfoCardContainer = useRef(null)
+  const share = useShare()
 
   useEffect(() => {
     (async () => {
@@ -42,6 +44,12 @@ export default () => {
       setArtist(await getArtist(+artistId))
     })()
   }, [artistId, setArtist])
+
+  const onShare = useCallback(() => {
+    if (artist) {
+      share(artist.name, window.location.href)
+    }
+  }, [artist])
 
   return (
     <Fragment>
@@ -55,8 +63,7 @@ export default () => {
               image={null}
               liked={false}
               onLike={() => { }}
-              onPlay={() => { }}
-              onShare={() => { }}
+              onShare={onShare}
               stickyContainer={stickyMediaInfoCardContainer}
               likeable
               shareable
@@ -66,7 +73,7 @@ export default () => {
             <Typography variant="h5" component="h2" gutterBottom>Albums</Typography>
             <Divider variant="fullWidth" />
             <div className={classes.grid}>
-              {artist?.albums.map(album => <Album key={album.id} name={album.name} coverArt={album.cover_art} />)}
+              {artist?.albums.map(album => <Album key={album.id} id={album.id} name={album.name} coverArt={album.cover_art} />)}
             </div>
           </Grid>
         </Grid>

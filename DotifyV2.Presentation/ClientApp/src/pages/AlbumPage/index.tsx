@@ -7,6 +7,7 @@ import { Link as RouterLink } from 'react-router-dom'
 import { getAlbum } from '../../api/endpoints'
 import { Album } from '../../api/model'
 import { AppBar, MediaInfoCard, SongTableRow } from '../../Components'
+import { useShare } from '../../hooks'
 import { showAlert } from '../../store/actions/Alerts'
 
 const useStyles = makeStyles(theme => ({
@@ -31,6 +32,7 @@ export default () => {
   const { album: albumId } = useParams<Params>()
   const dispatch = useDispatch()
   const stickyMediaInfoCardContainer = useRef(null)
+  const share = useShare()
 
   useEffect(() => {
     (async () => {
@@ -42,17 +44,10 @@ export default () => {
   }, [setAlbum, albumId])
 
   const onShare = useCallback(() => {
-    if (navigator.share) {
-      navigator.share({
-        title: album?.name,
-        url: window.location.href
-      })
+    if (album) {
+      share(album.name, window.location.href)
     }
-    else {
-      copyToClipboard(window.location.href)
-      dispatch(showAlert('Link copied to clipboard', 'success'))
-    }
-  }, [album, dispatch])
+  }, [album])
 
   return (
     <Fragment>
@@ -80,6 +75,7 @@ export default () => {
               stickyContainer={stickyMediaInfoCardContainer}
               likeable
               shareable
+              playable
             />
           </Grid>
           <Grid item xs>

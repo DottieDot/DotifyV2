@@ -34,20 +34,30 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-interface Props {
+
+
+interface CommonProps {
   title: string
   subtitle?: ReactElement
   image: ReactElement|null
-  onLike?: (liked: boolean) => void
-  onPlay?: () => void
-  onShare?: () => void
-  shareable?: boolean
-  likeable?: boolean
-  liked?: boolean
   stickyContainer: MutableRefObject<null>
 }
 
-export default ({ title, subtitle, image, onLike, onPlay, shareable, likeable, liked, onShare, stickyContainer }: Props) => {
+type LikeProps =
+  | { likeable?: false, onLike?: never, liked?: never }
+  | { likeable: true, onLike: (liked: boolean) => void, liked: boolean }
+
+type ShareProps =
+  | { shareable?: false, onShare?: never }
+  | { shareable: true, onShare: () => void }
+
+type PlayProps =
+  | { playable?: false, onPlay?: never }
+  | { playable: true, onPlay: () => void }
+
+type Props = CommonProps & LikeProps & ShareProps & PlayProps
+
+export default ({ title, subtitle, image, onLike, playable, onPlay, shareable, onShare, stickyContainer, liked, likeable }: Props) => {
   const classes = useStyles()
   const theme = useTheme()
   const sticky = useMediaQuery(theme.breakpoints.down('sm'))
@@ -61,31 +71,33 @@ export default ({ title, subtitle, image, onLike, onPlay, shareable, likeable, l
         <Grid container spacing={2}>
           <Grid item md={12} sm={6}>
             <Typography variant="h5" component="h1">
-              {title} {likeable && <LikeButton liked={liked ?? false} onClick={onLike ?? (() => {})} />}
+              {title} {(likeable) && <LikeButton liked={liked!} onClick={onLike!} />}
             </Typography>
             <Typography variant="subtitle1" color="textSecondary" gutterBottom>
               {subtitle}
             </Typography>
           </Grid>
           <Grid item xs>
-            <Button
-              className={classes.playButton}
-              variant="contained"
-              color="primary"
-              onClick={onPlay}
-              fullWidth
-            >
-              Play
-           </Button>
-           {shareable && (
-            <Button
-              variant="outlined"
-              onClick={onShare}
-              fullWidth
-            >
-              Share
-            </Button>
-           )}
+            {playable && (
+              <Button
+                className={classes.playButton}
+                variant="contained"
+                color="primary"
+                onClick={onPlay}
+                fullWidth
+              >
+                Play
+              </Button>
+            )}
+            {shareable && (
+              <Button
+                variant="outlined"
+                onClick={onShare}
+                fullWidth
+              >
+                Share
+              </Button>
+            )}
           </Grid>
         </Grid>
       </CardContent>

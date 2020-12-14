@@ -5,16 +5,61 @@ import { useIsAuthenticated } from './hooks'
 import { useDispatch } from 'react-redux'
 import { logout as logoutAction } from './store/actions/Auth'
 import AlbumPage from './pages/AlbumPage'
+import { AnimatedSwitch, spring } from 'react-router-transition'
+import { makeStyles } from '@material-ui/core'
+
+const mapStyles = (styles: any) => {
+  return {
+    opacity: styles.opacity,
+    transform: `scale(${styles.scale})`,
+  }
+}
+
+const bounce = (val: any) => {
+  return spring(val, {
+    stiffness: 800,
+    damping: 60,
+  })
+}
+
+const bounceTransition = {
+  atEnter: {
+    opacity: 0,
+    scale: 1.2,
+  },
+  atLeave: {
+    opacity: bounce(0),
+    scale: bounce(0.8),
+  },
+  atActive: {
+    opacity: bounce(1),
+    scale: bounce(1),
+  },
+}
+
+
+const useStyles = makeStyles({
+  switchWrapper: {
+    position: 'relative',
+    '& > div': {
+      position: 'absolute',
+      width: '100%',
+    }
+  }
+})
 
 const UnAuthenticatedRoutes = () => {
   return (
-    <Route path="*">
-      <LoginSignupPage />
-    </Route>
+    <Switch>
+      <Route path="*">
+        <LoginSignupPage />
+      </Route>
+    </Switch>
   )
 }
 
 const AuthenticatedRoutes = () => {
+  const classes = useStyles()
   const dispatch = useDispatch()
   const shouldLogout = useRouteMatch('/logout')
   const history = useHistory()
@@ -25,14 +70,20 @@ const AuthenticatedRoutes = () => {
   }
 
   return (
-    <Fragment>
+    <AnimatedSwitch
+      atEnter={bounceTransition.atEnter}
+      atLeave={bounceTransition.atLeave}
+      atActive={bounceTransition.atActive}
+      className={classes.switchWrapper}
+      mapStyles={mapStyles}
+    >
       <Route path="/artists/:artist">
         <ArtistPage />
       </Route>
       <Route path="/albums/:album">
         <AlbumPage />
       </Route>
-    </Fragment>
+    </AnimatedSwitch>
   )
 }
 
@@ -41,11 +92,9 @@ export default () => {
 
   return (
     <BrowserRouter>
-      <Switch>
-        {isAuthenticated 
-          ? <AuthenticatedRoutes /> 
-          : <UnAuthenticatedRoutes />}
-      </Switch>
+      {isAuthenticated
+        ? <AuthenticatedRoutes />
+        : <UnAuthenticatedRoutes />}
     </BrowserRouter>
   )
 }
