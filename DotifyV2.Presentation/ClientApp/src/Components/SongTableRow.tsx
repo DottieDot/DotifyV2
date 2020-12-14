@@ -10,6 +10,8 @@ interface Props {
 }
 
 export default ({ songNr, name, duration, artist }: Props) => {
+  const seconds = duration % 60
+
   return (
     <TableRow>
       <TableCell width="4ch">
@@ -24,7 +26,7 @@ export default ({ songNr, name, duration, artist }: Props) => {
         </TableCell>
       )}
       <TableCell align="right">
-        {Math.floor(duration / 60)}:{duration % 60}
+        {Math.floor(duration / 60)}:{seconds < 10 ? `0${seconds}` : seconds}
       </TableCell>
     </TableRow>
   )

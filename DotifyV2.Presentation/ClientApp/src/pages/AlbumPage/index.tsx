@@ -1,18 +1,23 @@
-import { Container, Table, TableHead, TableRow, TableCell, TableBody, TableContainer, Paper, Grid, Card, CardContent, Typography, CardMedia, makeStyles, Link, Button } from '@material-ui/core'
-import React, { Fragment, useCallback, useEffect, useState } from 'react'
+import { Container, Grid, Link, makeStyles, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core'
+import copyToClipboard from 'copy-to-clipboard'
+import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router'
 import { Link as RouterLink } from 'react-router-dom'
 import { getAlbum } from '../../api/endpoints'
 import { Album } from '../../api/model'
-import { MediaAvatar, MediaPageAppBar, SongTableRow } from '../../Components'
-import copyToClipboard from 'copy-to-clipboard'
-import { useDispatch } from 'react-redux'
+import { AppBar, MediaInfoCard, SongTableRow } from '../../Components'
 import { showAlert } from '../../store/actions/Alerts'
 
 const useStyles = makeStyles(theme => ({
-  cover: {
-    background: theme.palette.primary.main,
-    paddingTop: '100%'
+  stickyMediaInfroCardContainer: {
+    position: 'sticky',
+    top: 75
+  },
+  cardGridItem: {
+    [theme.breakpoints.up('md')]: {
+      maxWidth: 220
+    }
   }
 }))
 
@@ -25,6 +30,7 @@ export default () => {
   const [album, setAlbum] = useState<Album | null>(null)
   const { album: albumId } = useParams<Params>()
   const dispatch = useDispatch()
+  const stickyMediaInfoCardContainer = useRef(null)
 
   useEffect(() => {
     (async () => {
@@ -37,7 +43,7 @@ export default () => {
 
   const onShare = useCallback(() => {
     if (navigator.share) {
-        navigator.share({
+      navigator.share({
         title: album?.name,
         url: window.location.href
       })
@@ -50,39 +56,31 @@ export default () => {
 
   return (
     <Fragment>
-      <MediaPageAppBar
-        avatar={<MediaAvatar type="album" name={null} picture={null} />}
-        title={null}
-      />
-      <Container fixed>
+      <AppBar />
+      <Container maxWidth="lg">
+        <div className={classes.stickyMediaInfroCardContainer} ref={stickyMediaInfoCardContainer} />
         <Grid container spacing={2}>
-          <Grid item lg={2} md={3} xs={12}>
-            <Card>
-              <CardMedia className={classes.cover}>
-                
-              </CardMedia>
-              <CardContent>
-                <Typography variant="h5" component="h1">
-                  {album?.name}
-                </Typography>
-                <Typography variant="subtitle1" color="textSecondary" gutterBottom>
-                  <Link 
-                    to={`/artists/${album?.artist.id}`}
-                    color="inherit"
-                    component={RouterLink}
-                  >
-                    {album?.artist.name}
-                  </Link>
-                </Typography>
-                <Button 
-                  variant="outlined"
-                  onClick={onShare}
-                  fullWidth
+          <Grid item className={classes.cardGridItem} md xs={12}>
+            <MediaInfoCard
+              title={album?.name ?? ''}
+              subtitle={(
+                <Link
+                  to={`/artists/${album?.artist.id}`}
+                  color="inherit"
+                  component={RouterLink}
                 >
-                  Share
-                </Button>
-              </CardContent>
-            </Card>
+                  {album?.artist.name}
+                </Link>
+              )}
+              image={null}
+              liked={false}
+              onLike={() => { }}
+              onPlay={() => { }}
+              onShare={onShare}
+              stickyContainer={stickyMediaInfoCardContainer}
+              likeable
+              shareable
+            />
           </Grid>
           <Grid item xs>
             <TableContainer component={Paper}>
