@@ -11,15 +11,12 @@ namespace DotifyV2.Common
         {
             const string charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 
-            using (var rng = new RNGCryptoServiceProvider())
-            {
-                byte[] buffer = new byte[length];
-                rng.GetBytes(buffer);
+			using var rng = new RNGCryptoServiceProvider();
+			byte[] buffer = new byte[length];
+			rng.GetBytes(buffer);
 
-
-                var charArray = buffer.Select(val => charset[val % charset.Length]).ToArray();
-                return new string(charArray);
-            }
-        }
+			var charArray = buffer.Select(val => charset[val % charset.Length]).ToArray();
+			return new string(charArray);
+		}
     }
 }

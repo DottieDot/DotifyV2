@@ -64,11 +64,6 @@ namespace DotifyV2.Persistence.Repositories
 			return row?.ToUserDataDto();
 		}
 
-		public Task<UserDataDto> GetUserByPlaylistIdAsync(int playlistId)
-		{
-			throw new System.NotImplementedException();
-		}
-
 		public async Task<UserDataDto> GetUserByUsernameAsync(string username)
 		{
 			var row = await _db.Query("users")

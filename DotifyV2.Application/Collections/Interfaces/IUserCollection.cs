@@ -12,7 +12,5 @@ namespace DotifyV2.Application.Collections.Interfaces
 		public Task<IUser> GetUserByUsernameAsync(string username);
 
 		public Task<IUser> GetUserByApiTokenAsync(string apiToken);
-
-		public Task<IUser> GetUserByPlaylistIdAsync(int playlistId);
 	}
 }

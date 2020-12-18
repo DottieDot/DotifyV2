@@ -11,8 +11,8 @@ namespace DotifyV2.Application.Collections
 {
     public class SongCollection : ISongCollection
     {
-        ISongRepository _songRepository;
-        DependencyMapper _dependencyMapper;
+        readonly ISongRepository _songRepository;
+        readonly DependencyMapper _dependencyMapper;
 
         public SongCollection(ISongRepository songRepository, DependencyMapper dependencyMapper)
         {

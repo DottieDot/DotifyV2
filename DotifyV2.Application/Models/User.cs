@@ -1,4 +1,5 @@
-﻿using DotifyV2.Application.DTOs;
+﻿using System.Threading.Tasks;
+using DotifyV2.Application.DTOs;
 using DotifyV2.Application.Models.Interfaces;
 
 namespace DotifyV2.Application.Models
@@ -6,7 +7,7 @@ namespace DotifyV2.Application.Models
     public class User : IUser
 	{
 		string _password;
-		string _apiToken;
+		readonly string _apiToken;
 
 		public int Id { get; private set; }
 		public string Username { get; private set; }
@@ -45,7 +46,7 @@ namespace DotifyV2.Application.Models
 			return null;
 		}
 
-		public void Save()
+		public Task SaveAsync()
 		{
 			throw new System.NotImplementedException();
 		}

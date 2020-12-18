@@ -5,7 +5,7 @@ namespace DotifyV2.Common
 {
     public class DependencyMapper
     {
-        IServiceProvider _serviceProvider;
+        readonly IServiceProvider _serviceProvider;
 
         public DependencyMapper(IServiceProvider serviceProvider)
         {

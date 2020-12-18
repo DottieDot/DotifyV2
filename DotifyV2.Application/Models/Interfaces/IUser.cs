@@ -1,4 +1,5 @@
-﻿
+﻿using System.Threading.Tasks;
+
 namespace DotifyV2.Application.Models.Interfaces
 {
 	public interface IUser
@@ -15,6 +16,6 @@ namespace DotifyV2.Application.Models.Interfaces
 		/// <returns>The API token for the user or null if the password is incorrect.</returns>
 		string VerifyPassword(string password);
 
-		void Save();
+		Task SaveAsync();
 	}
 }

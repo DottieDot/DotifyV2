@@ -38,12 +38,6 @@ namespace DotifyV2.Application.Collections
 			return data != null ? _dependencyMapper.Construct<User>(data) : null;
 		}
 
-		public async Task<IUser> GetUserByPlaylistIdAsync(int playlistId)
-		{
-			var data = await _userRepository.GetUserByPlaylistIdAsync(playlistId);
-			return data != null ? _dependencyMapper.Construct<User>(data) : null;
-		}
-
         public async Task<IUser> CreateUserAsync(string username, string password)
         {
 			var newUserData = new NewUserDataDto
