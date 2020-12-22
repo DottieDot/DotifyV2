@@ -9,5 +9,9 @@ namespace DotifyV2.Application.Repositories
         Task<IEnumerable<AlbumDataDto>> GetAlbumsByArtistIdAsync(int artistId);
 
         Task<AlbumDataDto> GetAlbumByIdAsync(int albumId);
+
+        Task<bool> AddUserLikeAsync(int albumId, int userId);
+
+        Task<bool> RemoveUserLikeAsync(int albumId, int userId);
     }
 }

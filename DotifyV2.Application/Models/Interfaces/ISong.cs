@@ -2,7 +2,7 @@
 
 namespace DotifyV2.Application.Models.Interfaces
 {
-    public interface ISong
+    public interface ISong : ILikeable
     {
         int Id { get; }
         string Name { get; }

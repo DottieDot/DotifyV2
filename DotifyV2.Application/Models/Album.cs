@@ -1,5 +1,6 @@
 ﻿using DotifyV2.Application.Collections.Interfaces;
 using DotifyV2.Application.Models.Interfaces;
+using DotifyV2.Application.Repositories;
 using DotifyV2.Application.DTOs;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -8,11 +9,12 @@ namespace DotifyV2.Application.Models
 {
     public class Album : IAlbum
     {
+        readonly IAlbumRepository _albumRepository;
         readonly IArtistCollection _artistCollection;
         readonly ISongCollection _songCollection;
         readonly int _artistId;
 
-        public Album(AlbumDataDto dto, IArtistCollection artistCollection, ISongCollection songCollection)
+        public Album(AlbumDataDto dto, IAlbumRepository albumRepository, IArtistCollection artistCollection, ISongCollection songCollection)
         {
             Id = dto.ArtistId;
             Name = dto.Name;
@@ -20,6 +22,7 @@ namespace DotifyV2.Application.Models
 
             _artistId = dto.ArtistId;
 
+            _albumRepository = albumRepository;
             _artistCollection = artistCollection;
             _songCollection = songCollection;
         }
@@ -33,5 +36,11 @@ namespace DotifyV2.Application.Models
 
         public Task<IEnumerable<ISong>> GetSongsAsync()
             => _songCollection.GetSongsByAlbumIdAsync(Id);
+
+        public Task<bool> LikeAsync(int userId)
+            => _albumRepository.AddUserLikeAsync(Id, userId);
+
+        public Task<bool> RemoveLikeAsync(int userId)
+            => _albumRepository.RemoveUserLikeAsync(Id, userId);
     }
 }

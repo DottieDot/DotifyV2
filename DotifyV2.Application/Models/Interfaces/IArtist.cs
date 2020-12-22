@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace DotifyV2.Application.Models.Interfaces
 {
-    public interface IArtist
+    public interface IArtist : ILikeable
     {
         int Id { get; }
         string Name { get; }

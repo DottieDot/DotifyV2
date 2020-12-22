@@ -11,11 +11,14 @@ namespace DotifyV2.Persistence.Repositories
 {
     public class SongRepository : ISongRepository
     {
-        QueryFactory _db;
+        readonly QueryFactory _db;
+        readonly PivotTable _likesTable;
 
         public SongRepository(QueryFactory db)
         {
             _db = db;
+
+            _likesTable = new PivotTable(db, "song_likes", "song_id", "user_id");
         }
 
         public async Task<IEnumerable<SongDataDto>> GetSongsFromAlbumIdAsync(int albumId)
@@ -26,6 +29,22 @@ namespace DotifyV2.Persistence.Repositories
                 .GetAsync<SongTableRow>();
 
             return rows.Select(row => row.ToSongDataDto());
+        }
+
+        public Task<bool> AddUserLikeAsync(int songId, int userId)
+            => _likesTable.InsertAsync(songId, userId);
+
+        public Task<bool> RemoveUserLikeAsync(int songId, int userId)
+            => _likesTable.DeleteAsync(songId, userId);
+
+        public async Task<SongDataDto> GetSongByIdAsync(int songId)
+        {
+            var row = await _db.Query("songs")
+                .Select(typeof(SongTableRow).GetFieldNames().ToArray())
+                .Where("id", songId)
+                .FirstAsync<SongTableRow>();
+
+            return row?.ToSongDataDto();
         }
     }
 }

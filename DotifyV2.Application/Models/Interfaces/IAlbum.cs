@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DotifyV2.Application.Models.Interfaces
 {
-    public interface IAlbum
+    public interface IAlbum : ILikeable
     {
         int Id { get; }
         string Name { get; }

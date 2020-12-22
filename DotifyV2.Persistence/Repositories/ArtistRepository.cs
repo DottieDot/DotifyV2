@@ -11,10 +11,13 @@ namespace DotifyV2.Persistence.Repositories
     public class ArtistRepository : IArtistRepository
     {
         readonly QueryFactory _db;
+        readonly PivotTable _likesTable;
 
         public ArtistRepository(QueryFactory db)
         {
             _db = db;
+
+            _likesTable = new PivotTable(db, "artist_likes", "artist_id", "user_id");
         }
 
         public async Task<ArtistDataDto> GetArtistByIdAsync(int id)
@@ -26,5 +29,11 @@ namespace DotifyV2.Persistence.Repositories
 
             return row?.ToArtistDataDto();
         }
+
+        public Task<bool> AddUserLikeAsync(int artistId, int userId)
+            => _likesTable.InsertAsync(artistId, userId);
+
+        public Task<bool> RemoveUserLikeAsync(int artistId, int userId)
+            => _likesTable.DeleteAsync(artistId, userId);
     }
 }
