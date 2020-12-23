@@ -31,5 +31,8 @@ namespace DotifyV2.Application.Collections
            var albums = await _albumRepository.GetAlbumsByArtistIdAsync(artistId);
            return albums.Select(data => _dependencyMapper.Construct<Album>(data));
         }
+
+        public Task<IEnumerable<int>> GetLikedAlbumIdsByUserIdAsync(int userId)
+            => _albumRepository.GetLikedAlbumIdsByUserIdAsync(userId);
     }
 }

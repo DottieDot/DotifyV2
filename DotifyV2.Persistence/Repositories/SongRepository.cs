@@ -46,5 +46,8 @@ namespace DotifyV2.Persistence.Repositories
 
             return row?.ToSongDataDto();
         }
+
+        public Task<IEnumerable<int>> GetLikedSongIdsByUserIdAsync(int userId)
+            => _likesTable.GetAllByBColumn(userId);
     }
 }

@@ -48,5 +48,21 @@ namespace DotifyV2.Persistence.Tables
 
             return result != 0;
         }
+
+        public Task<IEnumerable<int>> GetAllByAColumn(int columnA)
+        {
+            return _db.Query(_table)
+                .Select(_keyColumnA)
+                .Where(_keyColumnA, columnA)
+                .GetAsync<int>();
+        }
+
+        public Task<IEnumerable<int>> GetAllByBColumn(int columnB)
+        {
+            return _db.Query(_table)
+                .Select(_keyColumnA)
+                .Where(_keyColumnB, columnB)
+                .GetAsync<int>();
+        }
     }
 }

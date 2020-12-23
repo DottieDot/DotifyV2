@@ -46,5 +46,8 @@ namespace DotifyV2.Persistence.Repositories
 
         public Task<bool> RemoveUserLikeAsync(int albumId, int userId)
             => _likesTable.DeleteAsync(albumId, userId);
+
+        public Task<IEnumerable<int>> GetLikedAlbumIdsByUserIdAsync(int userId)
+            => _likesTable.GetAllByBColumn(userId);
     }
 }

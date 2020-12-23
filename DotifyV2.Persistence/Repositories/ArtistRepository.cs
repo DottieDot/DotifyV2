@@ -5,6 +5,7 @@ using SqlKata.Execution;
 using DotifyV2.Common;
 using DotifyV2.Persistence.Tables;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace DotifyV2.Persistence.Repositories
 {
@@ -35,5 +36,8 @@ namespace DotifyV2.Persistence.Repositories
 
         public Task<bool> RemoveUserLikeAsync(int artistId, int userId)
             => _likesTable.DeleteAsync(artistId, userId);
+
+        public Task<IEnumerable<int>> GetLikedArtistIdsByUserIdAsync(int userId)
+            => _likesTable.GetAllByBColumn(userId);
     }
 }

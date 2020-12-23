@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using DotifyV2.Application.Collections.Interfaces;
 using DotifyV2.Application.Models;
 using DotifyV2.Application.Models.Interfaces;
@@ -23,5 +24,8 @@ namespace DotifyV2.Application.Collections
             var data = await _artistRepository.GetArtistByIdAsync(artistId);
             return data != null ? _dependencyMapper.Construct<Artist>(data) : null;
         }
+
+        public Task<IEnumerable<int>> GetLikedArtistIdsByUserIdAsync(int userId)
+            => _artistRepository.GetLikedArtistIdsByUserIdAsync(userId);
     }
 }

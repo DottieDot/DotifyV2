@@ -9,5 +9,7 @@ namespace DotifyV2.Application.Collections.Interfaces
         Task<IEnumerable<ISong>> GetSongsByAlbumIdAsync(int albumId);
 
         Task<ISong> GetSongByIdAsync(int songId);
+
+        Task<IEnumerable<int>> GetLikedSongIdsByUserIdAsync(int userId);
     }
 }

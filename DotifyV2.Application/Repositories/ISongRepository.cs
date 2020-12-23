@@ -13,5 +13,7 @@ namespace DotifyV2.Application.Repositories
         Task<bool> AddUserLikeAsync(int songId, int userId);
 
         Task<bool> RemoveUserLikeAsync(int songId, int userId);
+
+        Task<IEnumerable<int>> GetLikedSongIdsByUserIdAsync(int userId);
     }
 }

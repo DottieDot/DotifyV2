@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using DotifyV2.Application.DTOs;
 
 namespace DotifyV2.Application.Repositories
@@ -10,5 +11,7 @@ namespace DotifyV2.Application.Repositories
         Task<bool> AddUserLikeAsync(int artistId, int userId);
 
         Task<bool> RemoveUserLikeAsync(int artistId, int userId);
+
+        Task<IEnumerable<int>> GetLikedArtistIdsByUserIdAsync(int userId);
     }
 }
