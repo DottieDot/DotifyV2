@@ -25,5 +25,11 @@ namespace DotifyV2.Application.Collections
             var songs = await _songRepository.GetSongsFromAlbumIdAsync(albumId);
             return songs.Select(song => _dependencyMapper.Construct<Song>(song));
         }
+
+        public async Task<ISong> GetSongByIdAsync(int songId)
+        {
+            var data = await _songRepository.GetSongByIdAsync(songId);
+            return data != null ? _dependencyMapper.Construct<Song>(data) : null;
+        }
     }
 }

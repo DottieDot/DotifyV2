@@ -22,6 +22,8 @@ namespace DotifyV2.Presentation
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddHttpContextAccessor();
+
 			services.AddApplicationServices();
 			services.AddScoped<AuthenticatedUser>();
 			services.AddControllers();

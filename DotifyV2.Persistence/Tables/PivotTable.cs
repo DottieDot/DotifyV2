@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Data.Common;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using SqlKata.Execution;
 
@@ -21,14 +22,21 @@ namespace DotifyV2.Persistence.Tables
 
         public async Task<bool> InsertAsync(int columnA, int columnB)
         {
-            int result = await _db.Query(_table)
-                .InsertAsync(new Dictionary<string, int>
-                {
+            try
+            {
+                int result = await _db.Query(_table)
+                    .InsertAsync(new Dictionary<string, object>
+                    {
                     { _keyColumnA, columnA },
                     { _keyColumnB, columnB },
-                });
+                    });
 
-            return result != 0;
+                return result != 0;
+            }
+            catch (DbException)
+            {
+                return false;
+            }
         }
 
         public async Task<bool> DeleteAsync(int columnA, int columnB)
