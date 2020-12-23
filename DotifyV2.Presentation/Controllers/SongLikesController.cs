@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using DotifyV2.Application.Collections.Interfaces;
 using DotifyV2.Presentation.Exceptions;
 using DotifyV2.Presentation.Filters;
-using DotifyV2.Presentation.Identities;
+using DotifyV2.Presentation.Authentication;
 
 namespace DotifyV2.Presentation.Controllers
 {
@@ -14,17 +14,18 @@ namespace DotifyV2.Presentation.Controllers
     public class SongLikesController : Controller
     {
         readonly ISongCollection _songCollection;
+        readonly AuthenticatedUser _authenticatedUser;
 
-        public SongLikesController(ISongCollection songCollection)
+        public SongLikesController(ISongCollection songCollection, AuthenticatedUser authenticatedUser)
         {
             _songCollection = songCollection;
+            _authenticatedUser = authenticatedUser;
         }
 
         [HttpPost]
         public async Task<bool> Post(int id)
         {
-            var identity = HttpContext.User.Identity as BearerTokenUserIdentity;
-            var user = identity.User;
+            var user = await _authenticatedUser.GetUserAsync();
 
             var song = await _songCollection.GetSongByIdAsync(id);
             if (song == null)
@@ -38,8 +39,7 @@ namespace DotifyV2.Presentation.Controllers
         [HttpDelete]
         public async Task<bool> Delete(int id)
         {
-            var identity = HttpContext.User.Identity as BearerTokenUserIdentity;
-            var user = identity.User;
+            var user = await _authenticatedUser.GetUserAsync();
 
             var song = await _songCollection.GetSongByIdAsync(id);
             if (song == null)

@@ -2,12 +2,11 @@
 using System.Threading.Tasks;
 using System.Net.Http.Headers;
 using DotifyV2.Application.Collections.Interfaces;
-using DotifyV2.Presentation.Identities;
+using DotifyV2.Presentation.Authentication;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using DotifyV2.Presentation.Exceptions;
 using System.Net;
-
 
 namespace DotifyV2.Presentation.Middleware
 {
@@ -49,7 +48,8 @@ namespace DotifyV2.Presentation.Middleware
 				throw new HttpException(HttpStatusCode.Unauthorized, "Invalid authorization token");
 			}
 
-			var identity = new BearerTokenUserIdentity(user);
+			var identity = new ClaimsIdentity(new BearerTokenUserIdentity(user));
+			identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
 			context.User = new ClaimsPrincipal(identity);
 
 			await _next(context);

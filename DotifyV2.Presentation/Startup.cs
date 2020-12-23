@@ -6,7 +6,7 @@ using Microsoft.Extensions.Hosting;
 using DotifyV2.Mapping;
 using DotifyV2.Presentation.Middleware.Extensions;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
-using DotifyV2.Presentation.Filters;
+using DotifyV2.Presentation.Authentication;
 
 namespace DotifyV2.Presentation
 {
@@ -23,6 +23,7 @@ namespace DotifyV2.Presentation
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddApplicationServices();
+			services.AddScoped<AuthenticatedUser>();
 			services.AddControllers();
 
 			services.AddSpaStaticFiles(configuration =>

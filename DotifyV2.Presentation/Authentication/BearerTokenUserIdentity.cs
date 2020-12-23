@@ -1,7 +1,7 @@
 ﻿using System.Security.Principal;
 using DotifyV2.Application.Models.Interfaces;
 
-namespace DotifyV2.Presentation.Identities
+namespace DotifyV2.Presentation.Authentication
 {
 	public class BearerTokenUserIdentity : IIdentity
 	{
