@@ -1,8 +1,7 @@
-import { Card, CardContent, CardMedia, Grid, makeStyles, Typography, Link, Button, useTheme, useMediaQuery, Portal } from '@material-ui/core'
+import { Card, CardContent, CardMedia, Grid, makeStyles, Typography, Button, useTheme, useMediaQuery, Portal } from '@material-ui/core'
 import React, { MutableRefObject, ReactElement } from 'react'
-import { Link as RouterLink } from 'react-router-dom'
-import { AddPropsWhenScrolled } from '.'
-import LikeButton from './LikeButton'
+import { AddPropsWhenScrolled, LikeButton } from '.'
+import { MediaTypes } from '../common'
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -41,6 +40,8 @@ interface CommonProps {
   subtitle?: ReactElement
   image: ReactElement|null
   stickyContainer: MutableRefObject<null>
+  type: MediaTypes,
+  id: number
 }
 
 type LikeProps =
@@ -57,7 +58,7 @@ type PlayProps =
 
 type Props = CommonProps & LikeProps & ShareProps & PlayProps
 
-export default ({ title, subtitle, image, onLike, playable, onPlay, shareable, onShare, stickyContainer, liked, likeable }: Props) => {
+export default ({ title, subtitle, image, playable, onPlay, shareable, onShare, stickyContainer, type, id }: Props) => {
   const classes = useStyles()
   const theme = useTheme()
   const sticky = useMediaQuery(theme.breakpoints.down('sm'))
@@ -71,7 +72,7 @@ export default ({ title, subtitle, image, onLike, playable, onPlay, shareable, o
         <Grid container spacing={2}>
           <Grid item md={12} sm={6}>
             <Typography variant="h5" component="h1">
-              {title} {(likeable) && <LikeButton liked={liked!} onClick={onLike!} />}
+              {title} <LikeButton type={type} id={id} />
             </Typography>
             <Typography variant="subtitle1" color="textSecondary" gutterBottom>
               {subtitle}

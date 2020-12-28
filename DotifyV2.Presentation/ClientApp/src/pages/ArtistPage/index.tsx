@@ -49,7 +49,7 @@ export default () => {
     if (artist) {
       share(artist.name, window.location.href)
     }
-  }, [artist])
+  }, [artist, share])
 
   return (
     <Fragment>
@@ -60,12 +60,11 @@ export default () => {
           <Grid item md xs={12} className={classes.cardGridItem}>
             <MediaInfoCard
               title={artist?.name ?? ''}
+              type="artist"
+              id={artist?.id ?? 0}
               image={null}
-              liked={false}
-              onLike={() => { }}
               onShare={onShare}
               stickyContainer={stickyMediaInfoCardContainer}
-              likeable
               shareable
             />
           </Grid>

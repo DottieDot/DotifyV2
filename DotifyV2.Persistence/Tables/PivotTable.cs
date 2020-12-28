@@ -12,6 +12,17 @@ namespace DotifyV2.Persistence.Tables
         readonly string _keyColumnA;
         readonly string _keyColumnB;
 
+        private async Task<bool> DoesRelationExist(int columnA, int columnB)
+        {
+            var result = await _db.Query(_table)
+                .SelectRaw("TRUE")
+                .Where(_keyColumnA, columnA)
+                .Where(_keyColumnB, columnB)
+                .FirstOrDefaultAsync<bool?>();
+
+            return result != null;
+        }
+
         public PivotTable(QueryFactory db, string table, string keyColumnA, string keyColumnB)
         {
             _db = db;
@@ -35,12 +46,17 @@ namespace DotifyV2.Persistence.Tables
             }
             catch (DbException)
             {
-                return false;
+                return await DoesRelationExist(columnA, columnB);
             }
         }
 
         public async Task<bool> DeleteAsync(int columnA, int columnB)
         {
+            if (!await DoesRelationExist(columnA, columnB))
+            {
+                return true;
+            }
+
             int result = await _db.Query(_table)
                    .Where(_keyColumnA, columnA)
                    .Where(_keyColumnB, columnB)

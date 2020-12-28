@@ -1,20 +1,31 @@
 import React, { useCallback } from 'react'
-import { Favorite as HeartIcon, FavoriteBorder as HeartBorderIcon } from '@material-ui/icons'
-import { IconButton } from '@material-ui/core'
+import { useDispatch } from 'react-redux'
+import { useLiked } from '../hooks'
+import LikeButtonBase from './LikeButtonBase'
+import { MediaTypes } from '../common'
+import { addLike, removeLike } from '../store/actions/Likes'
 
 interface Props {
-  liked: boolean
-  onClick: (liked: boolean) => void
+  type: MediaTypes
+  id: number
 }
 
-export default ({ liked, onClick }: Props) => {
-  const handleClick = useCallback(() => {
-    onClick(!liked)
-  }, [onClick, liked])
+export default ({ type, id }: Props) => {
+  const dispatch = useDispatch()
+  const liked = useLiked(type, id)
+  const onLike = useCallback(() => {
+    if (liked) {
+      dispatch(removeLike(type, id))
+    }
+    else {
+      dispatch(addLike(type, id))
+    }
+  }, [dispatch, type, id, liked])
 
   return (
-    <IconButton size="small" onClick={handleClick}>
-      {liked ? <HeartIcon /> : <HeartBorderIcon />}
-    </IconButton>
+    <LikeButtonBase
+      onClick={onLike}
+      liked={liked}
+    />
   )
-}
+} 

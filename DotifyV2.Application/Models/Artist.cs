@@ -33,6 +33,6 @@ namespace DotifyV2.Application.Models
             => _artistRepository.AddUserLikeAsync(Id, userId);
 
         public Task<bool> RemoveLikeAsync(int userId)
-            => _artistRepository.AddUserLikeAsync(Id, userId);
+            => _artistRepository.RemoveUserLikeAsync(Id, userId);
     }
 }

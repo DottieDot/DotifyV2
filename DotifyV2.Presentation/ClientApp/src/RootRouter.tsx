@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { BrowserRouter, Route, Switch, useHistory, useRouteMatch } from 'react-router-dom'
 import { ArtistPage, LoginSignupPage } from './pages'
 import { useIsAuthenticated } from './hooks'

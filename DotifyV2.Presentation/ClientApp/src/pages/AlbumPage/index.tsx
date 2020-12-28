@@ -1,14 +1,11 @@
 import { Container, Grid, Link, makeStyles, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core'
-import copyToClipboard from 'copy-to-clipboard'
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router'
 import { Link as RouterLink } from 'react-router-dom'
 import { getAlbum } from '../../api/endpoints'
 import { Album } from '../../api/model'
 import { AppBar, MediaInfoCard, SongTableRow } from '../../Components'
 import { useShare } from '../../hooks'
-import { showAlert } from '../../store/actions/Alerts'
 
 const useStyles = makeStyles(theme => ({
   stickyMediaInfroCardContainer: {
@@ -30,7 +27,6 @@ export default () => {
   const classes = useStyles()
   const [album, setAlbum] = useState<Album | null>(null)
   const { album: albumId } = useParams<Params>()
-  const dispatch = useDispatch()
   const stickyMediaInfoCardContainer = useRef(null)
   const share = useShare()
 
@@ -47,7 +43,7 @@ export default () => {
     if (album) {
       share(album.name, window.location.href)
     }
-  }, [album])
+  }, [album, share])
 
   return (
     <Fragment>
@@ -67,13 +63,12 @@ export default () => {
                   {album?.artist.name}
                 </Link>
               )}
+              type="album"
+              id={album?.id ?? 0}
               image={null}
-              liked={false}
-              onLike={() => { }}
               onPlay={() => { }}
               onShare={onShare}
               stickyContainer={stickyMediaInfoCardContainer}
-              likeable
               shareable
               playable
             />

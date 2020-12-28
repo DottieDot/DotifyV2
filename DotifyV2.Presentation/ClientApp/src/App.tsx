@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
-import { Provider as StateProvider } from 'react-redux'
+import { Provider as StateProvider, useDispatch } from 'react-redux'
 import { store, persistor } from './store'
 import RootRouter from './RootRouter'
 import { PersistGate } from 'redux-persist/integration/react'
@@ -9,6 +9,7 @@ import { useApiToken } from './hooks'
 import { setApiToken } from './api/apiRequest'
 import Notifier from './Notifier'
 import { SnackbarProvider } from 'notistack'
+import { loadUserInfo } from './store/actions/User'
 
 const theme = createMuiTheme({
   palette: {
@@ -17,11 +18,13 @@ const theme = createMuiTheme({
 })
 
 const RegisterApiToken = () => {
+  const dispatch = useDispatch()
   const apiToken = useApiToken()
 
   useEffect(() => {
     setApiToken(apiToken)
-  }, [apiToken])
+    dispatch(loadUserInfo())
+  }, [apiToken, dispatch])
 
   return null
 }
