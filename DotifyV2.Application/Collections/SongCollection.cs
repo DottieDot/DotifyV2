@@ -22,7 +22,7 @@ namespace DotifyV2.Application.Collections
 
         public async Task<IEnumerable<ISong>> GetSongsByAlbumIdAsync(int albumId)
         {
-            var songs = await _songRepository.GetSongsFromAlbumIdAsync(albumId);
+            var songs = await _songRepository.GetSongsByAlbumId(albumId);
             return songs.Select(song => _dependencyMapper.Construct<Song>(song));
         }
 

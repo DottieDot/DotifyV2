@@ -1,15 +1,14 @@
-﻿using DotifyV2.Application.DTOs;
+﻿using System;
+using System.Threading.Tasks;
+using DotifyV2.Application.DTOs;
 using DotifyV2.Application.Repositories;
 using DotifyV2.Common;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System;
-using System.Threading.Tasks;
 
 namespace DotifyV2.Application.Collections.Tests
 {
-	[TestClass()]
+    [TestClass()]
 	public class UserCollectionTests
 	{
 		DependencyMapper _dependencyMapper;
@@ -18,18 +17,10 @@ namespace DotifyV2.Application.Collections.Tests
 		[TestInitialize()]
 		public void Initialize()
 		{
-			var serviceProviderFactory = new DefaultServiceProviderFactory();
-			var serviceCollection = new ServiceCollection();
-			serviceCollection.AddScoped<DependencyMapper>();
-			_serviceProvider = serviceProviderFactory.CreateServiceProvider(serviceCollection);
+			var serviceProviderMock = new Mock<IServiceProvider>();
+			_serviceProvider = serviceProviderMock.Object;
 
-			_dependencyMapper = _serviceProvider.GetService<DependencyMapper>();
-		}
-
-		[TestCleanup()]
-		public void Cleanup()
-		{
-			
+			_dependencyMapper = new DependencyMapper(_serviceProvider);
 		}
 
 		[TestMethod()]

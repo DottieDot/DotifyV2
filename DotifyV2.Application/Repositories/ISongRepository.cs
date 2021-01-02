@@ -6,7 +6,7 @@ namespace DotifyV2.Application.Repositories
 {
     public interface ISongRepository
     {
-        Task<IEnumerable<SongDataDto>> GetSongsFromAlbumIdAsync(int albumId);
+        Task<IEnumerable<SongDataDto>> GetSongsByAlbumId(int albumId);
 
         Task<SongDataDto> GetSongByIdAsync(int songId);
 

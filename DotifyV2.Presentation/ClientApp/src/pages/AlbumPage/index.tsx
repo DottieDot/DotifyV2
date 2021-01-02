@@ -49,7 +49,10 @@ export default () => {
     <Fragment>
       <AppBar />
       <Container maxWidth="lg">
-        <div className={classes.stickyMediaInfroCardContainer} ref={stickyMediaInfoCardContainer} />
+        <div 
+          className={classes.stickyMediaInfroCardContainer} 
+          ref={stickyMediaInfoCardContainer} 
+        />
         <Grid container spacing={2}>
           <Grid item className={classes.cardGridItem} md xs={12}>
             <MediaInfoCard

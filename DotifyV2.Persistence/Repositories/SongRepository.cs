@@ -21,7 +21,7 @@ namespace DotifyV2.Persistence.Repositories
             _likesTable = new PivotTable(db, "song_likes", "song_id", "user_id");
         }
 
-        public async Task<IEnumerable<SongDataDto>> GetSongsFromAlbumIdAsync(int albumId)
+        public async Task<IEnumerable<SongDataDto>> GetSongsByAlbumId(int albumId)
         {
             var rows = await _db.Query("songs")
                 .Select(typeof(SongTableRow).GetFieldNames().ToArray())
