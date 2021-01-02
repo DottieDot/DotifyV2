@@ -39,7 +39,7 @@ namespace DotifyV2.Tests.Application.Collections
 				},
             };
 			var songRepoMock = new Mock<ISongRepository>();
-			songRepoMock.Setup(userRepo => userRepo.GetSongsByAlbumId(1))
+			songRepoMock.Setup(mock => mock.GetSongsByAlbumId(1))
 				.ReturnsAsync(result)
 				.Verifiable();
 
@@ -75,7 +75,7 @@ namespace DotifyV2.Tests.Application.Collections
 				},
 			};
 			var songRepoMock = new Mock<ISongRepository>();
-			songRepoMock.Setup(userRepo => userRepo.GetSongsByAlbumId(1))
+			songRepoMock.Setup(mock => mock.GetSongsByAlbumId(1))
 				.ReturnsAsync(result)
 				.Verifiable();
 
@@ -90,8 +90,6 @@ namespace DotifyV2.Tests.Application.Collections
 				Assert.AreEqual(result[i].Name, songs[i].Name);
 				Assert.AreEqual(result[i].FileName, songs[i].FileName);
 				Assert.AreEqual(result[i].Duration, songs[i].Duration);
-
-				++i;
             }
 		}
 

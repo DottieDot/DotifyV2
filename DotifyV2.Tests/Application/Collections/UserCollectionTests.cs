@@ -2,11 +2,12 @@
 using System.Threading.Tasks;
 using DotifyV2.Application.DTOs;
 using DotifyV2.Application.Repositories;
+using DotifyV2.Application.Collections;
 using DotifyV2.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace DotifyV2.Application.Collections.Tests
+namespace DotifyV2.Tests.Application.Collections
 {
     [TestClass()]
 	public class UserCollectionTests

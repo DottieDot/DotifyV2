@@ -16,7 +16,7 @@ namespace DotifyV2.Application.Models
 
         public Album(AlbumDataDto dto, IAlbumRepository albumRepository, IArtistCollection artistCollection, ISongCollection songCollection)
         {
-            Id = dto.ArtistId;
+            Id = dto.Id;
             Name = dto.Name;
             CoverArt = dto.CoverArt;
 
