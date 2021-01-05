@@ -14,5 +14,7 @@ namespace DotifyV2.Application.Models.Interfaces
         Task<IEnumerable<ISong>> GetSongsAsync();
 
         Task<bool> SaveAsync();
+
+        Task<bool> DeleteAsync();
     }
 }

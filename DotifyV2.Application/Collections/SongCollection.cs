@@ -37,5 +37,8 @@ namespace DotifyV2.Application.Collections
 
         public Task DeleteSongsByArtistId(int artistId)
             => _songRepository.DeleteSongsByArtistId(artistId);
+
+        public Task DeleteSongsByAlbumIdAsync(int albumId)
+            => _songRepository.DeleteSongsByAlbumIdAsync(albumId);
     }
 }

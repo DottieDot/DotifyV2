@@ -7,6 +7,7 @@ import { Album } from '../../api/model'
 import { AppBar, MediaInfoCard, SongTableRow } from '../../components'
 import { useAuthenticatedUser, useShare } from '../../hooks'
 import RenameAlbumDialog from './RenameAlbumDialog'
+import DeleteAlbumDialog from './DeleteAlbumDialog'
 
 const useStyles = makeStyles(theme => ({
   stickyMediaInfroCardContainer: {
@@ -35,6 +36,7 @@ export default () => {
   const user = useAuthenticatedUser()
   const [album, setAlbum] = useState<Album | null>(null)
   const [renameAlbumDialog, setRenameAlbumDialog] = useState(false)
+  const [deleteAlbumDialog, setDeleteAlbumDialog] = useState(false)
   const { album: albumId } = useParams<Params>()
   const stickyMediaInfoCardContainer = useRef(null)
   const share = useShare()
@@ -67,6 +69,14 @@ export default () => {
       })
     }
   }, [setRenameAlbumDialog, album, setAlbum])
+
+  const showDeleteAlbumDialog = useCallback(() => {
+    setDeleteAlbumDialog(true)
+  }, [setDeleteAlbumDialog])
+
+  const closeDeleteAlbumDialog = useCallback(() => {
+    setDeleteAlbumDialog(false)
+  }, [setDeleteAlbumDialog])
 
   return (
     <Fragment>
@@ -115,12 +125,17 @@ export default () => {
                     Rename
                   </Button>
                   <Button
-                    onClick={showRenameAlbumDialog}
+                    onClick={showDeleteAlbumDialog}
                     color="secondary"
                   >
                     Delete
                   </Button>
                 </ButtonGroup>
+                <DeleteAlbumDialog
+                  albumId={album?.id ?? 0}
+                  open={deleteAlbumDialog}
+                  onClose={closeDeleteAlbumDialog}
+                />
                 <RenameAlbumDialog
                   albumId={album?.id ?? 0}
                   currentName={album?.name ?? ''}

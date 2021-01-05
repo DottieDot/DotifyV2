@@ -52,5 +52,10 @@ namespace DotifyV2.Persistence.Repositories
 
         public Task DeleteSongsByArtistId(int artistId)
             => _db.StatementAsync(string.Format($"DELETE s FROM songs s INNER JOIN albums a ON a.id = s.album_id WHERE a.artist_id = {artistId}"));
+
+        public Task DeleteSongsByAlbumIdAsync(int albumId)
+            => _db.Query("songs")
+                .Where("album_id", albumId)
+                .DeleteAsync();
     }
 }

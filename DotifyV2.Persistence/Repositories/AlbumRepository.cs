@@ -93,5 +93,14 @@ namespace DotifyV2.Persistence.Repositories
 
             return result == 1;
         }
+
+        public async Task<bool> DeleteAlbumById(int albumId)
+        {
+            var result = await _db.Query("albums")
+                .Where("id", albumId)
+                .DeleteAsync();
+
+            return result == 1;
+        }
     }
 }

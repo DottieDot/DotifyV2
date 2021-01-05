@@ -31,6 +31,12 @@ namespace DotifyV2.Application.Models
         public string Name { get; set; }
         public string CoverArt { get; }
 
+        public async Task<bool> DeleteAsync()
+        {
+            await _songCollection.DeleteSongsByAlbumIdAsync(Id);
+            return await _albumRepository.DeleteAlbumById(Id);
+        }
+
         public Task<IArtist> GetArtistAsync()
             => _artistCollection.GetArtistByIdAsync(_artistId);
 

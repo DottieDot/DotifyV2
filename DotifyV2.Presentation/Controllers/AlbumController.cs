@@ -49,6 +49,7 @@ namespace DotifyV2.Presentation.Controllers
         }
 
         [HttpPatch("/api/albums/{id}/name")]
+        [IsArtist]
         public async Task<bool> UpdateName(int id, [FromBody] ChangeAlbumNameRequest request)
         {
             var artist = await _authenticatedUser.GetArtistAsync();
@@ -62,6 +63,21 @@ namespace DotifyV2.Presentation.Controllers
             album.Name = request.Name;
 
             return await album.SaveAsync();
+        }
+
+        [HttpDelete("{id}")]
+        [IsArtist]
+        public async Task<bool> Delete(int id)
+        {
+            var artist = await _authenticatedUser.GetArtistAsync();
+            var album = await _albumCollection.GetAlbumByIdAsync(id);
+
+            if ((await album.GetArtistAsync()).Id != artist.Id)
+            {
+                throw new HttpException(HttpStatusCode.Unauthorized);
+            }
+
+            return await album.DeleteAsync();
         }
     }
 }
