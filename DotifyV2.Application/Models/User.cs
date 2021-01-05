@@ -75,5 +75,8 @@ namespace DotifyV2.Application.Models
 
 		public Task<IEnumerable<int>> GetLikedArtistIdsAsync()
 			=> _artistCollection.GetLikedArtistIdsByUserIdAsync(Id);
+
+		public Task<IArtist> GetArtistAsync()
+			=> _artistCollection.GetArtistByUserIdAsync(Id);
     }
 }

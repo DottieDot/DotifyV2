@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using DotifyV2.Application.DTOs;
 using DotifyV2.Application.Repositories;
 using SqlKata.Execution;
@@ -39,5 +40,48 @@ namespace DotifyV2.Persistence.Repositories
 
         public Task<IEnumerable<int>> GetLikedArtistIdsByUserIdAsync(int userId)
             => _likesTable.GetAllByBColumn(userId);
+
+        public async Task<ArtistDataDto> GetArtistByUserIdAsync(int userId)
+        {
+            var row = await _db.Query("artists")
+                .Select(typeof(ArtistTableRow).GetFieldNames().ToArray())
+                .Where("user_id", userId)
+                .FirstOrDefaultAsync<ArtistTableRow>();
+
+            return row?.ToArtistDataDto();
+        }
+
+        public async Task<ArtistDataDto> CreateArtistAsync(NewArtistDataDto dataDto)
+        {
+            try
+            {
+                var id = await _db.Query("artists")
+                    .InsertGetIdAsync<int>(new
+                    {
+                        user_id = dataDto.UserId,
+                        name = dataDto.Name,
+                    });
+
+                return new ArtistDataDto
+                {
+                    Id = id,
+                    Name = dataDto.Name,
+                    Picture = "",
+                };
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public async Task<bool> DeleteArtistAsync(int artistId)
+        {
+            int result = await _db.Query("artists")
+                 .Where("id", artistId)
+                 .DeleteAsync();
+
+            return result != 0;
+        }
     }
 }

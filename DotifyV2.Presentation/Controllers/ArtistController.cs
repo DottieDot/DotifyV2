@@ -5,6 +5,7 @@ using DotifyV2.Application.Collections.Interfaces;
 using DotifyV2.Presentation.Models;
 using DotifyV2.Presentation.Exceptions;
 using DotifyV2.Presentation.Filters;
+using DotifyV2.Presentation.Authentication;
 
 namespace DotifyV2.Presentation.Controllers
 {
@@ -14,10 +15,12 @@ namespace DotifyV2.Presentation.Controllers
     public class ArtistController : Controller
     {
         readonly IArtistCollection _artistCollection;
+        readonly AuthenticatedUser _authenticatedUser;
 
-        public ArtistController(IArtistCollection artistCollection)
+        public ArtistController(IArtistCollection artistCollection, AuthenticatedUser authenticatedUser)
         {
             _artistCollection = artistCollection;
+            _authenticatedUser = authenticatedUser;
         }
 
         [HttpGet("{id}")]
@@ -30,6 +33,33 @@ namespace DotifyV2.Presentation.Controllers
             }
 
             return await ArtistResponse.CreateFromArtistAsync(artist);
+        }
+
+        [HttpDelete()]
+        public async Task<bool> Delete()
+        {
+            var user = await _authenticatedUser.GetUserAsync();
+            var artist = await user.GetArtistAsync();
+
+            return await artist.DeleteAsync();
+        }
+
+        [HttpPost()]
+        public async Task<ArtistResponse> Create([FromBody] CreateArtistRequest request)
+        {
+            var user = await _authenticatedUser.GetUserAsync();
+            var artist = await user.GetArtistAsync();
+
+            if (artist != null)
+            {
+                throw new HttpException(HttpStatusCode.Unauthorized);
+            }
+            var result = await _artistCollection.CreateArtistAsync(user.Id, request.Name);
+            if (result == null)
+            {
+                throw new HttpException(HttpStatusCode.InternalServerError);
+            }
+            return await ArtistResponse.CreateFromArtistAsync(result);
         }
     }
 }

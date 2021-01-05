@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using DotifyV2.Application.Models.Interfaces;
 
 namespace DotifyV2.Application.Models.Interfaces
 {
@@ -18,6 +19,8 @@ namespace DotifyV2.Application.Models.Interfaces
 		string VerifyPassword(string password);
 
 		Task<bool> SaveAsync();
+
+		Task<IArtist> GetArtistAsync();
 
 		Task<IEnumerable<int>> GetLikedSongIdsAsync();
 

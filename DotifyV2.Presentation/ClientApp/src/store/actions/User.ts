@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux'
 import { RootState } from '..'
 import { getAuthenticatedUser } from '../../api/endpoints'
-import { SetUserInfo, SetUserUsername, SET_USER_INFO, SET_USER_USERNAME } from '../model/actions/User'
+import { SetUserArtistId, SetUserInfo, SetUserUsername, SET_USER_ARTIST_ID, SET_USER_INFO, SET_USER_USERNAME } from '../model/actions/User'
 import { showAlert } from './Alerts'
 import { logout } from './Auth'
 
@@ -27,4 +27,9 @@ export const loadUserInfo = () =>
 export const setUserUsername = (username: string): SetUserUsername => ({
   type: SET_USER_USERNAME,
   username
+})
+
+export const setUserArtistId = (artistId: number|null): SetUserArtistId => ({
+  type: SET_USER_ARTIST_ID,
+  artistId
 })

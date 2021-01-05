@@ -14,6 +14,7 @@ namespace DotifyV2.Presentation.Models
             return new AuthenticatedUserResponse
             {
                 Id = user.Id,
+                ArtistId = (await user.GetArtistAsync())?.Id,
                 Username = user.Username,
                 Likes = new LikedItems
                 {
@@ -24,7 +25,13 @@ namespace DotifyV2.Presentation.Models
             };
         }
 
+        [JsonPropertyName("id")]
         public int Id { get; set; }
+
+        [JsonPropertyName("artist_id")]
+        public int? ArtistId { get; set; }
+
+        [JsonPropertyName("username")]
         public string Username { get; set; }
 
         [Serializable]

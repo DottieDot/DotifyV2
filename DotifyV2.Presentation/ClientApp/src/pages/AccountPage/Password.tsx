@@ -10,7 +10,6 @@ import { showAlert } from '../../store/actions/Alerts'
 
 export default () => {
   const dispatch = useDispatch()
-  const user = useAuthenticatedUser()
   const formik = useFormik({
     initialValues: {
       currentPassword: '',

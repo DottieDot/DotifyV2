@@ -1,10 +1,13 @@
 import { Button, Container, makeStyles, Paper, Typography } from '@material-ui/core'
-import React, { Fragment } from 'react'
+import React, { Fragment, useCallback } from 'react'
 import { AppBar, Spacing } from '../../components'
 import Details from './Details'
 import Password from './Password'
 import Application from './Application'
 import Other from './Other'
+import Artist from './Artist'
+import { useDispatch } from 'react-redux'
+import { logout } from '../../store/actions/Auth'
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -23,13 +26,17 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default () => {
+  const dispatch = useDispatch()
   const classes = useStyles()
+
+  const onLogout = useCallback(() => {
+    dispatch(logout())
+  }, [dispatch])
 
   return (
     <Fragment>
       <AppBar />
       <Container maxWidth="lg">
-        
         <Spacing size={2} />
         <Typography
           variant="h5"
@@ -52,6 +59,17 @@ export default () => {
           component="h2"
           gutterBottom
         >
+          Artist
+        </Typography>
+        <Paper className={classes.paper}>
+          <Artist />
+        </Paper>
+        <Spacing size={2} />
+        <Typography
+          variant="h5"
+          component="h2"
+          gutterBottom
+        >
           Settings
         </Typography>
         <div className={classes.grid}>
@@ -62,6 +80,15 @@ export default () => {
             <Other />
           </Paper>
         </div>
+        <Spacing size={2} />
+        <Button
+          onClick={onLogout}
+          variant="contained"
+          color="primary"
+          fullWidth
+        >
+          Logout
+        </Button>
       </Container>
       <Spacing />
     </Fragment>

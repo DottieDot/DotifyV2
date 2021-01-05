@@ -34,5 +34,11 @@ namespace DotifyV2.Application.Models
 
         public Task<bool> RemoveLikeAsync(int userId)
             => _artistRepository.RemoveUserLikeAsync(Id, userId);
+
+        public async Task<bool> DeleteAsync()
+        {
+            await _albumCollection.DeleteAlbumsByArtistIdAsync(Id);
+            return await _artistRepository.DeleteArtistAsync(Id);
+        }
     }
 }

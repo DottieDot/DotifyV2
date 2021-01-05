@@ -12,12 +12,20 @@ namespace DotifyV2.Application.Collections
     public class AlbumCollection : IAlbumCollection
     {
         readonly IAlbumRepository _albumRepository;
+        readonly ISongCollection _songCollection;
         readonly DependencyMapper _dependencyMapper;
 
-        public AlbumCollection(IAlbumRepository albumRepository, DependencyMapper dependencyMapper)
+        public AlbumCollection(IAlbumRepository albumRepository, ISongCollection songCollection, DependencyMapper dependencyMapper)
         {
             _albumRepository = albumRepository;
+            _songCollection = songCollection;
             _dependencyMapper = dependencyMapper;
+        }
+
+        public async Task DeleteAlbumsByArtistIdAsync(int artistId)
+        {
+            await _songCollection.DeleteSongsByArtistId(artistId);
+            await _albumRepository.DeleteAlbumsByArtistId(artistId);
         }
 
         public async Task<IAlbum> GetAlbumByIdAsync(int albumId)

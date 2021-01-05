@@ -49,5 +49,8 @@ namespace DotifyV2.Persistence.Repositories
 
         public Task<IEnumerable<int>> GetLikedSongIdsByUserIdAsync(int userId)
             => _likesTable.GetAllByBColumn(userId);
+
+        public Task DeleteSongsByArtistId(int artistId)
+            => _db.StatementAsync(string.Format($"DELETE s FROM songs s INNER JOIN albums a ON a.id = s.album_id WHERE a.artist_id = {artistId}"));
     }
 }

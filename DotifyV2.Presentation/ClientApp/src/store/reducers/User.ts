@@ -1,5 +1,5 @@
 import { LOGOUT } from '../model/actions/Auth'
-import { SET_USER_INFO, SET_USER_USERNAME, UserAction } from '../model/actions/User'
+import { SET_USER_ARTIST_ID, SET_USER_INFO, SET_USER_USERNAME, UserAction } from '../model/actions/User'
 import UserState from '../model/state/UserState'
 
 const defaultState: UserState = null
@@ -15,6 +15,11 @@ export default (state: UserState = defaultState, action: UserAction): UserState 
       return state && {
         ...state,
         username: action.username
+      }
+    case SET_USER_ARTIST_ID:
+      return state && {
+        ...state,
+        artist_id: action.artistId
       }
     case LOGOUT:
       return defaultState
