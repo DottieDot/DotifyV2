@@ -3,11 +3,12 @@ import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react
 import { useParams } from 'react-router'
 import { Link as RouterLink } from 'react-router-dom'
 import { getAlbum } from '../../api/endpoints'
-import { Album } from '../../api/model'
+import { Album, Song } from '../../api/model'
 import { AppBar, MediaInfoCard, SongTableRow } from '../../components'
 import { useAuthenticatedUser, useShare } from '../../hooks'
 import RenameAlbumDialog from './RenameAlbumDialog'
 import DeleteAlbumDialog from './DeleteAlbumDialog'
+import NewSongDialog from './NewSongDialog'
 
 const useStyles = makeStyles(theme => ({
   stickyMediaInfroCardContainer: {
@@ -37,6 +38,7 @@ export default () => {
   const [album, setAlbum] = useState<Album | null>(null)
   const [renameAlbumDialog, setRenameAlbumDialog] = useState(false)
   const [deleteAlbumDialog, setDeleteAlbumDialog] = useState(false)
+  const [newSongDialog, setNewSongDialog] = useState(false)
   const { album: albumId } = useParams<Params>()
   const stickyMediaInfoCardContainer = useRef(null)
   const share = useShare()
@@ -77,6 +79,23 @@ export default () => {
   const closeDeleteAlbumDialog = useCallback(() => {
     setDeleteAlbumDialog(false)
   }, [setDeleteAlbumDialog])
+
+  const showNewSongDialog = useCallback(() => {
+    setNewSongDialog(true)
+  }, [setNewSongDialog])
+
+  const closeNewSongDialog = useCallback((song: Song | null) => {
+    setNewSongDialog(false)
+    if (album && song) {
+      setAlbum({
+        ...album,
+        songs: [
+          ...album.songs,
+          song,
+        ]
+      })
+    }
+  }, [setNewSongDialog, album, setAlbum])
 
   return (
     <Fragment>
@@ -120,6 +139,11 @@ export default () => {
                   fullWidth
                 >
                   <Button
+                    onClick={showNewSongDialog}
+                  >
+                    Add Song
+                  </Button>
+                  <Button
                     onClick={showRenameAlbumDialog}
                   >
                     Rename
@@ -131,6 +155,11 @@ export default () => {
                     Delete
                   </Button>
                 </ButtonGroup>
+                <NewSongDialog
+                  albumId={album?.id ?? 0}
+                  open={newSongDialog}
+                  onClose={closeNewSongDialog}
+                />
                 <DeleteAlbumDialog
                   albumId={album?.id ?? 0}
                   open={deleteAlbumDialog}

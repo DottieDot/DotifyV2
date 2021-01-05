@@ -44,13 +44,6 @@ export default () => {
               Home
             </Button>
             <Button 
-              component={Link} 
-              to="/playlists" 
-              color="inherit"
-            >
-              Playlists
-            </Button>
-            <Button 
               component={Link}
               to="/profile"
               color="inherit"

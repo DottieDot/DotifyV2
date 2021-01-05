@@ -14,3 +14,5 @@ export type { default as AuthenticatedUserResponse } from './AuthenticatedUserRe
 export type { default as UserInfo                  } from './AuthenticatedUserResponse'
 export type { default as ChangeUsernameRequest     } from './ChangeUsernameRequest'
 export type { default as ChangePasswordRequest     } from './ChangePasswordRequest'
+export type { default as SongResponse              } from './SongResponse'
+export type { default as Song                      } from './SongResponse'

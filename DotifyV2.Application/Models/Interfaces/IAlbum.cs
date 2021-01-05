@@ -9,6 +9,8 @@ namespace DotifyV2.Application.Models.Interfaces
         string Name { get; set; }
         string CoverArt { get; }
 
+        Task<ISong> CreateSongAsync(string name, int duration);
+
         Task<IArtist> GetArtistAsync();
 
         Task<IEnumerable<ISong>> GetSongsAsync();
