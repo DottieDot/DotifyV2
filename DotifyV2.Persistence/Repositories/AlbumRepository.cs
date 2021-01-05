@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using DotifyV2.Application.DTOs;
 using DotifyV2.Application.Repositories;
 using SqlKata.Execution;
@@ -55,6 +56,30 @@ namespace DotifyV2.Persistence.Repositories
             return _db.Query("albums")
                 .Where("artist_id", artistId)
                 .DeleteAsync();
+        }
+
+        public async Task<AlbumDataDto> CreateAlbumAsync(NewAlbumDataDto dataDto)
+        {
+            try
+            {
+                var id = await _db.Query("albums")
+                    .InsertGetIdAsync<int>(new
+                    {
+                        artist_id = dataDto.ArtistId,
+                        name = dataDto.Name,
+                    });
+
+                return new AlbumDataDto
+                {
+                    Id = id,
+                    ArtistId = dataDto.ArtistId,
+                    Name = dataDto.Name,
+                };
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }

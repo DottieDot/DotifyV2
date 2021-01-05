@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Redirect, Route, Switch, useHistory, useRouteMatch } from 'react-router-dom'
-import { ArtistPage, HomePage, LoginSignupPage, AccountPage, MyArtistPage } from './pages'
+import { ArtistPage, HomePage, LoginSignupPage, AccountPage } from './pages'
 import { useIsAuthenticated } from './hooks'
 import { useDispatch } from 'react-redux'
 import { logout as logoutAction } from './store/actions/Auth'
@@ -85,9 +85,6 @@ const AuthenticatedRoutes = () => {
       </Route>
       <Route exact path="/home">
         <HomePage />
-      </Route>
-      <Route exact path="/artist">
-        <MyArtistPage />
       </Route>
       <Route exact path="/artists/:artist">
         <ArtistPage />

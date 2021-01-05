@@ -10,11 +10,13 @@ namespace DotifyV2.Presentation.Authentication
     {
         IHttpContextAccessor _httpContextAccessor;
         IUserCollection _userCollection;
+        IArtistCollection _artistCollection;
 
-        public AuthenticatedUser(IHttpContextAccessor httpContextAccessor, IUserCollection userCollection)
+        public AuthenticatedUser(IHttpContextAccessor httpContextAccessor, IUserCollection userCollection, IArtistCollection artistCollection)
         {
             _httpContextAccessor = httpContextAccessor;
             _userCollection = userCollection;
+            _artistCollection = artistCollection;
         }
 
         public int GetUserId()
@@ -25,5 +27,8 @@ namespace DotifyV2.Presentation.Authentication
 
         public Task<IUser> GetUserAsync()
             => _userCollection.GetUserByIdAsync(GetUserId());
+
+        public Task<IArtist> GetArtistAsync()
+            => _artistCollection.GetArtistByUserIdAsync(GetUserId());
     }
 }

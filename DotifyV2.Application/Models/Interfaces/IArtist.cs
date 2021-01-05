@@ -9,6 +9,8 @@ namespace DotifyV2.Application.Models.Interfaces
         string Name { get; }
         string Picture { get; }
 
+        Task<IAlbum> CreateAlbumAsync(string name);
+
         Task<IEnumerable<IAlbum>> GetAlbumsAsync();
 
         Task<bool> DeleteAsync();

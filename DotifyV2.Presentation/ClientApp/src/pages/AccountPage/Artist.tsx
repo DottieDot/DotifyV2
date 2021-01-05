@@ -38,7 +38,7 @@ export default () => {
         >
           <Button
             component={Link}
-            to="/artist"
+            to={`/artists/${user.artist_id}`}
             color="primary"
           >
             Artist Page

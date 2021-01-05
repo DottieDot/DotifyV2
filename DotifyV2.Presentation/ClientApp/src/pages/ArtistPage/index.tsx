@@ -1,16 +1,20 @@
-import { Container, Divider, Grid, makeStyles, Typography } from '@material-ui/core'
+import { Button, Container, Divider, Grid, makeStyles, Typography } from '@material-ui/core'
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router'
 import { getArtist } from '../../api/endpoints'
-import { Artist } from '../../api/model'
+import { AlbumResponse, Artist } from '../../api/model'
 import { Album, AppBar, MediaGrid, MediaInfoCard } from '../../components'
-import { useShare } from '../../hooks'
+import { useAuthenticatedUser, useShare } from '../../hooks'
+import NewAlbumDialog from './NewAlbumDialog'
 
 interface Params {
   artist: string
 }
 
 const useStyles = makeStyles(theme => ({
+  container: {
+    position: 'relative',
+  },
   stickyMediaInfroCardContainer: {
     position: 'sticky',
     top: 75
@@ -19,11 +23,19 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up('md')]: {
       maxWidth: 220
     }
+  },
+  newAlbumButton: {
+    marginBottom: theme.spacing(1),
+    [theme.breakpoints.down('md')]: {
+      marginTop: theme.spacing(1),
+    }
   }
 }))
 
 export default () => {
   const classes = useStyles()
+  const user = useAuthenticatedUser()
+  const [newAlbumDialog, setNewAlbumDialog] = useState(false)
   const [artist, setArtist] = useState<Artist | null>(null)
   const { artist: artistId } = useParams<Params>()
   const stickyMediaInfoCardContainer = useRef(null)
@@ -44,10 +56,27 @@ export default () => {
     }
   }, [artist, share])
 
+  const showNewAlbumDialog = useCallback(() => {
+    setNewAlbumDialog(true)
+  }, [setNewAlbumDialog])
+
+  const closeNewAlbumDialog = useCallback((album: AlbumResponse | null) => {
+    setNewAlbumDialog(false)
+    if (album && artist) {
+      setArtist({
+        ...artist,
+        albums: [
+          ...artist.albums,
+          album
+        ]
+      })
+    }
+  }, [setNewAlbumDialog, setArtist, artist])
+
   return (
     <Fragment>
       <AppBar />
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" className={classes.container}>
         <div 
           className={classes.stickyMediaInfroCardContainer} 
           ref={stickyMediaInfoCardContainer} 
@@ -65,6 +94,23 @@ export default () => {
             />
           </Grid>
           <Grid item xs>
+            {(user?.artist_id == artist?.id) && (
+              <Fragment>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.newAlbumButton}
+                  onClick={showNewAlbumDialog}
+                  fullWidth
+                >
+                  New Album
+                </Button>
+                <NewAlbumDialog
+                  open={newAlbumDialog}
+                  onClose={closeNewAlbumDialog}
+                />
+              </Fragment>
+            )}
             <Typography 
               variant="h5" 
               component="h2" 

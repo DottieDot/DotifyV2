@@ -6,6 +6,8 @@ namespace DotifyV2.Application.Collections.Interfaces
 {
     public interface IAlbumCollection
     {
+        Task<IAlbum> CreateAlbumAsync(int artistId, string name);
+
         Task DeleteAlbumsByArtistIdAsync(int artistId);
 
         Task<IEnumerable<IAlbum>> GetAlbumsByArtistIdAsync(int artistId);

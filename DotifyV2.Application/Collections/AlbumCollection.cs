@@ -6,6 +6,7 @@ using DotifyV2.Application.Models;
 using DotifyV2.Application.Models.Interfaces;
 using DotifyV2.Application.Repositories;
 using DotifyV2.Common;
+using DotifyV2.Application.DTOs;
 
 namespace DotifyV2.Application.Collections
 {
@@ -20,6 +21,16 @@ namespace DotifyV2.Application.Collections
             _albumRepository = albumRepository;
             _songCollection = songCollection;
             _dependencyMapper = dependencyMapper;
+        }
+
+        public async Task<IAlbum> CreateAlbumAsync(int artistId, string name)
+        {
+            var data = await _albumRepository.CreateAlbumAsync(new NewAlbumDataDto
+            {
+                ArtistId = artistId,
+                Name = name,
+            });
+            return data != null ? _dependencyMapper.Construct<Album>(data) : null;
         }
 
         public async Task DeleteAlbumsByArtistIdAsync(int artistId)

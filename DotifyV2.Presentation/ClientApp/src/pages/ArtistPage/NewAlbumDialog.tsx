@@ -3,12 +3,12 @@ import React, { ChangeEvent, FormEvent, useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router'
 import * as endpoints from '../../api/endpoints'
+import { AlbumResponse } from '../../api/model'
 import { showAlert } from '../../store/actions/Alerts'
-import { setUserArtistId } from '../../store/actions/User'
 
 interface Props {
   open: boolean
-  onClose: () => void
+  onClose: (album: AlbumResponse | null) => void
 }
 
 export default ({ open, onClose }: Props) => {
@@ -19,7 +19,7 @@ export default ({ open, onClose }: Props) => {
 
   const handleClose = useCallback(() => {
     if (!submitting) {
-      onClose()
+      onClose(null)
       setName('')
     }
   }, [submitting, onClose, setName])
@@ -31,13 +31,15 @@ export default ({ open, onClose }: Props) => {
   const onSubmit = useCallback(async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setSubmitting(true)
-    const artist = await endpoints.createArtist(name)
-    if (artist) {
-      dispatch(setUserArtistId(artist.id))
-      history.push(`/artists/${artist.id}`)
+    const album = await endpoints.createAlbum(name)
+    if (album) {
+      dispatch(showAlert('Created album', 'success'))
+      setSubmitting(false)
+      setName('')
+      onClose(album)
     }
     else {
-      dispatch(showAlert('Failed to create artist', 'error'))
+      dispatch(showAlert('Failed to create album', 'error'))
       setSubmitting(false)
     }
   }, [setSubmitting, name, history, dispatch])
@@ -45,10 +47,10 @@ export default ({ open, onClose }: Props) => {
   return (
     <Dialog open={open} onClose={handleClose}>
       <form onSubmit={onSubmit}>
-        <DialogTitle>Create Artist</DialogTitle>
+        <DialogTitle>Create Album</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Enter a name for your artist page.
+            Enter a name for the album.
           </DialogContentText>
           <TextField
             margin="dense"
