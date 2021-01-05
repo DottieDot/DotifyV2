@@ -6,7 +6,7 @@ namespace DotifyV2.Application.Models.Interfaces
 	public interface IUser
 	{
 		int Id { get; }
-		string Username { get; }
+		string Username { get; set; }
 
 		bool SetPassword(string password);
 
@@ -17,7 +17,7 @@ namespace DotifyV2.Application.Models.Interfaces
 		/// <returns>The API token for the user or null if the password is incorrect.</returns>
 		string VerifyPassword(string password);
 
-		Task SaveAsync();
+		Task<bool> SaveAsync();
 
 		Task<IEnumerable<int>> GetLikedSongIdsAsync();
 

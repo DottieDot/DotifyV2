@@ -3,7 +3,7 @@ import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react
 import { useParams } from 'react-router'
 import { getArtist } from '../../api/endpoints'
 import { Artist } from '../../api/model'
-import { Album, AppBar, MediaGrid, MediaInfoCard } from '../../Components'
+import { Album, AppBar, MediaGrid, MediaInfoCard } from '../../components'
 import { useShare } from '../../hooks'
 
 interface Params {

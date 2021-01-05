@@ -4,15 +4,22 @@ import Auth from './Auth'
 import Alerts from './Alerts'
 import User from './User'
 import Likes from './Likes'
-import storage from 'redux-persist/lib/storage' 
+import Settings from './Settings'
+import storage from 'redux-persist/lib/storage'
 
-const persistConfig = {
+const authPersistConfig = {
   key: 'Auth',
   storage
 }
 
+const settingsPersistConfig = {
+  key: 'Settings',
+  storage
+}
+
 export default combineReducers({
-  Auth: persistReducer(persistConfig, Auth),
+  Auth: persistReducer(authPersistConfig, Auth),
+  Settings: persistReducer(settingsPersistConfig, Settings),
   Alerts,
   User,
   Likes,

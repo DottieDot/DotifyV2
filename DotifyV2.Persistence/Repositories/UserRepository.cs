@@ -1,5 +1,6 @@
 ﻿using DotifyV2.Application.Repositories;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using SqlKata.Execution;
 using DotifyV2.Application.DTOs;
 using DotifyV2.Persistence.Tables;
@@ -73,5 +74,18 @@ namespace DotifyV2.Persistence.Repositories
 
 			return row?.ToUserDataDto();
 		}
-	}
+
+        public async Task<bool> UpdateUserByIdAsync(int id, UpdateUserDataDto dataDto)
+        {
+			var rowsUpdated = await _db.Query("users")
+				.Where("id", id)
+				.UpdateAsync(new Dictionary<string, object>
+				{
+					{ "username", dataDto.Username },
+					{ "password", dataDto.Password },
+				});
+
+			return rowsUpdated == 1;
+        }
+    }
 }

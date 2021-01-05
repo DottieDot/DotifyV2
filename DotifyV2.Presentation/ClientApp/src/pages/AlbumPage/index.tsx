@@ -4,7 +4,7 @@ import { useParams } from 'react-router'
 import { Link as RouterLink } from 'react-router-dom'
 import { getAlbum } from '../../api/endpoints'
 import { Album } from '../../api/model'
-import { AppBar, MediaInfoCard, SongTableRow } from '../../Components'
+import { AppBar, MediaInfoCard, SongTableRow } from '../../components'
 import { useShare } from '../../hooks'
 
 const useStyles = makeStyles(theme => ({

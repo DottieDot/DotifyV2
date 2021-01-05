@@ -21,7 +21,7 @@ namespace DotifyV2.Tests.Application.Models
                 Username = "",
                 Password = "",
                 ApiToken = "",
-            }, null, null, null);
+            }, null, null, null, null);
 
             var result = user.SetPassword("test");
 
@@ -37,7 +37,7 @@ namespace DotifyV2.Tests.Application.Models
                 Username = "",
                 Password = "",
                 ApiToken = "",
-            }, null, null, null);
+            }, null, null, null, null);
 
             var result = user.SetPassword(new string('a', 81));
 
@@ -53,7 +53,7 @@ namespace DotifyV2.Tests.Application.Models
                 Username = "",
                 Password = "test",
                 ApiToken = "success",
-            }, null, null, null);
+            }, null, null, null, null);
 
             var apiToken = user.VerifyPassword("test");
 
@@ -69,7 +69,7 @@ namespace DotifyV2.Tests.Application.Models
                 Username = "",
                 Password = "test",
                 ApiToken = "success",
-            }, null, null, null);
+            }, null, null, null, null);
 
             var apiToken = user.VerifyPassword("hey");
 
@@ -85,7 +85,7 @@ namespace DotifyV2.Tests.Application.Models
                 Username = "",
                 Password = "test",
                 ApiToken = "success",
-            }, null, null, null);
+            }, null, null, null, null);
 
             var apiToken = user.VerifyPassword(new string('a', 81));
 
@@ -113,7 +113,7 @@ namespace DotifyV2.Tests.Application.Models
                 Username = "",
                 Password = "",
                 ApiToken = "",
-            }, songCollectionMock.Object, null, null);
+            }, null, songCollectionMock.Object, null, null);
 
             var likedSongs = (await user.GetLikedSongIdsAsync()).ToArray();
 
@@ -137,7 +137,7 @@ namespace DotifyV2.Tests.Application.Models
                 Username = "",
                 Password = "",
                 ApiToken = "",
-            }, null, albumCollectionMock.Object, null);
+            }, null, null, albumCollectionMock.Object, null);
 
             var likedAlbums = (await user.GetLikedAlbumIdsAsync()).ToArray();
 
@@ -161,7 +161,7 @@ namespace DotifyV2.Tests.Application.Models
                 Username = "",
                 Password = "",
                 ApiToken = "",
-            }, null, null, artistCollectionMock.Object);
+            }, null, null, null, artistCollectionMock.Object);
 
             var likedArtists = (await user.GetLikedArtistIdsAsync()).ToArray();
 

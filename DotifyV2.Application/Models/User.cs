@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using DotifyV2.Application.DTOs;
 using DotifyV2.Application.Models.Interfaces;
 using DotifyV2.Application.Collections.Interfaces;
+using DotifyV2.Application.Repositories;
 
 namespace DotifyV2.Application.Models
 {
@@ -11,14 +12,15 @@ namespace DotifyV2.Application.Models
 		string _password;
 		readonly string _apiToken;
 
+		readonly IUserRepository _userRepository;
 		readonly ISongCollection _songCollection;
 		readonly IAlbumCollection _albumCollection;
 		readonly IArtistCollection _artistCollection;
 
-		public int Id { get; private set; }
-		public string Username { get; private set; }
+		public int Id { get; }
+		public string Username { get; set; }
 
-		public User(UserDataDto dto, ISongCollection songCollection, IAlbumCollection albumCollection, IArtistCollection artistCollection)
+		public User(UserDataDto dto, IUserRepository userRepository, ISongCollection songCollection, IAlbumCollection albumCollection, IArtistCollection artistCollection)
 		{
 			Id = dto.Id;
 			Username = dto.Username;
@@ -26,6 +28,7 @@ namespace DotifyV2.Application.Models
 			_password = dto.Password;
 			_apiToken = dto.ApiToken;
 
+			_userRepository = userRepository;
 			_songCollection = songCollection;
 			_albumCollection = albumCollection;
 			_artistCollection = artistCollection;
@@ -57,10 +60,12 @@ namespace DotifyV2.Application.Models
 			return null;
 		}
 
-		public Task SaveAsync()
-		{
-			throw new System.NotImplementedException();
-		}
+		public Task<bool> SaveAsync()
+			=> _userRepository.UpdateUserByIdAsync(Id, new UpdateUserDataDto
+			{
+				Username = Username,
+				Password = _password,
+			});
 
 		public Task<IEnumerable<int>> GetLikedSongIdsAsync()
 			=> _songCollection.GetLikedSongIdsByUserIdAsync(Id);

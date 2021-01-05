@@ -1,6 +1,6 @@
 import React from 'react'
-import { BrowserRouter, Route, Switch, useHistory, useRouteMatch } from 'react-router-dom'
-import { ArtistPage, LoginSignupPage } from './pages'
+import { BrowserRouter, Redirect, Route, Switch, useHistory, useRouteMatch } from 'react-router-dom'
+import { ArtistPage, HomePage, LoginSignupPage, AccountPage } from './pages'
 import { useIsAuthenticated } from './hooks'
 import { useDispatch } from 'react-redux'
 import { logout as logoutAction } from './store/actions/Auth'
@@ -77,10 +77,19 @@ const AuthenticatedRoutes = () => {
       className={classes.switchWrapper}
       mapStyles={mapStyles}
     >
-      <Route path="/artists/:artist">
+      <Route exact path="/">
+        <Redirect to="/home" />
+      </Route>
+      <Route exact path="/profile">
+        <AccountPage />
+      </Route>
+      <Route exact path="/home">
+        <HomePage />
+      </Route>
+      <Route exact path="/artists/:artist">
         <ArtistPage />
       </Route>
-      <Route path="/albums/:album">
+      <Route exact path="/albums/:album">
         <AlbumPage />
       </Route>
     </AnimatedSwitch>

@@ -9,5 +9,6 @@ namespace DotifyV2.Application.Repositories
 		Task<UserDataDto> GetUserByIdAsync(int id);
 		Task<UserDataDto> GetUserByUsernameAsync(string username);
 		Task<UserDataDto> GetUserByApiTokenAsync(string apiToken);
+		Task<bool> UpdateUserByIdAsync(int id, UpdateUserDataDto dataDto);
 	}
 }

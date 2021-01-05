@@ -1,6 +1,7 @@
 import { Card, CardContent, CardMedia, Grid, makeStyles, Typography, Button, useTheme, useMediaQuery, Portal } from '@material-ui/core'
 import React, { MutableRefObject, ReactElement } from 'react'
-import { AddPropsWhenScrolled, LikeButton } from '.'
+import AddPropsWhenScrolled from './AddPropsWhenScrolled'
+import LikeButton from './LikeButton'
 import { MediaTypes } from '../common'
 
 const useStyles = makeStyles(theme => ({

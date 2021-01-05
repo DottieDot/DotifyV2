@@ -1,5 +1,6 @@
 import { AppBar, Button, Container, makeStyles, Toolbar, Typography } from '@material-ui/core'
 import React from 'react'
+import { Link } from 'react-router-dom'
 import AddPropsWhenScrolled from './AddPropsWhenScrolled'
 
 const useStyles = makeStyles(theme => ({
@@ -35,8 +36,27 @@ export default () => {
               Dotify
             </Typography>
             <div className={classes.gap} />
-            <Button color="inherit">Home</Button>
-            <Button color="inherit">Playlists</Button>
+            <Button 
+              component={Link} 
+              to="/home" 
+              color="inherit"
+            >
+              Home
+            </Button>
+            <Button 
+              component={Link} 
+              to="/playlists" 
+              color="inherit"
+            >
+              Playlists
+            </Button>
+            <Button 
+              component={Link}
+              to="/profile"
+              color="inherit"
+            >
+              Account
+            </Button>
           </Toolbar>
         </Container>
       </AppBar>

@@ -1,7 +1,7 @@
 
 export default interface AuthenticatedUserResponse {
   id: number
-  name: string
+  username: string
   likes: {
     songs: number[]
     albums: number[]
