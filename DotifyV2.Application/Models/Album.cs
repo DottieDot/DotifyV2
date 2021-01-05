@@ -28,7 +28,7 @@ namespace DotifyV2.Application.Models
         }
 
         public int Id { get; }
-        public string Name { get; }
+        public string Name { get; set; }
         public string CoverArt { get; }
 
         public Task<IArtist> GetArtistAsync()
@@ -42,5 +42,11 @@ namespace DotifyV2.Application.Models
 
         public Task<bool> RemoveLikeAsync(int userId)
             => _albumRepository.RemoveUserLikeAsync(Id, userId);
+
+        public Task<bool> SaveAsync()
+            => _albumRepository.UpdateAlbumByIdAsync(Id, new UpdateAlbumDataDto
+            {
+                Name = Name
+            });
     }
 }

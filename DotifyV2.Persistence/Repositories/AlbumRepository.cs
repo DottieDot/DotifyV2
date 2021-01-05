@@ -81,5 +81,17 @@ namespace DotifyV2.Persistence.Repositories
                 return null;
             }
         }
+
+        public async Task<bool> UpdateAlbumByIdAsync(int albumId, UpdateAlbumDataDto dataDto)
+        {
+            var result = await _db.Query("albums")
+                .Where("id", albumId)
+                .UpdateAsync(new
+                {
+                    name = dataDto.Name,
+                });
+
+            return result == 1;
+        }
     }
 }
