@@ -22,7 +22,7 @@ namespace DotifyV2.Presentation.Controllers
 		{
 			var user = await _userCollection.GetUserByUsernameAsync(loginRequest.Username);
 
-			string apiToken = user.VerifyPassword(loginRequest.Password);
+			string apiToken = user?.VerifyPassword(loginRequest.Password);
 			if (apiToken == null)
 			{
 				throw new HttpException(HttpStatusCode.Unauthorized);
