@@ -35,7 +35,7 @@ namespace DotifyV2.Application.Collections
 
         public async Task DeleteAlbumsByArtistIdAsync(int artistId)
         {
-            await _songCollection.DeleteSongsByArtistId(artistId);
+            await _songCollection.DeleteSongsByArtistIdAsync(artistId);
             await _albumRepository.DeleteAlbumsByArtistId(artistId);
         }
 

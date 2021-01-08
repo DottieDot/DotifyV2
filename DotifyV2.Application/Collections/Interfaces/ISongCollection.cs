@@ -10,7 +10,7 @@ namespace DotifyV2.Application.Collections.Interfaces
 
         Task DeleteSongsByAlbumIdAsync(int albumId);
 
-        Task DeleteSongsByArtistId(int artistId);
+        Task DeleteSongsByArtistIdAsync(int artistId);
 
         Task<IEnumerable<ISong>> GetSongsByAlbumIdAsync(int albumId);
 

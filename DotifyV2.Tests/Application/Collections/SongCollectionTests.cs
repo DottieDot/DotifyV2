@@ -28,6 +28,7 @@ namespace DotifyV2.Tests.Application.Collections
 		[TestMethod()]
 		public async Task GetSongsByAlbumIdAsyncTest_ValidId_OneSong()
         {
+			// Arrange
 			SongDataDto[] result =
 			{
 				new SongDataDto
@@ -44,8 +45,11 @@ namespace DotifyV2.Tests.Application.Collections
 				.Verifiable();
 
 			var songCollection = new SongCollection(songRepoMock.Object, _dependencyMapper);
+
+			// Act
 			var songs = (await songCollection.GetSongsByAlbumIdAsync(1)).ToArray();
 
+			// Assert
 			songRepoMock.Verify();
 			Assert.AreEqual(1, songs.Length);
 			Assert.AreEqual(1, songs[0].Id);
@@ -57,6 +61,7 @@ namespace DotifyV2.Tests.Application.Collections
 		[TestMethod()]
 		public async Task GetSongsByAlbumIdAsyncTest_ValidId_MultipleSongs()
 		{
+			// Arrange
 			SongDataDto[] result =
 			{
 				new SongDataDto
@@ -80,8 +85,11 @@ namespace DotifyV2.Tests.Application.Collections
 				.Verifiable();
 
 			var songCollection = new SongCollection(songRepoMock.Object, _dependencyMapper);
+			
+			// Act
 			var songs = (await songCollection.GetSongsByAlbumIdAsync(1)).ToArray();
 
+			// Assert
 			songRepoMock.Verify();
 			Assert.AreEqual(2, songs.Length);
 			for (int i = 0; i < 2; ++i)
@@ -96,14 +104,18 @@ namespace DotifyV2.Tests.Application.Collections
 		[TestMethod()]
 		public async Task GetSongsByAlbumIdAsyncTest_InvalidId_EmptyArray()
         {
+			// Arrange
 			var songRepoMock = new Mock<ISongRepository>();
 			songRepoMock.Setup(mock => mock.GetSongsByAlbumId(1))
 				.ReturnsAsync(new SongDataDto[] { })
 				.Verifiable();
 
 			var songCollection = new SongCollection(songRepoMock.Object, _dependencyMapper);
+
+			// Act
 			var songs = (await songCollection.GetSongsByAlbumIdAsync(1)).ToArray();
 
+			// Assert
 			songRepoMock.Verify();
 			Assert.AreEqual(0, songs.Length);
 		}
@@ -111,6 +123,7 @@ namespace DotifyV2.Tests.Application.Collections
 		[TestMethod()]
 		public async Task GetSongByIdAsyncTest_ValidId_CorrectData()
         {
+			// Arrange
 			var songRepoMock = new Mock<ISongRepository>();
 			songRepoMock.Setup(mock => mock.GetSongByIdAsync(1))
 				.ReturnsAsync(new SongDataDto
@@ -123,8 +136,11 @@ namespace DotifyV2.Tests.Application.Collections
 				.Verifiable();
 
 			var songCollection = new SongCollection(songRepoMock.Object, _dependencyMapper);
+
+			// Act
 			var song = await songCollection.GetSongByIdAsync(1);
 
+			// Assert
 			songRepoMock.Verify();
 			Assert.AreEqual(1, song.Id);
 			Assert.AreEqual("Test", song.Name);
@@ -135,48 +151,127 @@ namespace DotifyV2.Tests.Application.Collections
 		[TestMethod()]
 		public async Task GetSongByIdAsyncTest_InvalidId_Null()
 		{
+			// Arrange
 			var songRepoMock = new Mock<ISongRepository>();
 			songRepoMock.Setup(mock => mock.GetSongByIdAsync(1))
 				.ReturnsAsync(null as SongDataDto)
 				.Verifiable();
 
 			var songCollection = new SongCollection(songRepoMock.Object, _dependencyMapper);
+
+			// Act
 			var song = await songCollection.GetSongByIdAsync(1);
 
+			// Assert
 			songRepoMock.Verify();
 			Assert.AreEqual(null, song);
 		}
 
 		[TestMethod()]
-		public async Task GetLikedSongIdsByUserIdAsync_UserIdNoLikedSongs_EmptyArray()
+		public async Task GetLikedSongIdsByUserIdAsyncTest_UserIdNoLikedSongs_EmptyArray()
         {
+			// Arrange
 			var songRepoMock = new Mock<ISongRepository>();
 			songRepoMock.Setup(mock => mock.GetLikedSongIdsByUserIdAsync(1))
 				.ReturnsAsync(new int[] { })
 				.Verifiable();
 
 			var songCollection = new SongCollection(songRepoMock.Object, _dependencyMapper);
+
+			// Act
 			var likedSongs = (await songCollection.GetLikedSongIdsByUserIdAsync(1)).ToArray();
 
+			// Assert
 			songRepoMock.Verify();
 			Assert.AreEqual(0, likedSongs.Length);
 		}
 
 		[TestMethod()]
-		public async Task GetLikedSongIdsByUserIdAsync_UserIdLikedSongs_CorrectData()
+		public async Task GetLikedSongIdsByUserIdAsyncTest_UserIdLikedSongs_CorrectData()
 		{
+			// Arrange
 			var songRepoMock = new Mock<ISongRepository>();
 			songRepoMock.Setup(mock => mock.GetLikedSongIdsByUserIdAsync(1))
 				.ReturnsAsync(new int[] { 1, 2 })
 				.Verifiable();
 
 			var songCollection = new SongCollection(songRepoMock.Object, _dependencyMapper);
+
+			// Act
 			var likedSongs = (await songCollection.GetLikedSongIdsByUserIdAsync(1)).ToArray();
 
+			// Assert
 			songRepoMock.Verify();
 			Assert.AreEqual(2, likedSongs.Length);
 			Assert.AreEqual(1, likedSongs[0]);
 			Assert.AreEqual(2, likedSongs[1]);
+		}
+
+		[TestMethod()]
+		public async Task DeleteSongsByArtistIdAsyncTest()
+		{
+			// Arrange
+			var songRepoMock = new Mock<ISongRepository>();
+			songRepoMock.Setup(mock => mock.DeleteSongsByArtistId(1))
+				.Verifiable();
+
+			var songCollection = new SongCollection(songRepoMock.Object, _dependencyMapper);
+
+			// Act
+			await songCollection.DeleteSongsByArtistIdAsync(1);
+
+			// Assert
+			songRepoMock.Verify();
+		}
+
+		[TestMethod()]
+		public async Task DeleteSongsByAlbumIdAsyncTest()
+		{
+			// Arrange
+			var songRepoMock = new Mock<ISongRepository>();
+			songRepoMock.Setup(mock => mock.DeleteSongsByAlbumIdAsync(1))
+				.Verifiable();
+
+			var songCollection = new SongCollection(songRepoMock.Object, _dependencyMapper);
+
+			// Act
+			await songCollection.DeleteSongsByAlbumIdAsync(1);
+
+			// Assert
+			songRepoMock.Verify();
+		}
+
+		[TestMethod()]
+		public async Task CreateSongAsyncTest()
+		{
+			// Arrange
+			var songRepoMock = new Mock<ISongRepository>();
+			songRepoMock.Setup(mock => mock.CreateSongAsync(It.Is((NewSongDataDto dataDto) => (
+					dataDto.AlbumId == 1 &&
+					dataDto.Name == "Test" &&
+					dataDto.Duration == 1337
+				))))
+				.ReturnsAsync(new SongDataDto
+				{
+					Id = 1,
+					AlbumId = 1,
+					Name = "Test",
+					FileName = "",
+					Duration = 1337,
+				})
+				.Verifiable();
+
+			var songCollection = new SongCollection(songRepoMock.Object, _dependencyMapper);
+
+			// Act
+			var song = await songCollection.CreateSongAsync(1, "Test", 1337);
+
+			// Assert
+			songRepoMock.Verify();
+			Assert.AreEqual(1, song.Id);
+			Assert.AreEqual("Test", song.Name);
+			Assert.AreEqual("", song.FileName);
+			Assert.AreEqual(1337, song.Duration);
 		}
 	}
 }

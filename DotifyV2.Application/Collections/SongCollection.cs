@@ -36,7 +36,7 @@ namespace DotifyV2.Application.Collections
         public Task<IEnumerable<int>> GetLikedSongIdsByUserIdAsync(int userId)
             => _songRepository.GetLikedSongIdsByUserIdAsync(userId);
 
-        public Task DeleteSongsByArtistId(int artistId)
+        public Task DeleteSongsByArtistIdAsync(int artistId)
             => _songRepository.DeleteSongsByArtistId(artistId);
 
         public Task DeleteSongsByAlbumIdAsync(int albumId)
