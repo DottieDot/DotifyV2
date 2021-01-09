@@ -3,6 +3,7 @@ import React, { MutableRefObject, ReactElement } from 'react'
 import AddPropsWhenScrolled from './AddPropsWhenScrolled'
 import LikeButton from './LikeButton'
 import { MediaTypes } from '../common'
+import { MediaCover } from '.'
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -20,7 +21,7 @@ const useStyles = makeStyles(theme => ({
       height: '1fr',
     },
     [theme.breakpoints.up('md')]: {
-      paddingTop: '100%',
+
     }
   },
   cardContent: {
@@ -33,8 +34,6 @@ const useStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(1)
   }
 }))
-
-
 
 interface CommonProps {
   title: string
@@ -67,7 +66,12 @@ export default ({ title, subtitle, image, playable, onPlay, shareable, onShare, 
   const content = (
     <Card className={classes.card}>
       <CardMedia className={classes.cover}>
-
+        <MediaCover
+          name={title}
+          coverArt={null}
+          variant="flat"
+          color="primary"
+        />
       </CardMedia>
       <CardContent className={classes.cardContent}>
         <Grid container spacing={2}>
