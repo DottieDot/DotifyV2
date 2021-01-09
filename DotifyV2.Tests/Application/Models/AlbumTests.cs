@@ -15,6 +15,7 @@ namespace DotifyV2.Tests.Application.Models
         [TestMethod()]
         public async Task GetArtistAsyncTest()
         {
+            // Arrange
             var artistData = new ArtistDataDto
             {
                 Id = 1,
@@ -36,8 +37,10 @@ namespace DotifyV2.Tests.Application.Models
                 CoverArt = "",
             }, null, artistCollectionMock.Object, null);
 
+            // Act
             var artist = await album.GetArtistAsync();
 
+            // Assert
             artistCollectionMock.Verify();
             Assert.AreEqual(1, artist.Id);
         }
@@ -45,6 +48,7 @@ namespace DotifyV2.Tests.Application.Models
         [TestMethod()]
         public async Task GetSongsAsyncTest()
         {
+            // Arrange
             var result = new SongDataDto
             {
                 Id = 1,
@@ -67,8 +71,11 @@ namespace DotifyV2.Tests.Application.Models
                 Name = "Test",
                 CoverArt = ""
             }, null, null, songCollectionMock.Object);
+
+            // Act
             var songs = (await album.GetSongsAsync()).ToArray();
 
+            // Assert
             songCollectionMock.Verify();
             Assert.AreEqual(1, songs.Length);
             Assert.AreEqual(1, songs[0].Id);
@@ -77,6 +84,7 @@ namespace DotifyV2.Tests.Application.Models
         [TestMethod()]
         public async Task LikeAsyncTest()
         {
+            // Arrange
             var albumRepoMock = new Mock<IAlbumRepository>();
             albumRepoMock
                 .Setup(mock => mock.AddUserLikeAsync(1, 1))
@@ -90,8 +98,11 @@ namespace DotifyV2.Tests.Application.Models
                 Name = "Test",
                 CoverArt = ""
             }, albumRepoMock.Object, null, null);
+
+            // Act
             var success = await album.LikeAsync(1);
 
+            // Assert
             albumRepoMock.Verify();
             Assert.AreEqual(true, success);
         }
@@ -99,6 +110,7 @@ namespace DotifyV2.Tests.Application.Models
         [TestMethod()]
         public async Task RemoveLikeAsyncTest()
         {
+            // Arrange
             var albumRepoMock = new Mock<IAlbumRepository>();
             albumRepoMock
                 .Setup(mock => mock.RemoveUserLikeAsync(1, 1))
@@ -112,8 +124,11 @@ namespace DotifyV2.Tests.Application.Models
                 Name = "Test",
                 CoverArt = ""
             }, albumRepoMock.Object, null, null);
+
+            // Accept
             var success = await album.RemoveLikeAsync(1);
 
+            // Assert
             albumRepoMock.Verify();
             Assert.AreEqual(true, success);
         }

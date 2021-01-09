@@ -14,6 +14,7 @@ namespace DotifyV2.Tests.Application.Models
         [TestMethod()]
         public async Task GetAlbumAsyncTest()
         {
+            // Arrange
             var result = new AlbumDataDto
             {
                 Id = 1,
@@ -36,8 +37,11 @@ namespace DotifyV2.Tests.Application.Models
                 FileName = "",
                 Duration = 0,
             }, null, albumCollectionMock.Object, null);
+
+            // Act
             var album = await song.GetAlbumAsync();
 
+            // Assert
             albumCollectionMock.Verify();
             Assert.AreEqual(1, song.Id);
         }
@@ -45,6 +49,7 @@ namespace DotifyV2.Tests.Application.Models
         [TestMethod()]
         public async Task LikeAsyncTest()
         {
+            // Arrange
             var songRepoMock = new Mock<ISongRepository>();
             songRepoMock
                 .Setup(mock => mock.AddUserLikeAsync(1, 1))
@@ -59,8 +64,11 @@ namespace DotifyV2.Tests.Application.Models
                 FileName = "",
                 Duration = 0,
             }, songRepoMock.Object, null, null);
+
+            // Act
             var success = await song.LikeAsync(1);
 
+            // Assert
             songRepoMock.Verify();
             Assert.AreEqual(true, success);
         }
@@ -68,6 +76,7 @@ namespace DotifyV2.Tests.Application.Models
         [TestMethod()]
         public async Task RemoveLikeAsyncTest()
         {
+            // Arrange
             var songRepoMock = new Mock<ISongRepository>();
             songRepoMock
                 .Setup(mock => mock.RemoveUserLikeAsync(1, 1))
@@ -82,8 +91,11 @@ namespace DotifyV2.Tests.Application.Models
                 FileName = "",
                 Duration = 0,
             }, songRepoMock.Object, null, null);
+
+            // Act
             var success = await song.RemoveLikeAsync(1);
 
+            // Assert
             songRepoMock.Verify();
             Assert.AreEqual(true, success);
         }
