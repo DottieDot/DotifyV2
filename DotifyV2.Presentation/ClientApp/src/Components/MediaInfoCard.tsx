@@ -1,9 +1,10 @@
-import { Card, CardContent, CardMedia, Grid, makeStyles, Typography, Button, useTheme, useMediaQuery, Portal } from '@material-ui/core'
-import React, { MutableRefObject, ReactElement } from 'react'
+import { Card, CardContent, CardMedia, Grid, makeStyles, Typography, Button, useTheme, useMediaQuery, Portal, IconButton, Menu, MenuItem } from '@material-ui/core'
+import React, { MutableRefObject, ReactElement, useCallback, useState, MouseEvent } from 'react'
 import AddPropsWhenScrolled from './AddPropsWhenScrolled'
 import LikeButton from './LikeButton'
 import { MediaTypes } from '../common'
 import { MediaCover } from '.'
+import { MoreVert as MoreVertIcon } from '@material-ui/icons'
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -17,6 +18,7 @@ const useStyles = makeStyles(theme => ({
   cover: {
     background: theme.palette.primary.main,
     [theme.breakpoints.down('sm')]: {
+      minWidth: 100,
       width: 100,
       height: '1fr',
     },
@@ -32,21 +34,51 @@ const useStyles = makeStyles(theme => ({
   },
   playButton: {
     marginBottom: theme.spacing(1)
+  },
+  buttons: {
+    [theme.breakpoints.down('xs')]: {
+      display: 'none'
+    }
+  },
+  menuButton: {
+    [theme.breakpoints.up('sm')]: {
+      display: 'none'
+    }
+  },
+  title: {
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    [theme.breakpoints.up('sm')]: {
+      marginRight: theme.spacing(1),
+    }
+  },
+  subtitle: {
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+  },
+  titleContainer: {
+    display: 'grid',
+    [theme.breakpoints.down('xs')]: {
+      gridTemplateColumns: '1fr auto'
+    },
+    [theme.breakpoints.up('sm')]: {
+      gridTemplateColumns: 'auto 1fr'
+    }
+  },
+  titleControls: {
+    whiteSpace: 'nowrap',
   }
 }))
 
 interface CommonProps {
   title: string
   subtitle?: ReactElement
-  image: ReactElement|null
   stickyContainer: MutableRefObject<null>
   type: MediaTypes,
   id: number
 }
-
-type LikeProps =
-  | { likeable?: false, onLike?: never, liked?: never }
-  | { likeable: true, onLike: (liked: boolean) => void, liked: boolean }
 
 type ShareProps =
   | { shareable?: false, onShare?: never }
@@ -56,12 +88,31 @@ type PlayProps =
   | { playable?: false, onPlay?: never }
   | { playable: true, onPlay: () => void }
 
-type Props = CommonProps & LikeProps & ShareProps & PlayProps
+type Props = CommonProps & ShareProps & PlayProps
 
-export default ({ title, subtitle, image, playable, onPlay, shareable, onShare, stickyContainer, type, id }: Props) => {
+export default ({ title, subtitle, playable, onPlay, shareable, onShare, stickyContainer, type, id }: Props) => {
   const classes = useStyles()
   const theme = useTheme()
   const sticky = useMediaQuery(theme.breakpoints.down('sm'))
+  const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null)
+
+  const openMenu = useCallback((event: MouseEvent<HTMLButtonElement>) => {
+    setMenuAnchorEl(event.currentTarget)
+  }, [setMenuAnchorEl])
+
+  const closeMenu = useCallback(() => {
+    setMenuAnchorEl(null)
+  }, [setMenuAnchorEl])
+
+  const handlePlay = useCallback(() => {
+    setMenuAnchorEl(null)
+    onPlay && onPlay()
+  }, [setMenuAnchorEl, onPlay])
+
+  const handleShare = useCallback(() => {
+    setMenuAnchorEl(null)
+    onShare && onShare()
+  }, [setMenuAnchorEl, onShare])
 
   const content = (
     <Card className={classes.card}>
@@ -75,15 +126,32 @@ export default ({ title, subtitle, image, playable, onPlay, shareable, onShare, 
       </CardMedia>
       <CardContent className={classes.cardContent}>
         <Grid container spacing={2}>
-          <Grid item md={12} sm={6}>
-            <Typography variant="h5" component="h1">
-              {title} <LikeButton type={type} id={id} />
-            </Typography>
-            <Typography variant="subtitle1" color="textSecondary" gutterBottom>
+          <Grid item md={12} sm={8} xs={12}>
+            <div className={classes.titleContainer}>
+              <Typography className={classes.title} variant="h5" component="h1">
+                {title}
+              </Typography>
+              <div className={classes.titleControls}>
+                <LikeButton type={type} id={id} />
+                <IconButton
+                  size="small"
+                  onClick={openMenu}
+                  className={classes.menuButton}
+                >
+                  <MoreVertIcon />
+                </IconButton>
+              </div>
+            </div>
+            <Typography 
+              className={classes.subtitle}
+              variant="subtitle1" 
+              color="textSecondary" 
+              gutterBottom
+            >
               {subtitle}
             </Typography>
           </Grid>
-          <Grid item xs>
+          <Grid className={classes.buttons} item xs>
             {playable && (
               <Button
                 className={classes.playButton}
@@ -106,6 +174,19 @@ export default ({ title, subtitle, image, playable, onPlay, shareable, onShare, 
             )}
           </Grid>
         </Grid>
+        <Menu
+          open={!!menuAnchorEl}
+          anchorEl={menuAnchorEl}
+          onClose={closeMenu}
+          keepMounted
+        >
+          {playable && (
+            <MenuItem onClick={handlePlay}>Play</MenuItem>
+          )}
+          {shareable && (
+            <MenuItem onClick={handleShare}>Share</MenuItem>
+          )}
+        </Menu>
       </CardContent>
     </Card>
   )
@@ -118,7 +199,7 @@ export default ({ title, subtitle, image, playable, onPlay, shareable, onShare, 
         </AddPropsWhenScrolled>
       </Portal>
     )
-  } 
+  }
   else {
     return content
   }

@@ -166,7 +166,6 @@ export default () => {
               )}
               type="album"
               id={album?.id ?? 0}
-              image={null}
               onPlay={() => { }}
               onShare={onShare}
               stickyContainer={stickyMediaInfoCardContainer}

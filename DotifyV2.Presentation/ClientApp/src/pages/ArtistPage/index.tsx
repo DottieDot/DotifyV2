@@ -111,7 +111,6 @@ export default () => {
               title={artist?.name ?? ''}
               type="artist"
               id={artist?.id ?? 0}
-              image={null}
               onShare={onShare}
               stickyContainer={stickyMediaInfoCardContainer}
               shareable

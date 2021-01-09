@@ -1,5 +1,5 @@
 import { IconButton, makeStyles, Menu, MenuItem, TableCell, TableRow } from '@material-ui/core'
-import { MoreHoriz as MoreHorizIcon } from '@material-ui/icons'
+import { MoreVert as MoreVertIcon } from '@material-ui/icons'
 import React, { useCallback, useState, MouseEvent, Fragment } from 'react'
 import LikeButton from '../LikeButton'
 import { ArtistDescritpion } from '../../api/model'
@@ -82,7 +82,7 @@ export default ({ songNr, name, duration, artist, songId, management, onSongDele
             <LikeButton type="song" id={songId} />
             {management && (
               <IconButton size="small" onClick={openMenu}>
-                <MoreHorizIcon />
+                <MoreVertIcon />
               </IconButton>
             )}
             <Menu
