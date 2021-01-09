@@ -3,9 +3,10 @@ import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react
 import { useParams } from 'react-router'
 import { getArtist } from '../../api/endpoints'
 import { AlbumResponse, Artist } from '../../api/model'
-import { Album, AppBar, MediaGrid, MediaInfoCard } from '../../components'
+import { Album, AppBar, MediaGrid, MediaInfoCard, NotFound } from '../../components'
 import { useAuthenticatedUser, useShare } from '../../hooks'
 import NewAlbumDialog from './NewAlbumDialog'
+import Skeleton from './Skeleton'
 
 interface Params {
   artist: string
@@ -35,20 +36,28 @@ const useStyles = makeStyles(theme => ({
 export default () => {
   const classes = useStyles()
   const user = useAuthenticatedUser()
+  const [notFound, setNotFound] = useState(false)
   const [newAlbumDialog, setNewAlbumDialog] = useState(false)
   const [artist, setArtist] = useState<Artist | null>(null)
   const { artist: artistId } = useParams<Params>()
   const stickyMediaInfoCardContainer = useRef(null)
   const share = useShare()
+  const loading = notFound || !artist
 
   useEffect(() => {
     (async () => {
       if (typeof (+artistId) !== 'number')
         return
 
-      setArtist(await getArtist(+artistId))
+      const artist = await getArtist(+artistId)
+      if (artist !== null) {
+        setArtist(artist)
+      }
+      else {
+        setNotFound(true)
+      }
     })()
-  }, [artistId, setArtist])
+  }, [artistId, setArtist, setNotFound])
 
   const onShare = useCallback(() => {
     if (artist) {
@@ -72,6 +81,20 @@ export default () => {
       })
     }
   }, [setNewAlbumDialog, setArtist, artist])
+
+  if (loading) {
+    return (
+      <Skeleton />
+    )
+  }
+
+  if (notFound) {
+    return (
+      <NotFound
+        text="Artist not found."
+      />
+    )
+  }
 
   return (
     <Fragment>
