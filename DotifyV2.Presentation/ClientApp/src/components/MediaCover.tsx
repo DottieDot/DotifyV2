@@ -10,19 +10,11 @@ interface Props {
 }
 
 const useStyles = makeStyles({
-  root: {
-
-  },
-  buttonBase: {
-    width: '100%'
-  },
-  ripple: {
-
-  },
   paper: {
     paddingTop: '100%',
     position: 'relative',
     width: '100%',
+    borderRadius: 0,
   },
   coverArt: {
     position: 'absolute',

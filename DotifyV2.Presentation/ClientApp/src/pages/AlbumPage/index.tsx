@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Container, Grid, Link, makeStyles, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core'
+import { Button, ButtonGroup, Container, Grid, Link, makeStyles, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core'
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router'
 import { Link as RouterLink } from 'react-router-dom'
@@ -6,9 +6,10 @@ import { getAlbum } from '../../api/endpoints'
 import { Album, Song } from '../../api/model'
 import { AppBar, MediaInfoCard, NotFound, SongTableRow } from '../../components'
 import { useAuthenticatedUser, useShare } from '../../hooks'
-import RenameAlbumDialog from './RenameAlbumDialog'
 import DeleteAlbumDialog from './DeleteAlbumDialog'
 import NewSongDialog from './NewSongDialog'
+import RenameAlbumDialog from './RenameAlbumDialog'
+import Skeleton from './Skeleton'
 
 const useStyles = makeStyles(theme => ({
   stickyMediaInfroCardContainer: {
@@ -43,6 +44,7 @@ export default () => {
   const { album: albumId } = useParams<Params>()
   const stickyMediaInfoCardContainer = useRef(null)
   const share = useShare()
+  const loading = notFound || !album
 
   useEffect(() => {
     (async () => {
@@ -125,6 +127,12 @@ export default () => {
       })
     }
   }, [setNewSongDialog, album, setAlbum])
+
+  if (loading) {
+    return (
+      <Skeleton />
+    )
+  }
 
   if (notFound) {
     return (
@@ -214,9 +222,10 @@ export default () => {
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell>#</TableCell>
+                    <TableCell width={30}>#</TableCell>
                     <TableCell>Name</TableCell>
                     <TableCell align="right">Duration</TableCell>
+                    <TableCell />
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -241,4 +250,3 @@ export default () => {
     </Fragment>
   )
 }
-
