@@ -73,7 +73,10 @@ export default ({ name, coverArt, variant = 'outlined', color = 'paper' }: Props
 
   return (
     <Paper 
-      style={{ background: colors[color] }}
+      style={{ 
+        background: colors[color], 
+        color: theme.palette.getContrastText(colors[color]) 
+      }}
       variant={paperVariant} 
       elevation={elevation} 
       className={classes.paper}
