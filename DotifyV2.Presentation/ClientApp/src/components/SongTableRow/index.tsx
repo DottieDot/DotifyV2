@@ -40,7 +40,8 @@ export default ({ songNr, name, duration, artist, songId, management, onSongDele
 
   const openDeleteSongDialog = useCallback(() => {
     setDeleteSongDialog(true)
-  }, [setDeleteSongDialog])
+    closeMenu()
+  }, [setDeleteSongDialog, closeMenu])
 
   const closeDeleteSongDialig = useCallback((deleted: boolean) => {
     setDeleteSongDialog(false)
@@ -49,7 +50,8 @@ export default ({ songNr, name, duration, artist, songId, management, onSongDele
 
   const openUpdateSongDialog = useCallback(() => {
     setUpdateSongDialog(true)
-  }, [setUpdateSongDialog])
+    closeMenu()
+  }, [setUpdateSongDialog, closeMenu])
 
   const closeUpdateSongDialog = useCallback((name: string | null, duration: number | null) => {
     setUpdateSongDialog(false)

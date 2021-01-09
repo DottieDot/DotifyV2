@@ -18,7 +18,8 @@ const useStyles = makeStyles(theme => ({
   },
   stickyMediaInfroCardContainer: {
     position: 'sticky',
-    top: 75
+    top: 75,
+    zIndex: 1,
   },
   cardGridItem: {
     [theme.breakpoints.up('md')]: {
