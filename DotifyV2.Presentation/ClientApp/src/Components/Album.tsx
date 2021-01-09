@@ -1,4 +1,4 @@
-import { ButtonBase, makeStyles, Paper, Typography } from '@material-ui/core'
+import { ButtonBase, makeStyles, Typography } from '@material-ui/core'
 import React, { useCallback } from 'react'
 import { useHistory } from 'react-router'
 import MediaCover from './MediaCover'

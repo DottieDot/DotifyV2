@@ -1,11 +1,10 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@material-ui/core'
-import React, { ChangeEvent, FormEvent, useCallback, useState } from 'react'
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core'
+import React, { useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router'
 import * as endpoints from '../../api/endpoints'
-import { showAlert } from '../../store/actions/Alerts'
-import { setUserArtistId } from '../../store/actions/User'
 import { useAuthenticatedUser } from '../../hooks'
+import { showAlert } from '../../store/actions/Alerts'
 
 interface Props {
   open: boolean
@@ -38,7 +37,7 @@ export default ({ open, onClose, albumId }: Props) => {
       dispatch(showAlert('Failed to delete album', 'error'))
       setSubmitting(false)
     }
-  }, [setSubmitting, dispatch, history, user, albumId])
+  }, [setSubmitting, dispatch, history, user, albumId, handleClose])
 
   return (
     <Dialog open={open} onClose={handleClose}>

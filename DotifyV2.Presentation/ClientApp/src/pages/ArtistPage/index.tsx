@@ -94,7 +94,7 @@ export default () => {
             />
           </Grid>
           <Grid item xs>
-            {(user?.artist_id == artist?.id) && (
+            {(user?.artist_id === artist?.id) && (
               <Fragment>
                 <Button
                   variant="contained"

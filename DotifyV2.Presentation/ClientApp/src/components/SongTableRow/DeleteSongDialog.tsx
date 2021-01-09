@@ -1,10 +1,9 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@material-ui/core'
-import React, { ChangeEvent, FormEvent, useCallback, useState } from 'react'
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core'
+import React, { useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useHistory } from 'react-router'
 import * as endpoints from '../../api/endpoints'
-import { showAlert } from '../../store/actions/Alerts'
 import { useAuthenticatedUser } from '../../hooks'
+import { showAlert } from '../../store/actions/Alerts'
 
 interface Props {
   open: boolean
@@ -16,7 +15,6 @@ export default ({ open, onClose, songId }: Props) => {
   const user = useAuthenticatedUser()
   const [submitting, setSubmitting] = useState(false)
   const dispatch = useDispatch()
-  const history = useHistory()
 
   const handleClose = useCallback(() => {
     if (!submitting) {
@@ -36,7 +34,7 @@ export default ({ open, onClose, songId }: Props) => {
       dispatch(showAlert('Failed to delete song', 'error'))
       setSubmitting(false)
     }
-  }, [setSubmitting, dispatch, history, user, songId])
+  }, [setSubmitting, dispatch, user, songId, onClose])
 
   return (
     <Dialog open={open} onClose={handleClose}>

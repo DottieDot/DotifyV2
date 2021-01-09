@@ -46,7 +46,7 @@ export default () => {
     if (!formik.values['username']) {
       formik.setFieldValue('username', user?.username)
     }
-  }, [user])
+  }, [user, formik])
 
   const sharedProps = useCallback((name: 'username' | 'password') => ({
     fullWidth: true,

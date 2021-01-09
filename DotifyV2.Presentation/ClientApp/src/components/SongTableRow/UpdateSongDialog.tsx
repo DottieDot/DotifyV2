@@ -1,7 +1,6 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@material-ui/core'
 import React, { ChangeEvent, FormEvent, useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useHistory } from 'react-router'
 import * as endpoints from '../../api/endpoints'
 import { showAlert } from '../../store/actions/Alerts'
 
@@ -18,7 +17,6 @@ export default ({ open, onClose, currentName, currentDuration, songId }: Props) 
   const [duration, setDuration] = useState<number|string>('')
   const [submitting, setSubmitting] = useState(false)
   const dispatch = useDispatch()
-  const history = useHistory()
 
   const handleClose = useCallback(() => {
     if (!submitting) {
@@ -51,7 +49,7 @@ export default ({ open, onClose, currentName, currentDuration, songId }: Props) 
       dispatch(showAlert('Failed to update song', 'error'))
       setSubmitting(false)
     }
-  }, [setSubmitting, name, history, dispatch, duration])
+  }, [setSubmitting, name, onClose, songId, dispatch, duration])
 
   return (
     <Dialog open={open} onClose={handleClose}>

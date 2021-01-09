@@ -1,7 +1,6 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@material-ui/core'
 import React, { ChangeEvent, FormEvent, useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useHistory } from 'react-router'
 import * as endpoints from '../../api/endpoints'
 import { AlbumResponse } from '../../api/model'
 import { showAlert } from '../../store/actions/Alerts'
@@ -15,7 +14,6 @@ export default ({ open, onClose }: Props) => {
   const [name, setName] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const dispatch = useDispatch()
-  const history = useHistory()
 
   const handleClose = useCallback(() => {
     if (!submitting) {
@@ -42,7 +40,7 @@ export default ({ open, onClose }: Props) => {
       dispatch(showAlert('Failed to create album', 'error'))
       setSubmitting(false)
     }
-  }, [setSubmitting, name, history, dispatch])
+  }, [setSubmitting, name, dispatch, onClose])
 
   return (
     <Dialog open={open} onClose={handleClose}>

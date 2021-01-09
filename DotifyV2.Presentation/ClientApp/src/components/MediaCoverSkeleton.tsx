@@ -1,7 +1,6 @@
-import { makeStyles, Paper, Typography, useTheme } from '@material-ui/core'
+import { makeStyles, Paper } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
 import React from 'react'
-import useInitials from '../hooks/useInitials'
 
 interface Props {
   variant?: 'outlined' | 'elevation' | 'flat'
@@ -29,7 +28,6 @@ const useStyles = makeStyles({
 
 export default ({ variant = 'outlined', color = 'paper' }: Props) => {
   const classes = useStyles()
-  const theme = useTheme()
 
   const paperVariant = variant === 'flat' ? 'elevation' : variant
   const elevation = variant === 'elevation' ? 1 : 0

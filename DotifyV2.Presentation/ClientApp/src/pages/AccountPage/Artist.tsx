@@ -1,10 +1,9 @@
-import { Button, ButtonGroup, Divider, TextField, useTheme } from '@material-ui/core'
+import { Button, ButtonGroup } from '@material-ui/core'
 import React, { Fragment, useCallback, useState } from 'react'
-import { Spacing } from '../../components'
-import { useAuthenticatedUser } from '../../hooks'
 import { Link } from 'react-router-dom'
-import NewArtistDialog from './NewArtistDialog'
+import { useAuthenticatedUser } from '../../hooks'
 import DeleteArtistDialog from './DeleteArtistDialog'
+import NewArtistDialog from './NewArtistDialog'
 
 export default () => {
   const user = useAuthenticatedUser()

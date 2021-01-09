@@ -1,7 +1,6 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@material-ui/core'
 import React, { ChangeEvent, FormEvent, useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useHistory } from 'react-router'
 import * as endpoints from '../../api/endpoints'
 import { showAlert } from '../../store/actions/Alerts'
 
@@ -16,7 +15,6 @@ export default ({ open, onClose, currentName, albumId }: Props) => {
   const [name, setName] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const dispatch = useDispatch()
-  const history = useHistory()
 
   const handleClose = useCallback(() => {
     if (!submitting) {
@@ -43,7 +41,7 @@ export default ({ open, onClose, currentName, albumId }: Props) => {
       dispatch(showAlert('Failed to rename album', 'error'))
       setSubmitting(false)
     }
-  }, [setSubmitting, name, history, dispatch])
+  }, [setSubmitting, name, dispatch, albumId, onClose])
 
   return (
     <Dialog open={open} onClose={handleClose}>

@@ -1,7 +1,6 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@material-ui/core'
-import React, { ChangeEvent, FormEvent, useCallback, useState } from 'react'
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core'
+import React, { useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useHistory } from 'react-router'
 import * as endpoints from '../../api/endpoints'
 import { showAlert } from '../../store/actions/Alerts'
 import { setUserArtistId } from '../../store/actions/User'
@@ -34,7 +33,7 @@ export default ({ open, onClose }: Props) => {
       dispatch(showAlert('Failed to delete artist', 'error'))
       setSubmitting(false)
     }
-  }, [setSubmitting, dispatch])
+  }, [setSubmitting, dispatch, handleClose])
 
   return (
     <Dialog open={open} onClose={handleClose}>
