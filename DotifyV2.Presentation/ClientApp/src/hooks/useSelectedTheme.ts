@@ -1,4 +1,4 @@
 import { useTypedSelector } from '../store'
 
-export default () => 
+export default (): 'system' | 'dark' | 'light' => 
   useTypedSelector(state => state.Settings.theme)

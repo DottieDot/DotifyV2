@@ -1,7 +1,7 @@
 import { Divider, MenuItem, TextField, Typography } from '@material-ui/core'
 import React, { ChangeEvent, Fragment, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
-import { useSelectedTheme } from '../../common'
+import { useSelectedTheme } from '../../hooks'
 import { Spacing } from '../../components'
 import { setTheme } from '../../store/actions/Settings'
 

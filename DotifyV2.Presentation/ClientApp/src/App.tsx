@@ -10,7 +10,7 @@ import { setApiToken } from './api/apiRequest'
 import Notifier from './Notifier'
 import { SnackbarProvider } from 'notistack'
 import { loadUserInfo } from './store/actions/User'
-import { useSelectedTheme } from './common'
+import { useSelectedTheme } from './hooks'
 
 const lightTheme: ThemeOptions = {
   palette: {

@@ -6,7 +6,7 @@ import rootReducer from './reducers'
 
 export type RootState = ReturnType<typeof rootReducer>
 
-export const useTypedSelector = (selector: (state: RootState) => any) => useSelector(selector)
+export const useTypedSelector = <TSelected>(selector: (state: RootState) => TSelected ) => useSelector(selector)
 
 export const store = createStore(
   rootReducer,
