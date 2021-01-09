@@ -36,12 +36,6 @@ namespace DotifyV2.Application.Collections
         public Task<IEnumerable<int>> GetLikedSongIdsByUserIdAsync(int userId)
             => _songRepository.GetLikedSongIdsByUserIdAsync(userId);
 
-        public Task DeleteSongsByArtistIdAsync(int artistId)
-            => _songRepository.DeleteSongsByArtistId(artistId);
-
-        public Task DeleteSongsByAlbumIdAsync(int albumId)
-            => _songRepository.DeleteSongsByAlbumIdAsync(albumId);
-
         public async Task<ISong> CreateSongAsync(int albumId, string name, int duration)
         {
             var data = await _songRepository.CreateSongAsync(new NewSongDataDto

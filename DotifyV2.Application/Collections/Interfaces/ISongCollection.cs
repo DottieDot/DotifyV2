@@ -8,10 +8,6 @@ namespace DotifyV2.Application.Collections.Interfaces
     {
         Task<ISong> CreateSongAsync(int albumId, string name, int duration);
 
-        Task DeleteSongsByAlbumIdAsync(int albumId);
-
-        Task DeleteSongsByArtistIdAsync(int artistId);
-
         Task<IEnumerable<ISong>> GetSongsByAlbumIdAsync(int albumId);
 
         Task<ISong> GetSongByIdAsync(int songId);

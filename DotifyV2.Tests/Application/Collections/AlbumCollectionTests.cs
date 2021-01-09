@@ -78,7 +78,7 @@ namespace DotifyV2.Tests.Application.Collections
 				.ReturnsAsync(result)
 				.Verifiable();
 
-			var albumCollection = new AlbumCollection(albumRepoMock.Object, null, _dependencyMapper);
+			var albumCollection = new AlbumCollection(albumRepoMock.Object, _dependencyMapper);
 
 			// Act
 			var albums = (await albumCollection.GetAlbumsByArtistIdAsync(1)).ToArray();
@@ -103,7 +103,7 @@ namespace DotifyV2.Tests.Application.Collections
 				.ReturnsAsync(new AlbumDataDto[] { })
 				.Verifiable();
 
-			var albumCollection = new AlbumCollection(albumRepo.Object, null, _dependencyMapper);
+			var albumCollection = new AlbumCollection(albumRepo.Object, _dependencyMapper);
 
 			// Act
 			var albums = (await albumCollection.GetAlbumsByArtistIdAsync(1)).ToArray();
@@ -127,7 +127,7 @@ namespace DotifyV2.Tests.Application.Collections
 				})
 				.Verifiable();
 
-			var albumCollection = new AlbumCollection(albumRepoMock.Object, null, _dependencyMapper);
+			var albumCollection = new AlbumCollection(albumRepoMock.Object, _dependencyMapper);
 
 			// Act
 			var album = await albumCollection.GetAlbumByIdAsync(1);
@@ -148,7 +148,7 @@ namespace DotifyV2.Tests.Application.Collections
 				.ReturnsAsync(null as AlbumDataDto)
 				.Verifiable();
 
-			var albumCollection = new AlbumCollection(albumRepoMock.Object, null, _dependencyMapper);
+			var albumCollection = new AlbumCollection(albumRepoMock.Object, _dependencyMapper);
 			
 			// Act
 			var album = await albumCollection.GetAlbumByIdAsync(1);
@@ -167,7 +167,7 @@ namespace DotifyV2.Tests.Application.Collections
 				.ReturnsAsync(new int[] { })
 				.Verifiable();
 
-			var albumCollection = new AlbumCollection(albumRepoMock.Object, null, _dependencyMapper);
+			var albumCollection = new AlbumCollection(albumRepoMock.Object, _dependencyMapper);
 
 			// Act
 			var likedAlbums = (await albumCollection.GetLikedAlbumIdsByUserIdAsync(1)).ToArray();
@@ -186,7 +186,7 @@ namespace DotifyV2.Tests.Application.Collections
 				.ReturnsAsync(new int[] { 1, 2 })
 				.Verifiable();
 
-			var albumCollection = new AlbumCollection(albumRepoMock.Object, null, _dependencyMapper);
+			var albumCollection = new AlbumCollection(albumRepoMock.Object, _dependencyMapper);
 
 			// Act
 			var likedAlbums = (await albumCollection.GetLikedAlbumIdsByUserIdAsync(1)).ToArray();
@@ -216,7 +216,7 @@ namespace DotifyV2.Tests.Application.Collections
 				})
 				.Verifiable();
 
-			var albumCollection = new AlbumCollection(albumRepoMock.Object, null, _dependencyMapper);
+			var albumCollection = new AlbumCollection(albumRepoMock.Object, _dependencyMapper);
 
 			// Act
 			var album = await albumCollection.CreateAlbumAsync(1, "Test");
@@ -225,27 +225,6 @@ namespace DotifyV2.Tests.Application.Collections
 			albumRepoMock.Verify();
 			Assert.AreEqual(1, album.Id);
 			Assert.AreEqual("Test", album.Name);
-		}
-
-		[TestMethod()]
-		public async Task DeleteAlbumsByArtistIdAsyncTest()
-		{
-			// Arrange
-			var albumRepoMock = new Mock<IAlbumRepository>();
-			albumRepoMock.Setup(mock => mock.DeleteAlbumsByArtistId(1))
-				.Verifiable();
-			var songCollectionMock = new Mock<ISongCollection>();
-			songCollectionMock.Setup(mock => mock.DeleteSongsByArtistIdAsync(1))
-				.Verifiable();
-
-			var albumCollection = new AlbumCollection(albumRepoMock.Object, songCollectionMock.Object, _dependencyMapper);
-
-			// Act
-			await albumCollection.DeleteAlbumsByArtistIdAsync(1);
-
-			// Assert
-			albumRepoMock.Verify();
-			songCollectionMock.Verify();
 		}
 	}
 }

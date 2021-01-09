@@ -34,11 +34,8 @@ namespace DotifyV2.Application.Models
         public Task<ISong> CreateSongAsync(string name, int duration)
             => _songCollection.CreateSongAsync(Id, name, duration);
 
-        public async Task<bool> DeleteAsync()
-        {
-            await _songCollection.DeleteSongsByAlbumIdAsync(Id);
-            return await _albumRepository.DeleteAlbumById(Id);
-        }
+        public Task<bool> DeleteAsync()
+            => _albumRepository.DeleteAlbumById(Id);
 
         public Task<IArtist> GetArtistAsync()
             => _artistCollection.GetArtistByIdAsync(_artistId);

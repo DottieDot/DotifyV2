@@ -51,13 +51,6 @@ namespace DotifyV2.Persistence.Repositories
         public Task<IEnumerable<int>> GetLikedAlbumIdsByUserIdAsync(int userId)
             => _likesTable.GetAllByBColumn(userId);
 
-        public Task DeleteAlbumsByArtistId(int artistId)
-        {
-            return _db.Query("albums")
-                .Where("artist_id", artistId)
-                .DeleteAsync();
-        }
-
         public async Task<AlbumDataDto> CreateAlbumAsync(NewAlbumDataDto dataDto)
         {
             try

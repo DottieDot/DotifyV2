@@ -208,40 +208,6 @@ namespace DotifyV2.Tests.Application.Collections
 		}
 
 		[TestMethod()]
-		public async Task DeleteSongsByArtistIdAsyncTest()
-		{
-			// Arrange
-			var songRepoMock = new Mock<ISongRepository>();
-			songRepoMock.Setup(mock => mock.DeleteSongsByArtistId(1))
-				.Verifiable();
-
-			var songCollection = new SongCollection(songRepoMock.Object, _dependencyMapper);
-
-			// Act
-			await songCollection.DeleteSongsByArtistIdAsync(1);
-
-			// Assert
-			songRepoMock.Verify();
-		}
-
-		[TestMethod()]
-		public async Task DeleteSongsByAlbumIdAsyncTest()
-		{
-			// Arrange
-			var songRepoMock = new Mock<ISongRepository>();
-			songRepoMock.Setup(mock => mock.DeleteSongsByAlbumIdAsync(1))
-				.Verifiable();
-
-			var songCollection = new SongCollection(songRepoMock.Object, _dependencyMapper);
-
-			// Act
-			await songCollection.DeleteSongsByAlbumIdAsync(1);
-
-			// Assert
-			songRepoMock.Verify();
-		}
-
-		[TestMethod()]
 		public async Task CreateSongAsyncTest()
 		{
 			// Arrange
