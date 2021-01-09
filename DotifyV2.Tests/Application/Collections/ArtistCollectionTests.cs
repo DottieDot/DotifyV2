@@ -156,6 +156,51 @@ namespace DotifyV2.Tests.Application.Collections
 		}
 
 		[TestMethod()]
+		public async Task GetArtistBySongIdAsyncTest_ValidSongId_CorrectData()
+		{
+			// Arrange
+			var artistRepoMock = new Mock<IArtistRepository>();
+			artistRepoMock.Setup(mock => mock.GetArtistBySongIdAsync(1))
+				.ReturnsAsync(new ArtistDataDto
+				{
+					Id = 1,
+					Name = "Test",
+					Picture = "",
+				})
+				.Verifiable();
+
+			var artistCollection = new ArtistCollection(artistRepoMock.Object, _dependencyMapper);
+
+			// Act
+			var artist = await artistCollection.GetArtistBySongIdAsync(1);
+
+			// Assert
+			artistRepoMock.Verify();
+			Assert.AreEqual(1, artist.Id);
+			Assert.AreEqual("Test", artist.Name);
+			Assert.AreEqual("", artist.Picture);
+		}
+
+		[TestMethod()]
+		public async Task GetArtistBySongIdAsyncTest_InvalidSongId_Null()
+		{
+			// Arrange
+			var artistRepoMock = new Mock<IArtistRepository>();
+			artistRepoMock.Setup(mock => mock.GetArtistBySongIdAsync(1))
+				.ReturnsAsync(null as ArtistDataDto)
+				.Verifiable();
+
+			var artistCollection = new ArtistCollection(artistRepoMock.Object, _dependencyMapper);
+
+			// Act
+			var artist = await artistCollection.GetArtistBySongIdAsync(1);
+
+			// Assert
+			artistRepoMock.Verify();
+			Assert.AreEqual(null, artist);
+		}
+
+		[TestMethod()]
 		public async Task CreateArtistAsyncTest()
 		{
 			// Arrange

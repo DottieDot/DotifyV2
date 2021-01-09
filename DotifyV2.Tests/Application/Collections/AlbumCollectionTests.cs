@@ -44,7 +44,7 @@ namespace DotifyV2.Tests.Application.Collections
 				.ReturnsAsync(result)
 				.Verifiable();
 
-			var albumCollection = new AlbumCollection(albumRepoMock.Object, null, _dependencyMapper);
+			var albumCollection = new AlbumCollection(albumRepoMock.Object, _dependencyMapper);
 
 			// Act
 			var albums = (await albumCollection.GetAlbumsByArtistIdAsync(1)).ToArray();

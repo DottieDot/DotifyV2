@@ -57,7 +57,7 @@ namespace DotifyV2.Tests.Application.Models
             var songCollectionMock = new Mock<ISongCollection>();
             songCollectionMock
                 .Setup(mock => mock.GetSongsByAlbumIdAsync(1))
-                .ReturnsAsync(new[] { new Song(result, null, null) })
+                .ReturnsAsync(new[] { new Song(result, null, null, null) })
                 .Verifiable();
 
             var album = new Album(new AlbumDataDto

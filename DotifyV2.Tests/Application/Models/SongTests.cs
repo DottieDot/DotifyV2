@@ -87,5 +87,98 @@ namespace DotifyV2.Tests.Application.Models
             songRepoMock.Verify();
             Assert.AreEqual(true, success);
         }
+
+        [TestMethod()]
+        public async Task DeleteAsyncTest()
+        {
+            // Arrange
+            var songRepoMock = new Mock<ISongRepository>();
+            songRepoMock
+                .Setup(mock => mock.DeleteByIdAsync(1))
+                .ReturnsAsync(true)
+                .Verifiable();
+
+            var song = new Song(new SongDataDto
+            {
+                Id = 1,
+                AlbumId = 1,
+                Name = "",
+                FileName = "",
+                Duration = 0,
+            }, songRepoMock.Object, null, null);
+
+            // Act
+            var success = await song.DeleteAsync();
+
+            // Assert
+            songRepoMock.Verify();
+            Assert.AreEqual(true, success);
+        }
+
+        [TestMethod()]
+        public async Task UpateByIdAsyncTest()
+        {
+            // Arrange
+            var songRepoMock = new Mock<ISongRepository>();
+            songRepoMock
+                .Setup(mock => mock.UpdateByIdAsync(1, It.Is((UpdateSongDataDto data) => (
+                    data.Name == "updated" &&
+                    data.Duration == 20
+                ))))
+                .ReturnsAsync(true)
+                .Verifiable();
+
+            var song = new Song(new SongDataDto
+            {
+                Id = 1,
+                AlbumId = 1,
+                Name = "",
+                FileName = "",
+                Duration = 0,
+            }, songRepoMock.Object, null, null);
+
+            // Act
+            song.Name = "updated";
+            song.Duration = 20;
+            var success = await song.SaveAsync();
+
+            // Assert
+            songRepoMock.Verify();
+            Assert.AreEqual(true, success);
+        }
+
+        [TestMethod()]
+        public async Task GetArtistAsyncTest()
+        {
+            // Arrange
+            var result = new ArtistDataDto
+            {
+                Id = 1,
+                Name = "",
+                Picture = "",
+            };
+
+            var artistCollection = new Mock<IArtistCollection>();
+            artistCollection
+                .Setup(mock => mock.GetArtistBySongIdAsync(1))
+                .ReturnsAsync(new Artist(result, null, null))
+                .Verifiable();
+
+            var song = new Song(new SongDataDto
+            {
+                Id = 1,
+                AlbumId = 1,
+                Name = "",
+                FileName = "",
+                Duration = 0,
+            }, null, null, artistCollection.Object);
+
+            // Act
+            var artist = await song.GetArtistAsync();
+
+            // Assert
+            artistCollection.Verify();
+            Assert.AreEqual(1, song.Id);
+        }
     }
 }

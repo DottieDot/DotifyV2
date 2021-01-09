@@ -93,9 +93,32 @@ namespace DotifyV2.Tests.Application.Models
         }
 
         [TestMethod()]
-        public async Task TaskAsyncTest()
+        public async Task SaveAsyncTest()
         {
-            // TODO: Test
+            // Arrange
+            var userRepoMock = new Mock<IUserRepository>();
+            userRepoMock
+                .Setup(mock => mock.UpdateUserByIdAsync(1, It.Is((UpdateUserDataDto data) => (
+                    data.Username == "updated"
+                ))))
+                .ReturnsAsync(true)
+                .Verifiable();
+
+            var user = new User(new UserDataDto
+            {
+                Id = 1,
+                Username = "test",
+                Password = "",
+                ApiToken = "",
+            }, userRepoMock.Object, null, null, null);
+
+            // Act
+            user.Username = "updated";
+            var success = await user.SaveAsync();
+
+            // Assert
+            userRepoMock.Verify();
+            Assert.AreEqual(true, success);
         }
 
         [TestMethod()]
