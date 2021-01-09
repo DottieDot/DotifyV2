@@ -12,6 +12,8 @@ namespace DotifyV2.Application.Collections.Interfaces
 
         Task<IArtist> GetArtistByUserIdAsync(int userId);
 
+        Task<IArtist> GetArtistBySongIdAsync(int songId);
+
         Task<IEnumerable<int>> GetLikedArtistIdsByUserIdAsync(int userId);
     }
 }

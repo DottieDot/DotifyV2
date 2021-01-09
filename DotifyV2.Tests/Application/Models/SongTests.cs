@@ -35,7 +35,7 @@ namespace DotifyV2.Tests.Application.Models
                 Name = "",
                 FileName = "",
                 Duration = 0,
-            }, null, albumCollectionMock.Object);
+            }, null, albumCollectionMock.Object, null);
             var album = await song.GetAlbumAsync();
 
             albumCollectionMock.Verify();
@@ -58,7 +58,7 @@ namespace DotifyV2.Tests.Application.Models
                 Name = "",
                 FileName = "",
                 Duration = 0,
-            }, songRepoMock.Object, null);
+            }, songRepoMock.Object, null, null);
             var success = await song.LikeAsync(1);
 
             songRepoMock.Verify();
@@ -81,7 +81,7 @@ namespace DotifyV2.Tests.Application.Models
                 Name = "",
                 FileName = "",
                 Duration = 0,
-            }, songRepoMock.Object, null);
+            }, songRepoMock.Object, null, null);
             var success = await song.RemoveLikeAsync(1);
 
             songRepoMock.Verify();

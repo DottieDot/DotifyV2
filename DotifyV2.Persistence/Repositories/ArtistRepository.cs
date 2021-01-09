@@ -83,5 +83,17 @@ namespace DotifyV2.Persistence.Repositories
 
             return result != 0;
         }
+
+        public async Task<ArtistDataDto> GetArtistBySongIdAsync(int songId)
+        {
+            var row = await _db.Query("artists")
+                .Select(typeof(ArtistTableRow).GetFieldNames().Select(field => string.Format($"artists.{field}")).ToArray())
+                .Join("albums", "albums.artist_id", "artists.id")
+                .Join("songs", "songs.album_id", "albums.id")
+                .Where("songs.id", songId)
+                .FirstOrDefaultAsync<ArtistTableRow>();
+
+            return row?.ToArtistDataDto();
+        }
     }
 }

@@ -44,5 +44,39 @@ namespace DotifyV2.Presentation.Controllers
 
             return await SongResponse.CreateFromSongAsync(song);
         }
+
+
+        [HttpPatch("{id}")]
+        [IsArtist]
+        public async Task<bool> UpdateName(int id, [FromBody] UpdateSongRequest request)
+        {
+            var artist = await _authenticatedUser.GetArtistAsync();
+            var song = await _songCollection.GetSongByIdAsync(id);
+
+            if ((await song.GetArtistAsync()).Id != artist.Id)
+            {
+                throw new HttpException(HttpStatusCode.Unauthorized);
+            }
+
+            song.Name = request.Name;
+            song.Duration = request.Durtion;
+
+            return await song.SaveAsync();
+        }
+
+        [HttpDelete("{id}")]
+        [IsArtist]
+        public async Task<bool> Delete(int id)
+        {
+            var artist = await _authenticatedUser.GetArtistAsync();
+            var song = await _songCollection.GetSongByIdAsync(id);
+
+            if ((await song.GetArtistAsync()).Id != artist.Id)
+            {
+                throw new HttpException(HttpStatusCode.Unauthorized);
+            }
+
+            return await song.DeleteAsync();
+        }
     }
 }

@@ -78,5 +78,27 @@ namespace DotifyV2.Persistence.Repositories
                 return null;
             }
         }
+
+        public async Task<bool> DeleteByIdAsync(int songId)
+        {
+            int result = await _db.Query("songs")
+                 .Where("id", songId)
+                 .DeleteAsync();
+
+            return result != 0;
+        }
+
+        public async Task<bool> UpdateByIdAsync(int songId, UpdateSongDataDto dataDto)
+        {
+            var result = await _db.Query("songs")
+                .Where("id", songId)
+                .UpdateAsync(new
+                {
+                    name = dataDto.Name,
+                    duration = dataDto.Duration,
+                });
+
+            return result == 1;
+        }
     }
 }

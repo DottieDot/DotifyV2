@@ -15,7 +15,7 @@ namespace DotifyV2.Application.Collections
         readonly ISongRepository _songRepository;
         readonly DependencyMapper _dependencyMapper;
 
-        public SongCollection(ISongRepository songRepository, DependencyMapper dependencyMapper)
+        public SongCollection(ISongRepository songRepository, IArtistCollection artistCollection, DependencyMapper dependencyMapper)
         {
             _songRepository = songRepository;
             _dependencyMapper = dependencyMapper;

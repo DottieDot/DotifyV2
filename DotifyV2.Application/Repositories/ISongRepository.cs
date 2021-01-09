@@ -6,6 +6,10 @@ namespace DotifyV2.Application.Repositories
 {
     public interface ISongRepository
     {
+        Task<bool> DeleteByIdAsync(int songId);
+
+        Task<bool> UpdateByIdAsync(int songId, UpdateSongDataDto dataDto);
+        
         Task<SongDataDto> CreateSongAsync(NewSongDataDto dataDto);
 
         Task<IEnumerable<SongDataDto>> GetSongsByAlbumId(int albumId);

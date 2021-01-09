@@ -91,6 +91,28 @@ export default () => {
     setNewSongDialog(true)
   }, [setNewSongDialog])
 
+  const onDeleteSong = useCallback((songId: number) => {
+    if (album) {
+      setAlbum({
+        ...album,
+        songs: album.songs.filter(song => song.id !== songId)
+      })
+    }
+  }, [setAlbum, album])
+
+  const onUpdateSong = useCallback((songId: number, name: string, duration: number) => {
+    if (album) {
+      setAlbum({
+        ...album,
+        songs: album.songs.map(song => (song.id === songId ? {
+          ...song,
+          duration,
+          name,
+        } : song))
+      })
+    }
+  }, [album, setAlbum])
+
   const closeNewSongDialog = useCallback((song: Song | null) => {
     setNewSongDialog(false)
     if (album && song) {
@@ -206,6 +228,8 @@ export default () => {
                       duration={duration}
                       songId={id}
                       management={user?.artist_id === album?.artist.id}
+                      onSongDeleted={onDeleteSong}
+                      onSongUpdated={onUpdateSong}
                     />
                   ))}
                 </TableBody>
