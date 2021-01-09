@@ -1,10 +1,10 @@
-import { Button, ButtonGroup, Container, Grid, Link, makeStyles, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core'
+import { Button, ButtonGroup, Container, Grid, Link, makeStyles, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core'
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router'
 import { Link as RouterLink } from 'react-router-dom'
 import { getAlbum } from '../../api/endpoints'
 import { Album, Song } from '../../api/model'
-import { AppBar, MediaInfoCard, SongTableRow } from '../../components'
+import { AppBar, MediaInfoCard, NotFound, SongTableRow } from '../../components'
 import { useAuthenticatedUser, useShare } from '../../hooks'
 import RenameAlbumDialog from './RenameAlbumDialog'
 import DeleteAlbumDialog from './DeleteAlbumDialog'
@@ -36,6 +36,7 @@ export default () => {
   const classes = useStyles()
   const user = useAuthenticatedUser()
   const [album, setAlbum] = useState<Album | null>(null)
+  const [notFound, setNotFound] = useState(false)
   const [renameAlbumDialog, setRenameAlbumDialog] = useState(false)
   const [deleteAlbumDialog, setDeleteAlbumDialog] = useState(false)
   const [newSongDialog, setNewSongDialog] = useState(false)
@@ -48,9 +49,15 @@ export default () => {
       if (typeof (+albumId) !== 'number')
         return
 
-      setAlbum(await getAlbum(+albumId))
+      const album = await getAlbum(+albumId)
+      if (album !== null) {
+        setAlbum(album)
+      }
+      else {
+        setNotFound(true)
+      }
     })()
-  }, [setAlbum, albumId])
+  }, [setAlbum, albumId, setNotFound])
 
   const onShare = useCallback(() => {
     if (album) {
@@ -96,6 +103,14 @@ export default () => {
       })
     }
   }, [setNewSongDialog, album, setAlbum])
+
+  if (notFound) {
+    return (
+      <NotFound 
+        text="Album not found."
+      />
+    )
+  }
 
   return (
     <Fragment>
@@ -189,6 +204,8 @@ export default () => {
                       songNr={index + 1}
                       name={name}
                       duration={duration}
+                      songId={id}
+                      management={user?.artist_id === album?.artist.id}
                     />
                   ))}
                 </TableBody>
