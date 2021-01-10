@@ -45,7 +45,7 @@ export default () => {
   const { album: albumId } = useParams<Params>()
   const stickyMediaInfoCardContainer = useRef(null)
   const share = useShare()
-  const loading = notFound || !album
+  const loading = !notFound && !album
 
   useEffect(() => {
     (async () => {

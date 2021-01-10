@@ -226,5 +226,105 @@ namespace DotifyV2.Tests.Application.Collections
 			Assert.AreEqual(1, album.Id);
 			Assert.AreEqual("Test", album.Name);
 		}
+
+		[TestMethod()]
+		public async Task GetAllAlbumsAsyncTest_LessThanCount_AllAvailableData()
+		{
+			// Arrange
+			AlbumDataDto[] result =
+			{
+				new AlbumDataDto
+				{
+					Id = 1,
+					Name = "Test",
+					CoverArt = "",
+				},
+				new AlbumDataDto
+				{
+					Id = 2,
+					Name = "Test 2",
+					CoverArt = "test2.mp3",
+				},
+			};
+			var albumRepoMock = new Mock<IAlbumRepository>();
+			albumRepoMock.Setup(mock => mock.GetAllAlbumsAsync(0, 4))
+				.ReturnsAsync(result)
+				.Verifiable();
+
+			var albumCollection = new AlbumCollection(albumRepoMock.Object, _dependencyMapper);
+
+			// Act
+			var albums = (await albumCollection.GetAllAlbumsAsync(0, 4)).ToArray();
+
+			// Assert
+			albumRepoMock.Verify();
+			Assert.AreEqual(2, albums.Length);
+			for (int i = 0; i < 2; ++i)
+			{
+				Assert.AreEqual(result[i].Id, albums[i].Id);
+				Assert.AreEqual(result[i].Name, albums[i].Name);
+				Assert.AreEqual(result[i].CoverArt, albums[i].CoverArt);
+			}
+		}
+
+		[TestMethod()]
+		public async Task GetAllAlbumsAsyncTest_MoreThanCount_MultipleSections()
+		{
+			// Arrange
+			AlbumDataDto[] result =
+			{
+				new AlbumDataDto
+				{
+					Id = 1,
+					Name = "Test",
+					CoverArt = "",
+				},
+				new AlbumDataDto
+				{
+					Id = 2,
+					Name = "Test 2",
+					CoverArt = "test2.mp3",
+				},
+			};
+			var albumRepoMock = new Mock<IAlbumRepository>();
+			albumRepoMock.Setup(mock => mock.GetAllAlbumsAsync(0, 1))
+				.ReturnsAsync(new[] { result[0] })
+				.Verifiable();
+			albumRepoMock.Setup(mock => mock.GetAllAlbumsAsync(1, 1))
+				.ReturnsAsync(new[] { result[1] })
+				.Verifiable();
+
+			var albumCollection = new AlbumCollection(albumRepoMock.Object, _dependencyMapper);
+
+			// Act
+			var section1 = (await albumCollection.GetAllAlbumsAsync(0, 1)).ToArray();
+			var section2 = (await albumCollection.GetAllAlbumsAsync(1, 1)).ToArray();
+
+			// Assert
+			albumRepoMock.Verify();
+			Assert.AreEqual(1, section1.Length);
+			Assert.AreEqual(1, section2.Length);
+			Assert.AreEqual(1, section1[0].Id);
+			Assert.AreEqual(2, section2[0].Id);
+		}
+
+		[TestMethod()]
+		public async Task GetAllAlbumsAsyncTest_NoAlbums_EmptyArray()
+		{
+			// Arrange
+			var albumRepoMock = new Mock<IAlbumRepository>();
+			albumRepoMock.Setup(mock => mock.GetAllAlbumsAsync(0, 4))
+				.ReturnsAsync(new AlbumDataDto[] { })
+				.Verifiable();
+
+			var albumCollection = new AlbumCollection(albumRepoMock.Object, _dependencyMapper);
+
+			// Act
+			var albums = (await albumCollection.GetAllAlbumsAsync(0, 4)).ToArray();
+
+			// Assert
+			albumRepoMock.Verify();
+			Assert.AreEqual(0, albums.Length);
+		}
 	}
 }

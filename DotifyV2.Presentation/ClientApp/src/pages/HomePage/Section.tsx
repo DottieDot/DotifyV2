@@ -58,8 +58,9 @@ export default function <TItem>({ batchSize = 10, title, renderItem, load, rende
               <Button
                 onClick={loadItems}
                 disabled={loading}
+                variant="outlined"
               >
-                Load Next
+                Load More
               </Button>
             )}
           </Fragment>
