@@ -43,7 +43,7 @@ export default () => {
   const { artist: artistId } = useParams<Params>()
   const stickyMediaInfoCardContainer = useRef(null)
   const share = useShare()
-  const loading = notFound || !artist
+  const loading = !notFound && !artist
 
   useEffect(() => {
     (async () => {
