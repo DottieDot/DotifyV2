@@ -1,10 +1,11 @@
-import { makeStyles, Paper } from '@material-ui/core'
+import { makeStyles, Paper, useTheme } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
-import React from 'react'
+import React, { useMemo } from 'react'
 
 interface Props {
   variant?: 'outlined' | 'elevation' | 'flat'
   color?: 'paper' | 'primary' | 'secondary'
+  circular?: boolean
 }
 
 const useStyles = makeStyles({
@@ -26,22 +27,28 @@ const useStyles = makeStyles({
   }
 })
 
-export default ({ variant = 'outlined', color = 'paper' }: Props) => {
+export default ({ variant = 'outlined', color = 'paper', circular }: Props) => {
   const classes = useStyles()
+  const theme = useTheme()
 
   const paperVariant = variant === 'flat' ? 'elevation' : variant
   const elevation = variant === 'elevation' ? 1 : 0
+
+  const style = useMemo(() => ({
+    borderRadius: circular ? 999 : theme.shape.borderRadius,
+  }), [circular, theme])
 
   return (
     <Paper 
       variant={paperVariant} 
       elevation={elevation} 
       className={classes.paper}
+      style={style}
     >
       <div className={classes.coverArt}>
         <Skeleton 
           animation="pulse" 
-          variant="rect"
+          variant={circular ? "circle" : "rect"}
           className={classes.skeleton}
         />
       </div>

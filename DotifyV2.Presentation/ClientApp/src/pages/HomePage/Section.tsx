@@ -7,9 +7,10 @@ interface Props<TItem> {
   title: string
   load: (offset: number, count: number) => Promise<TItem[]>
   renderItem: (item: TItem) => ReactNode
+  renderSkeleton: (index: number) => ReactNode
 }
 
-export default function <TItem>({ batchSize = 10, title, renderItem, load }: Props<TItem>) {
+export default function <TItem>({ batchSize = 10, title, renderItem, load, renderSkeleton }: Props<TItem>) {
   const [items, setItems] = useState<TItem[] | null>(null)
   const [loading, setLoading] = useState(false)
   const [loadedAll, setLoadedAll] = useState(false)
@@ -35,12 +36,6 @@ export default function <TItem>({ batchSize = 10, title, renderItem, load }: Pro
     }
   }, [loadItems, items, setItems])
 
-  if (items === null) {
-    return (
-      <h1>Loading!</h1>
-    )
-  }
-
   return (
     <Fragment>
       <Typography
@@ -52,14 +47,22 @@ export default function <TItem>({ batchSize = 10, title, renderItem, load }: Pro
       </Typography>
       <Divider variant="fullWidth" />
       <MediaGrid horizontal>
-        {items.map(renderItem)}
-        {!loadedAll && (
-          <Button
-            onClick={loadItems}
-            disabled={loading}
-          >
-            Load Next
-          </Button>
+        {(items === null) ? (
+          <Fragment>
+            {[...Array(batchSize).keys()].map(renderSkeleton)}
+          </Fragment>
+        ) : (
+          <Fragment>
+            {items.map(renderItem)}
+            {!loadedAll && (
+              <Button
+                onClick={loadItems}
+                disabled={loading}
+              >
+                Load Next
+              </Button>
+            )}
+          </Fragment>
         )}
       </MediaGrid>
     </Fragment>

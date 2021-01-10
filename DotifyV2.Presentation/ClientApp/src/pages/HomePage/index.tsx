@@ -1,6 +1,6 @@
 import { Container } from '@material-ui/core'
 import React, { Fragment, useCallback } from 'react'
-import { Album, AppBar, Artist, Spacing } from '../../components'
+import { Album, AlbumSkeleton, AppBar, Artist, ArtistSkeleton, Spacing } from '../../components'
 import Section from './Section'
 import * as eindpoints from '../../api/endpoints'
 import { AlbumDescription, ArtistDescritpion } from '../../api/model'
@@ -19,6 +19,10 @@ export default () => {
     />
   ), [])
 
+  const renderArtistSkeleton = useCallback((index: number) => (
+    <ArtistSkeleton key={index} index={index} />
+  ), [])
+
   const loadAlbums = useCallback((offset: number, count: number) => (
     eindpoints.indexAlbums(offset, count)
   ), [])
@@ -32,6 +36,10 @@ export default () => {
     />
   ), [])
 
+  const renderAlbumSkeleton = useCallback((index: number) => (
+    <AlbumSkeleton key={index} index={index} />
+  ), [])
+
   return (
     <Fragment>
       <AppBar />
@@ -40,12 +48,14 @@ export default () => {
           title="Artists" 
           load={loadArtists}
           renderItem={renderArtist}
+          renderSkeleton={renderArtistSkeleton}
         />
         <Spacing />
         <Section 
           title="Albums" 
           load={loadAlbums}
           renderItem={renderAlbum}
+          renderSkeleton={renderAlbumSkeleton}
         />
         <Spacing />
       </Container>

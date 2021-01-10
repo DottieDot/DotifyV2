@@ -1,5 +1,5 @@
-import React, { ReactNode, useMemo } from 'react'
 import { makeStyles } from '@material-ui/core'
+import React, { ReactNode } from 'react'
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -8,11 +8,18 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(),
     marginBottom: theme.spacing(2),
     gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))',
-    '&.horizontal': {
-      gridTemplateRows: '1fr',
-      overflowX: 'scroll',
-      paddingBottom: theme.spacing(1),
-    }
+  },
+  singleRow: {
+    display: 'grid',
+    gap: theme.spacing(2),
+    marginTop: theme.spacing(),
+    marginBottom: theme.spacing(2),
+    flexDirection: 'column',
+    overflowX: 'scroll',
+    paddingBottom: theme.spacing(1),
+    gridAutoColumns: 160,
+    gridTemplateRows: '1fr',
+    gridAutoFlow: 'column'
   }
 }))
 
@@ -23,24 +30,9 @@ interface Props {
 
 export default ({ children, horizontal }: Props) => {
   const classes = useStyles()
-  const numChildren = useMemo(() => {
-    let count = 0
-    React.Children.forEach(children, (child) => {
-      if (React.isValidElement(child)) {
-        ++count
-      }
-    })
-    return count
-  }, [children])
-  const style = useMemo(() => ({
-    gridTemplateColumns: `repeat(${numChildren}, 160px)`,
-  }), [numChildren])
 
   return (
-    <div 
-      className={`${classes.grid} ${horizontal ? 'horizontal' : ''}`}
-      style={horizontal ? style : {}}
-    >
+    <div className={horizontal ? classes.singleRow : classes.grid}>
       {children}
     </div>
   )
