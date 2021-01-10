@@ -6,21 +6,22 @@ import MediaGridItem from './MediaGridItem'
 interface Props {
   id: number
   name: string
-  coverArt: string | null
+  picture: string | null
 }
 
-export default ({ id, name, coverArt }: Props) => {
+export default ({ id, name, picture }: Props) => {
   const history = useHistory()
 
   const onClick = useCallback(() => {
-    history.push(`/albums/${id}`)
+    history.push(`/artists/${id}`)
   }, [history, id])
 
   return (
-    <MediaGridItem name={name} onClick={onClick}>
+    <MediaGridItem name={name} onClick={onClick} circular>
       <MediaCover
         name={name}
-        coverArt={coverArt}
+        coverArt={picture}
+        circular
       />
     </MediaGridItem>
   )

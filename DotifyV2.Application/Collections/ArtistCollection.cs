@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 using DotifyV2.Application.Collections.Interfaces;
 using DotifyV2.Application.Models;
 using DotifyV2.Application.Models.Interfaces;
@@ -50,5 +51,11 @@ namespace DotifyV2.Application.Collections
 
         public Task<IEnumerable<int>> GetLikedArtistIdsByUserIdAsync(int userId)
             => _artistRepository.GetLikedArtistIdsByUserIdAsync(userId);
+
+        public async Task<IEnumerable<IArtist>> GetAllArtistsAsync(int offset, int count)
+        {
+            var data = await _artistRepository.GetAllArtistsAsync(offset, count);
+            return data.Select(dto => _dependencyMapper.Construct<Artist>(dto));
+        }
     }
 }

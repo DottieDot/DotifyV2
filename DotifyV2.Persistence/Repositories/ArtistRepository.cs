@@ -95,5 +95,16 @@ namespace DotifyV2.Persistence.Repositories
 
             return row?.ToArtistDataDto();
         }
+
+        public async Task<IEnumerable<ArtistDataDto>> GetAllArtistsAsync(int offset, int count)
+        {
+            var rows = await _db.Query("artists")
+                .Select(typeof(ArtistTableRow).GetFieldNames().ToArray())
+                .Skip(offset)
+                .Limit(count)
+                .GetAsync<ArtistTableRow>();
+
+            return rows.Select(row => row.ToArtistDataDto());
+        }
     }
 }

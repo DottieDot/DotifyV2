@@ -1,5 +1,5 @@
 import { makeStyles, Paper, Typography, useTheme } from '@material-ui/core'
-import React from 'react'
+import React, { useMemo } from 'react'
 import useInitials from '../hooks/useInitials'
 
 interface Props {
@@ -7,6 +7,7 @@ interface Props {
   coverArt: string | null
   variant?: 'outlined' | 'elevation' | 'flat'
   color?: 'paper' | 'primary' | 'secondary'
+  circular?: boolean
 }
 
 const useStyles = makeStyles({
@@ -50,7 +51,7 @@ const AlbumInitials = ({ name }: { name: string }) => {
   )
 }
 
-export default ({ name, coverArt, variant = 'outlined', color = 'paper' }: Props) => {
+export default ({ name, coverArt, variant = 'outlined', color = 'paper', circular }: Props) => {
   const classes = useStyles()
   const theme = useTheme()
 
@@ -63,12 +64,15 @@ export default ({ name, coverArt, variant = 'outlined', color = 'paper' }: Props
     secondary: theme.palette.secondary.main,
   }
 
+  const style = useMemo(() => ({
+    background: colors[color], 
+    color: theme.palette.getContrastText(colors[color]),
+    borderRadius: circular ? 999 : theme.shape.borderRadius
+  }), [colors, color, theme, circular])
+
   return (
     <Paper 
-      style={{ 
-        background: colors[color], 
-        color: theme.palette.getContrastText(colors[color]) 
-      }}
+      style={style}
       variant={paperVariant} 
       elevation={elevation} 
       className={classes.paper}

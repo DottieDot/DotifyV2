@@ -6,6 +6,8 @@ namespace DotifyV2.Application.Repositories
 {
     public interface IArtistRepository
     {
+        Task<IEnumerable<ArtistDataDto>> GetAllArtistsAsync(int offset, int count);
+
         Task<bool> DeleteArtistAsync(int artistId);
 
         Task<ArtistDataDto> CreateArtistAsync(NewArtistDataDto dataDto);

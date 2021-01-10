@@ -11,6 +11,7 @@ namespace DotifyV2.Presentation.Models.Descriptions
         {
             Id = artist.Id;
             Name = artist.Name;
+            Picture = artist.Picture;
         }
 
         [JsonPropertyName("id")]
@@ -18,5 +19,8 @@ namespace DotifyV2.Presentation.Models.Descriptions
 
         [JsonPropertyName("name")]
         public string Name { get; set; }
+
+        [JsonPropertyName("picture")]
+        public string Picture { get; set; }
     }
 }
