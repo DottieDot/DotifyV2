@@ -21,5 +21,7 @@ namespace DotifyV2.Application.Repositories
         Task<IEnumerable<int>> GetLikedAlbumIdsByUserIdAsync(int userId);
 
         Task<bool> UpdateAlbumByIdAsync(int albumId, UpdateAlbumDataDto dataDto);
+
+        Task<IEnumerable<AlbumDataDto>> GetAllAlbumsAsync(int offset, int count);
     }
 }

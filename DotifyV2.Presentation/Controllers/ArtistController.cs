@@ -66,7 +66,7 @@ namespace DotifyV2.Presentation.Controllers
         }
 
         [HttpGet()]
-        public async Task<IEnumerable<ArtistDescription>> Index([FromQuery] IndexArtistsRequest request)
+        public async Task<IEnumerable<ArtistDescription>> Index([FromQuery] IndexRequest request)
         {
             var artists = await _artistCollection.GetAllArtistsAsync(request.Offset, request.Count);
 

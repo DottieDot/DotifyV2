@@ -1,11 +1,14 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using DotifyV2.Application.Collections.Interfaces;
 using DotifyV2.Presentation.Models;
 using DotifyV2.Presentation.Exceptions;
 using DotifyV2.Presentation.Filters;
 using DotifyV2.Presentation.Authentication;
+using DotifyV2.Presentation.Models.Descriptions;
 
 namespace DotifyV2.Presentation.Controllers
 {
@@ -78,6 +81,14 @@ namespace DotifyV2.Presentation.Controllers
             }
 
             return await album.DeleteAsync();
+        }
+
+        [HttpGet()]
+        public async Task<IEnumerable<AlbumDescription>> Index([FromQuery] IndexRequest request)
+        {
+            var albums = await _albumCollection.GetAllAlbumsAsync(request.Offset, request.Count);
+
+            return albums.Select(album => new AlbumDescription(album));
         }
     }
 }

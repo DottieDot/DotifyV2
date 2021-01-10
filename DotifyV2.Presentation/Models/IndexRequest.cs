@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DotifyV2.Presentation.Models
 {
-    public class IndexArtistsRequest
+    public class IndexRequest
     {
         [FromQuery(Name = "offset")]
         public int Offset { get; set; }

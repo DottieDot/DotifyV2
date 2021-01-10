@@ -43,6 +43,12 @@ namespace DotifyV2.Application.Collections
            return albums.Select(data => _dependencyMapper.Construct<Album>(data));
         }
 
+        public async Task<IEnumerable<IAlbum>> GetAllAlbumsAsync(int offset, int count)
+        {
+            var albums = await _albumRepository.GetAllAlbumsAsync(offset, count);
+            return albums.Select(data => _dependencyMapper.Construct<Album>(data));
+        }
+
         public Task<IEnumerable<int>> GetLikedAlbumIdsByUserIdAsync(int userId)
             => _albumRepository.GetLikedAlbumIdsByUserIdAsync(userId);
     }

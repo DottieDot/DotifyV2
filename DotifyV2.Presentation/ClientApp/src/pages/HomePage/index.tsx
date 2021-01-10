@@ -3,7 +3,7 @@ import React, { Fragment, useCallback } from 'react'
 import { Album, AppBar, Artist, Spacing } from '../../components'
 import Section from './Section'
 import * as eindpoints from '../../api/endpoints'
-import { ArtistDescritpion } from '../../api/model'
+import { AlbumDescription, ArtistDescritpion } from '../../api/model'
 
 export default () => {
   const loadArtists = useCallback((offset: number, count: number) => (
@@ -19,12 +19,16 @@ export default () => {
     />
   ), [])
 
-  const renderAlbum = useCallback((album: ArtistDescritpion) => (
+  const loadAlbums = useCallback((offset: number, count: number) => (
+    eindpoints.indexAlbums(offset, count)
+  ), [])
+
+  const renderAlbum = useCallback((album: AlbumDescription) => (
     <Album
       key={album.id}
       id={album.id}
       name={album.name}
-      coverArt={album.picture}
+      coverArt={album.cover_art}
     />
   ), [])
 
@@ -40,7 +44,7 @@ export default () => {
         <Spacing />
         <Section 
           title="Albums" 
-          load={loadArtists}
+          load={loadAlbums}
           renderItem={renderAlbum}
         />
         <Spacing />

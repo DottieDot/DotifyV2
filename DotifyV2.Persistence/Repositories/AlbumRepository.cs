@@ -95,5 +95,16 @@ namespace DotifyV2.Persistence.Repositories
 
             return result == 1;
         }
+
+        public async Task<IEnumerable<AlbumDataDto>> GetAllAlbumsAsync(int offset, int count)
+        {
+            var rows = await _db.Query("albums")
+                .Select(typeof(AlbumTableRow).GetFieldNames().ToArray())
+                .Skip(offset)
+                .Limit(count)
+                .GetAsync<AlbumTableRow>();
+
+            return rows.Select(row => row.ToAlbumDataDto());
+        }
     }
 }
