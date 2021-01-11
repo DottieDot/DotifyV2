@@ -7,6 +7,7 @@ using DotifyV2.Mapping;
 using DotifyV2.Presentation.Middleware.Extensions;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using DotifyV2.Presentation.Authentication;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace DotifyV2.Presentation
 {
@@ -45,6 +46,11 @@ namespace DotifyV2.Presentation
 			{
 				app.UseHsts();
 			}
+
+			app.UseForwardedHeaders(new ForwardedHeadersOptions
+			{
+				ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+			});
 
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
